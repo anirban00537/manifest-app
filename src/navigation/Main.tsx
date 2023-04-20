@@ -1,35 +1,44 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import { List } from '../screens/List';
-import { TextDemo, ButtonDemo, FormDemo } from '../screens/Demos';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Premium from '../screens/Premium';
+import { MaterialIcons } from '@expo/vector-icons';
+import VisionBoard from '../screens/VisionBoard';
 
 export type MainStackParams = {
-  List: undefined;
-  TextDemo: undefined;
-  FormDemo: undefined;
-  ButtonDemo: undefined;
+  Premium: undefined;
+  VisionBoard: undefined;
 };
 
 const MainStack = createStackNavigator<MainStackParams>();
+const Tab = createBottomTabNavigator<MainStackParams>();
+
+const tabBarIcon = (name: any, focused: boolean) => {
+  const color = focused ? 'blue' : 'gray';
+  return <MaterialIcons name={name} size={24} color={color} />;
+};
 
 export const Main = () => (
-  <MainStack.Navigator>
-    <MainStack.Screen name="List" component={List} />
-    <MainStack.Screen
-      name="TextDemo"
-      component={TextDemo}
-      options={{ headerTitle: 'Text Demo' }}
+  <Tab.Navigator>
+    <Tab.Screen
+      name="VisionBoard"
+      component={VisionBoard}
+      options={{
+        title: 'VisionBoard',
+        tabBarIcon: ({ focused }) => tabBarIcon('dashboard', focused),
+        headerShown: false,
+        tabBarLabel: () => null, // hide the title
+      }}
     />
-    <MainStack.Screen
-      name="FormDemo"
-      component={FormDemo}
-      options={{ headerTitle: 'Button Demo' }}
+    <Tab.Screen
+      name="Premium"
+      component={Premium}
+      options={{
+        title: 'premium',
+        tabBarIcon: ({ focused }) => tabBarIcon('stars', focused),
+        headerShown: false,
+        tabBarLabel: () => null, // hide the title
+      }}
     />
-    <MainStack.Screen
-      name="ButtonDemo"
-      component={ButtonDemo}
-      options={{ headerTitle: 'Button Demo' }}
-    />
-  </MainStack.Navigator>
+  </Tab.Navigator>
 );
