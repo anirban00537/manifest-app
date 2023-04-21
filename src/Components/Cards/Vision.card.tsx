@@ -7,7 +7,9 @@ import {
   Paragraph,
   Title,
   Menu,
+  useTheme, // import the useTheme hook
 } from 'react-native-paper';
+import colors from '../../constants/colors';
 
 const Visioncard = ({ data }: any) => {
   const [isDone, setIsDone] = useState(false);
@@ -18,11 +20,20 @@ const Visioncard = ({ data }: any) => {
         source={{ uri: data?.uri ? data.uri : 'https://picsum.photos/700' }}
         style={styles.cardBackground}
       >
-        <View style={styles.overlay} />
-
-        <Title style={styles.cardTitle}>My Visions</Title>
+        <View
+          style={[styles.overlay, { backgroundColor: colors.background }]}
+        />
+        {/* @ts-ignore */}
+        <Title style={[styles.cardTitle, { color: colors.text }]}>
+          My Visions
+        </Title>
         <View style={styles.badgeContainer}>
-          <Badge style={isDone ? styles.doneBadge : styles.notDoneBadge}>
+          <Badge
+            style={[
+              isDone ? styles.doneBadge : styles.notDoneBadge,
+              { backgroundColor: colors.primary },
+            ]}
+          >
             {isDone ? 'Done' : 'Not Done'}
           </Badge>
         </View>
@@ -48,22 +59,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
-    color: '#fff',
   },
   badgeContainer: {
     alignSelf: 'flex-start',
   },
   notDoneBadge: {
-    backgroundColor: '#f44336',
     paddingHorizontal: 8,
   },
   doneBadge: {
-    backgroundColor: '#4caf50',
     paddingHorizontal: 8,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    opacity: 0.5,
   },
 });
 

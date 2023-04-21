@@ -5,12 +5,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Premium from '../screens/Premium';
 import VisionBoard from '../screens/VisionBoard';
 import JournalHomeScreen from '../screens/Journal';
+import colors from '../constants/colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const tabBarIcon = (name: any, focused: boolean) => {
-  const color = focused ? '#5352ed' : 'gray';
+  const color = focused ? colors.primary : 'gray';
   return <MaterialIcons name={name} size={24} color={color} />;
 };
 
@@ -29,7 +30,15 @@ const PremiumStack = () => (
 );
 
 const MainTabs = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      headerShown: false,
+      tabBarStyle: {
+        backgroundColor: colors.background,
+        borderTopWidth: 0,
+      },
+    })}
+  >
     <Tab.Screen
       name="VisionBoard"
       component={VisionBoard}
@@ -37,6 +46,7 @@ const MainTabs = () => (
         title: 'Vision Board',
         tabBarIcon: ({ focused }) => tabBarIcon('dashboard', focused),
         headerShown: false,
+        tabBarLabel: () => null, // hide the tab title
       }}
     />
     <Tab.Screen
@@ -46,6 +56,7 @@ const MainTabs = () => (
         title: 'Journal',
         tabBarIcon: ({ focused }) => tabBarIcon('book', focused),
         headerShown: false,
+        tabBarLabel: () => null, // hide the tab title
       }}
     />
   </Tab.Navigator>

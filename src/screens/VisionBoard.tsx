@@ -1,11 +1,14 @@
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Card, Paragraph, Title } from 'react-native-paper';
+import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Visioncard from '../Components/Cards/Vision.card';
 import VisionboardTab from '../Components/Tabs/Visionboard.tab';
+import colors from '../constants/colors';
 
 const VisionBoard = ({ navigation }: any) => {
+  const { colors, dark } = useTheme(); // retrieve the theme colors
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -57,22 +60,18 @@ const VisionBoard = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // padding: 8,
     paddingVertical: 8,
-    // paddingHorizontal: 16,
-    backgroundColor: 'transparent',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#eee',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: colors.text,
   },
   scrollView: {
     flex: 1,

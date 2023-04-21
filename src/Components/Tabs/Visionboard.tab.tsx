@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { Badge } from 'react-native-paper';
+import colors from '../../constants/colors';
 
 const VisionboardTab = ({ data }: any) => {
   return (
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 7,
     paddingVertical: 2,
-    backgroundColor: '#55CB95',
+    backgroundColor: colors.background2,
     margin: 2,
     borderRadius: 4,
   },
