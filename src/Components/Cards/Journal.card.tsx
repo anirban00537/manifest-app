@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Card, Paragraph, Title } from 'react-native-paper';
 
 const JournalCard = ({ data }: any) => {
@@ -8,10 +8,10 @@ const JournalCard = ({ data }: any) => {
       <Card elevation={3} style={styles.card}>
         <Card.Content>
           <View style={styles.contentContainer}>
-            <Title style={styles.title}>This is title</Title>
-            <Paragraph style={styles.date}>{data.date}</Paragraph>
+            <Title style={styles.title}>{data.item.title}</Title>
+            <Paragraph style={styles.date}>{data.item.date}</Paragraph>
           </View>
-          <Paragraph style={styles.content}>{data.content}</Paragraph>
+          <Paragraph style={styles.content}>{data.item.content}</Paragraph>
         </Card.Content>
       </Card>
     </View>

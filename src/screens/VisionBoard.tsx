@@ -3,15 +3,28 @@ import { Card, Paragraph, Title } from 'react-native-paper';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Visioncard from '../Components/Cards/Vision.card';
+import VisionboardTab from '../Components/Tabs/Visionboard.tab';
 
-const VisionBoard = () => {
+const VisionBoard = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Title style={styles.title}>My Vision Board</Title>
-        <MaterialCommunityIcons name="crown" size={32} color="#F5A623" />
-      </View>
       <ScrollView style={styles.scrollView}>
+        <View style={styles.header}>
+          <Title style={styles.title}>My Visionboard</Title>
+          <MaterialCommunityIcons
+            name="crown"
+            size={32}
+            color="#F5A623"
+            onPress={() => {
+              navigation.navigate('PremiumStack');
+            }}
+          />
+        </View>
+        <View style={styles.boardTabContainer}>
+          <VisionboardTab data={{ title: 'All' }} />
+          <VisionboardTab data={{ title: 'Done' }} />
+          <VisionboardTab data={{ title: 'Not Achived' }} />
+        </View>
         <View style={styles.cardsContainer}>
           <Visioncard
             data={{
@@ -50,13 +63,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    // padding: 8,
+    paddingVertical: 8,
+    // paddingHorizontal: 16,
     backgroundColor: 'transparent',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#eee',
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   scrollView: {
@@ -68,6 +83,10 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginBottom: 90,
+  },
+  boardTabContainer: {
+    flexDirection: 'row',
+    // marginHorizontal: 15,
   },
 });
 

@@ -1,148 +1,59 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground } from 'react-native';
-import { Title, Paragraph, Button, List, Divider } from 'react-native-paper';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, Image, StyleSheet, Button } from 'react-native';
 
-const Premium = () => {
+const PremiumScreen = () => {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={{
-          uri: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-        }}
-        style={styles.backgroundImage}
-      >
-        <View style={styles.overlay}>
-          <Title style={styles.title}>Upgrade to Premium</Title>
-          <Paragraph style={styles.description}>
-            Unlock exclusive features and content
-          </Paragraph>
-          <List.Section style={styles.listSection}>
-            <List.Item
-              title="Ad-free experience"
-              description="Enjoy your favorite content without interruptions"
-              left={() => (
-                <MaterialCommunityIcons
-                  name="block-helper"
-                  size={24}
-                  color="#FFF"
-                />
-              )}
-            />
-            <Divider style={styles.listDivider} />
-            <List.Item
-              title="Offline playback"
-              description="Download your favorite videos and watch them offline"
-              left={() => (
-                <MaterialCommunityIcons
-                  name="download-circle-outline"
-                  size={24}
-                  color="#FFF"
-                />
-              )}
-            />
-            <Divider style={styles.listDivider} />
-            <List.Item
-              title="Exclusive content"
-              description="Access content that's not available for free users"
-              left={() => (
-                <MaterialCommunityIcons
-                  name="card-bulleted-outline"
-                  size={24}
-                  color="#FFF"
-                />
-              )}
-            />
-            <Divider style={styles.listDivider} />
-            <List.Item
-              title="Early access"
-              description="Get early access to new features and updates"
-              left={() => (
-                <MaterialCommunityIcons
-                  name="rocket-launch-outline"
-                  size={24}
-                  color="#FFF"
-                />
-              )}
-            />
-          </List.Section>
-          <Button
-            mode="contained"
-            style={styles.button}
-            onPress={() => console.log('Subscribe button pressed')}
-          >
-            <MaterialCommunityIcons
-              name="currency-usd"
-              size={24}
-              color="#FFF"
-            />
-            <Paragraph style={styles.buttonText}>Subscribe</Paragraph>
-          </Button>
+      <View style={styles.contentContainer}>
+        <Text style={styles.heading}>Manifestation Mastery</Text>
+        <Text style={styles.subheading}>Unlock Your Full Potential</Text>
+        <View style={styles.buttonContainer}>
+          <Text>Get Premium</Text>
         </View>
-      </ImageBackground>
+      </View>
     </View>
   );
 };
 
-export default Premium;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    color: '#FFF',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  description: {
-    fontSize: 18,
-    color: '#FFF',
-    marginBottom: 32,
-    textAlign: 'center',
-  },
-  listSection: {
+    position: 'absolute',
     width: '100%',
-    backgroundColor: 'transparent',
-    marginTop: 16,
-    marginBottom: 24,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: 8,
+    height: '100%',
+    resizeMode: 'cover',
+    opacity: 0.5,
   },
-  listItem: {
-    color: 'white',
-  },
-  listDivider: {
-    height: 1,
-    marginVertical: 4,
-  },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  contentContainer: {
     alignItems: 'center',
-    backgroundColor: '#FFA500',
-    borderRadius: 25,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    justifyContent: 'center',
+    padding: 32,
   },
-  buttonText: {
-    fontSize: 18,
-    color: '#FFF',
-    marginLeft: 8,
+  heading: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  subheading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#666',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    width: '100%',
+    backgroundColor: '#55CB95',
+    borderRadius: 24,
+    padding: 16,
   },
 });
+
+export default PremiumScreen;

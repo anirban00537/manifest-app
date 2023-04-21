@@ -1,57 +1,63 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Premium from '../screens/Premium';
 import { MaterialIcons } from '@expo/vector-icons';
+import Premium from '../screens/Premium';
 import VisionBoard from '../screens/VisionBoard';
 import JournalHomeScreen from '../screens/Journal';
 
-export type MainStackParams = {
-  Premium: undefined;
-  VisionBoard: undefined;
-  Journal: undefined;
-};
-
-const MainStack = createStackNavigator<MainStackParams>();
-const Tab = createBottomTabNavigator<MainStackParams>();
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const tabBarIcon = (name: any, focused: boolean) => {
   const color = focused ? '#5352ed' : 'gray';
   return <MaterialIcons name={name} size={24} color={color} />;
 };
 
-export const Main = () => (
+const PremiumStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Premium"
+      component={Premium}
+      options={{
+        title: 'Premium',
+        headerTitleAlign: 'center',
+        headerShown: false,
+      }}
+    />
+  </Stack.Navigator>
+);
+
+const MainTabs = () => (
   <Tab.Navigator>
     <Tab.Screen
       name="VisionBoard"
       component={VisionBoard}
       options={{
-        title: 'VisionBoard',
+        title: 'Vision Board',
         tabBarIcon: ({ focused }) => tabBarIcon('dashboard', focused),
         headerShown: false,
-        tabBarLabel: () => null, // hide the title
-      }}
-    />
-
-    <Tab.Screen
-      name="Premium"
-      component={Premium}
-      options={{
-        title: 'premium',
-        tabBarIcon: ({ focused }) => tabBarIcon('stars', focused),
-        headerShown: false,
-        tabBarLabel: () => null, // hide the title
       }}
     />
     <Tab.Screen
       name="Journal"
       component={JournalHomeScreen}
       options={{
-        title: 'premium',
-        tabBarIcon: ({ focused }) => tabBarIcon('stars', focused),
+        title: 'Journal',
+        tabBarIcon: ({ focused }) => tabBarIcon('book', focused),
         headerShown: false,
-        tabBarLabel: () => null, // hide the title
       }}
     />
   </Tab.Navigator>
+);
+
+export const Main = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
+    <Stack.Screen name="MainTabs" component={MainTabs} />
+    <Stack.Screen name="PremiumStack" component={PremiumStack} />
+  </Stack.Navigator>
 );
