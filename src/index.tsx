@@ -20,7 +20,11 @@ export default function App() {
   return (
     <>
       <PaperProvider theme={theme}>
-        <StatusBar style="auto" />
+        <StatusBar
+          translucent={true}
+          backgroundColor="transparent"
+          style="dark"
+        />
         <SafeAreaView style={{ flex: 1 }}>
           <NavigationContainer>
             <Main />

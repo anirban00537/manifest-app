@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, ImageBackground, View } from 'react-native';
-import { Card, IconButton, Paragraph, Title, Menu } from 'react-native-paper';
+import {
+  Badge,
+  Card,
+  IconButton,
+  Paragraph,
+  Title,
+  Menu,
+} from 'react-native-paper';
 
 const Visioncard = ({ data }: any) => {
+  const [isDone, setIsDone] = useState(false);
+
   return (
     <Card style={styles.card}>
       <ImageBackground
@@ -12,6 +21,11 @@ const Visioncard = ({ data }: any) => {
         <View style={styles.overlay} />
 
         <Title style={styles.cardTitle}>My Visions</Title>
+        <View style={styles.badgeContainer}>
+          <Badge style={isDone ? styles.doneBadge : styles.notDoneBadge}>
+            {isDone ? 'Done' : 'Not Done'}
+          </Badge>
+        </View>
       </ImageBackground>
     </Card>
   );
@@ -36,18 +50,16 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#fff',
   },
-  cardContent: {
-    fontSize: 16,
-    marginBottom: 8,
-    color: '#444',
+  badgeContainer: {
+    alignSelf: 'flex-start',
   },
-  cardActions: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    margin: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-    borderRadius: 24,
+  notDoneBadge: {
+    backgroundColor: '#f44336',
+    paddingHorizontal: 8,
+  },
+  doneBadge: {
+    backgroundColor: '#4caf50',
+    paddingHorizontal: 8,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
