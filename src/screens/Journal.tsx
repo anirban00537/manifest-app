@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { FAB, Card, Title, Paragraph } from 'react-native-paper';
 import JournalCard from '../Components/Cards/Journal.card';
+import colors from '../constants/colors';
 
 const JournalHomeScreen = ({ navigation }: any) => {
   // mock data for the journal entries
@@ -28,6 +29,13 @@ const JournalHomeScreen = ({ navigation }: any) => {
     },
     {
       id: 3,
+      title: 'A New Recipe',
+      content:
+        'I tried a new recipe today and it turned out amazing! It was a little bit difficult to make, but it was totally worth it.',
+      date: 'Thursday 2:22pm',
+    },
+    {
+      id: 4,
       title: 'A New Recipe',
       content:
         'I tried a new recipe today and it turned out amazing! It was a little bit difficult to make, but it was totally worth it.',
@@ -57,7 +65,8 @@ const JournalHomeScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
+    paddingTop: 22,
   },
   list: {
     paddingHorizontal: 16,
@@ -71,6 +80,8 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    backgroundColor: colors.primary,
+    color: colors.text,
   },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Paragraph, Title } from 'react-native-paper';
+import colors from '../../constants/colors';
 
 const JournalCard = ({ data }: any) => {
   return (
@@ -21,10 +22,13 @@ const JournalCard = ({ data }: any) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 12,
+    // backgroundColor: colors.background,
   },
   card: {
     borderRadius: 10,
     overflow: 'hidden',
+    backgroundColor: colors.background1,
+    color: colors.text,
   },
   contentContainer: {
     flexDirection: 'row',
@@ -33,12 +37,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
+    color: colors.text,
   },
   date: {
-    color: 'gray',
+    // color: 'gray',
+    color: colors.text,
   },
   content: {
     marginTop: 10,
+    color: colors.text,
   },
 });
 

@@ -1,15 +1,35 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Button } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { Button, TouchableRipple } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import colors from '../constants/colors';
 
 const PremiumScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
+      <MaterialIcons
+        name="arrow-back-ios"
+        size={24}
+        color={colors.text}
+        onPress={() => navigation.canGoBack()}
+        style={styles.backButton}
+      />
+      <Image
+        source={require('../../assets/premium.jpg')}
+        style={styles.backgroundImage}
+      />
       <View style={styles.contentContainer}>
         <Text style={styles.heading}>Manifestation Mastery</Text>
         <Text style={styles.subheading}>Unlock Your Full Potential</Text>
-        <View style={styles.buttonContainer}>
-          <Text>Get Premium</Text>
-        </View>
+        <TouchableRipple
+          style={styles.buttonContainer}
+          onPress={() => navigation.canGoBack()}
+        >
+          <Text style={styles.buttonContainerText}>Get Premium</Text>
+        </TouchableRipple>
       </View>
     </View>
   );
@@ -18,7 +38,7 @@ const PremiumScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: colors.background1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -34,25 +54,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 32,
   },
+  backButton: {
+    position: 'absolute',
+    top: 18,
+    left: 18,
+    color: colors.text,
+  },
   heading: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#333',
+    color: colors.text,
     marginBottom: 8,
     textAlign: 'center',
   },
   subheading: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#666',
+    color: colors.text,
     marginBottom: 24,
     textAlign: 'center',
   },
   buttonContainer: {
     width: '100%',
-    backgroundColor: '#55CB95',
+    backgroundColor: colors.primary,
     borderRadius: 24,
     padding: 16,
+  },
+  buttonContainerText: {
+    color: colors.text,
   },
 });
 
