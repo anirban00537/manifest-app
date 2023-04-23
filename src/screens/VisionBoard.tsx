@@ -19,7 +19,7 @@ const VisionBoard = ({ navigation }: any) => {
             size={32}
             color="#F5A623"
             onPress={() => {
-              navigation.navigate('PremiumStack');
+              navigation.navigate('OtherStacks', { screen: 'Premium' });
             }}
           />
         </View>
@@ -38,18 +38,21 @@ const VisionBoard = ({ navigation }: any) => {
             data={{
               uri: 'https://cdn.corporatefinanceinstitute.com/assets/cash-money.jpg',
             }}
+            navigation={navigation}
           />
           <Visioncard
             data={{
               uri: 'https://img.etimg.com/photo/91783506/91783506.jpg',
             }}
+            navigation={navigation}
           />
           <Visioncard
             data={{
               uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU10dE4-XEUOU_mkq_pqkTO-doa2ObtORaFA',
             }}
+            navigation={navigation}
           />
-          <Visioncard />
+          <Visioncard navigation={navigation} />
           {/* Add more cards as needed */}
         </View>
       </ScrollView>

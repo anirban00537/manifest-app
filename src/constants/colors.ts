@@ -1,5 +1,5 @@
 export default {
-  primary: '#4A4AFF',
+  primary: '#1dd1a1',
   secondary: '#FFC107',
   background: '#1F1F1F',
   background1: '#2E2E2E',
@@ -10,4 +10,7 @@ export default {
   success: '#28A745',
   danger: '#DC3545',
   warning: '#FFC107',
+  yellow: '#FFC300',
+  green: '#27AE60',
+  blue: '#2980B9',
 };

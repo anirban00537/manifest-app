@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, View } from 'react-native';
+import {
+  StyleSheet,
+  ImageBackground,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {
   Badge,
   Card,
@@ -10,35 +15,43 @@ import {
   useTheme, // import the useTheme hook
 } from 'react-native-paper';
 import colors from '../../constants/colors';
+import { useNavigation } from '@react-navigation/native';
 
 const Visioncard = ({ data }: any) => {
   const [isDone, setIsDone] = useState(false);
-
+  const navigation: any = useNavigation();
   return (
-    <Card style={styles.card}>
-      <ImageBackground
-        source={{ uri: data?.uri ? data.uri : 'https://picsum.photos/700' }}
-        style={styles.cardBackground}
-      >
-        <View
-          style={[styles.overlay, { backgroundColor: colors.background }]}
-        />
-        {/* @ts-ignore */}
-        <Title style={[styles.cardTitle, { color: colors.text }]}>
-          My Visions
-        </Title>
-        <View style={styles.badgeContainer}>
-          <Badge
-            style={[
-              isDone ? styles.doneBadge : styles.notDoneBadge,
-              { backgroundColor: colors.primary },
-            ]}
-          >
-            {isDone ? 'Done' : 'Not Done'}
-          </Badge>
-        </View>
-      </ImageBackground>
-    </Card>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => {
+        navigation.navigate('OtherStacks', { screen: 'VisionDetails' });
+      }}
+    >
+      <Card>
+        <ImageBackground
+          source={{ uri: data?.uri ? data.uri : 'https://picsum.photos/700' }}
+          style={styles.cardBackground}
+        >
+          <View
+            style={[styles.overlay, { backgroundColor: colors.background }]}
+          />
+          {/* @ts-ignore */}
+          <Title style={[styles.cardTitle, { color: colors.text }]}>
+            My Visions
+          </Title>
+          <View style={styles.badgeContainer}>
+            <Badge
+              style={[
+                isDone ? styles.doneBadge : styles.notDoneBadge,
+                { backgroundColor: colors.primary },
+              ]}
+            >
+              {isDone ? 'Done' : 'Not Done'}
+            </Badge>
+          </View>
+        </ImageBackground>
+      </Card>
+    </TouchableOpacity>
   );
 };
 

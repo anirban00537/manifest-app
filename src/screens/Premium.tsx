@@ -5,9 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import colors from '../constants/colors';
 
-const PremiumScreen = () => {
-  const navigation = useNavigation();
-
+const PremiumScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <MaterialIcons
@@ -49,6 +47,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     opacity: 0.5,
   },
+
   contentContainer: {
     alignItems: 'center',
     justifyContent: 'center',
