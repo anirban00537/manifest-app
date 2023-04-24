@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 import colors from '../../constants/colors';
 
 const VisionProgressCard = ({ title, description, dayProgress }: any) => {
-  const twentyOneDayProgress = Math.round((dayProgress / 21) * 100);
+  const targetDays = 21;
+  const achievedDays = Math.round((dayProgress / 100) * targetDays);
+  const missedDays = targetDays - achievedDays;
+
+  const twentyOneDayProgress = Math.round((dayProgress / targetDays) * 100);
   const ninetyDayProgress = Math.round((dayProgress / 90) * 100);
   const threeSixtyFiveDayProgress = Math.round((dayProgress / 365) * 100);
 
@@ -14,37 +19,33 @@ const VisionProgressCard = ({ title, description, dayProgress }: any) => {
         <Text style={styles.progress}>{`${dayProgress}%`}</Text>
       </View>
       <Text style={styles.description}>{description}</Text>
-      <View style={styles.progressBar}>
-        <View
-          style={[styles.progressIndicator, { width: `${dayProgress}%` }]}
-        />
+      <ProgressBar progress={dayProgress / 100} color={colors.primary} />
+      <View style={styles.progressLabels}>
+        <Text
+          style={styles.progressLabel}
+        >{`${achievedDays} days completed`}</Text>
+        <Text style={styles.progressLabel}>{`${missedDays} days missed`}</Text>
+        <Text style={styles.progressLabel}>{`${targetDays} days target`}</Text>
+      </View>
+      <View style={styles.secondaryProgress}>
         <View
           style={[
-            styles.progressIndicator21,
+            styles.secondaryProgressIndicator,
             { width: `${twentyOneDayProgress}%` },
           ]}
         />
         <View
           style={[
-            styles.progressIndicator90,
+            styles.secondaryProgressIndicator,
             { width: `${ninetyDayProgress}%` },
           ]}
         />
         <View
           style={[
-            styles.progressIndicator365,
+            styles.secondaryProgressIndicator,
             { width: `${threeSixtyFiveDayProgress}%` },
           ]}
         />
-      </View>
-      <View style={styles.progressLabels}>
-        <Text style={styles.progressLabel}>
-          21-day: {twentyOneDayProgress}%
-        </Text>
-        <Text style={styles.progressLabel}>90-day: {ninetyDayProgress}%</Text>
-        <Text style={styles.progressLabel}>
-          365-day: {threeSixtyFiveDayProgress}%
-        </Text>
       </View>
     </View>
   );
@@ -78,41 +79,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginBottom: 8,
   },
-  progressBar: {
-    height: 8,
-    backgroundColor: colors.background,
-    borderRadius: 4,
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  progressIndicator: {
-    height: 8,
-    backgroundColor: colors.primary,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  progressIndicator21: {
-    height: 8,
-    backgroundColor: colors.yellow,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  progressIndicator90: {
-    height: 8,
-    backgroundColor: colors.green,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  progressIndicator365: {
-    height: 8,
-    backgroundColor: colors.blue,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
   progressLabels: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -122,6 +88,17 @@ const styles = StyleSheet.create({
   progressLabel: {
     fontSize: 12,
     color: colors.text,
+  },
+  secondaryProgress: {
+    flexDirection: 'row',
+    height: 8,
+    backgroundColor: colors.background,
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginTop: 8,
+  },
+  secondaryProgressIndicator: {
+    height: 8,
   },
 });
 

@@ -1,69 +1,124 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../../constants/colors';
+import {
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  MD3Colors,
+  Menu,
+  Title,
+} from 'react-native-paper';
 
-const AffirmationCard = ({ affirmation }: any) => {
+const AffirmationCard = ({
+  affirmation,
+  imageSource,
+  onDelete,
+  onEdit,
+}: any) => {
+  const [visible, setVisible] = useState(false);
+  const closeMenu = () => {
+    setVisible(false);
+  };
+  const openMenu = () => {
+    setVisible(true);
+  };
   return (
-    <TouchableOpacity activeOpacity={0.8}>
-      <View style={styles.card}>
-        <View style={styles.header}>
-          <Ionicons name="heart" size={24} color={colors.primary} />
-          <Ionicons
-            name="share-social-outline"
-            size={24}
-            color={colors.primary}
+    <TouchableOpacity style={styles.card}>
+      <Card>
+        <ImageBackground
+          source={{
+            uri: imageSource ? imageSource : 'https://picsum.photos/200',
+          }}
+          style={styles.cardBackground}
+        >
+          <View
+            style={{
+              ...StyleSheet.absoluteFillObject,
+              backgroundColor: 'rgba(0,0,0,0.4)',
+            }}
           />
-        </View>
-        <Text style={styles.affirmation}>{affirmation}</Text>
-        <View style={styles.footer}>
-          <Text style={styles.author}>- Unknown</Text>
-          <Ionicons name="bookmark-outline" size={24} color={colors.primary} />
-        </View>
-      </View>
+          <Title style={[styles.cardTitle, { color: colors.text }]}>
+            {affirmation}
+          </Title>
+        </ImageBackground>
+      </Card>
     </TouchableOpacity>
   );
 };
 
+{
+}
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.background2,
-    borderRadius: 16,
-    padding: 24,
-    // marginHorizontal: 24,
-    marginBottom: 16,
-    shadowColor: colors.text,
+    width: '100%',
+    marginVertical: 8,
+    elevation: 3,
+    borderRadius: 6,
+    overflow: 'hidden',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
-  header: {
+  cardBackground: {
+    height: 150,
+    padding: 6,
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    borderWidth: 0,
+    borderColor: '#000000',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
+    overflow: 'hidden',
     flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
+    resizeMode: 'cover',
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
   },
-  affirmation: {
-    fontSize: 32,
+  cardTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
-    color: colors.text,
+    color: '#ffffff',
     textAlign: 'center',
-    marginBottom: 24,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 24,
+  badgeContainer: {
+    alignSelf: 'flex-start',
   },
-  author: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: colors.text,
+  notDoneBadge: {
+    paddingHorizontal: 8,
+  },
+  doneBadge: {
+    paddingHorizontal: 8,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.5,
   },
 });
 

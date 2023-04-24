@@ -12,11 +12,40 @@ import colors from '../constants/colors';
 import PracticeCard from '../Components/Cards/Affirmatio.card';
 import VisionProgressCard from '../Components/Cards/Progress.card';
 import AffirmationCard from '../Components/Cards/Affirmatio.card';
+import { FAB, IconButton } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 
 const VisionDetails = () => {
   const scrollY = useRef(new Animated.Value(0)).current;
-  const data = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  const weekProgress = [
+    {
+      day: 'Monday',
+      progress: 20, // in percentage
+    },
+    {
+      day: 'Tuesday',
+      progress: 35,
+    },
+    {
+      day: 'Wednesday',
+      progress: 55,
+    },
+    {
+      day: 'Thursday',
+      progress: 70,
+    },
+    {
+      day: 'Friday',
+      progress: 80,
+    },
+    {
+      day: 'Saturday',
+      progress: 90,
+    },
+    {
+      day: 'Sunday',
+      progress: 100,
+    },
   ];
 
   const practices = [
@@ -26,27 +55,47 @@ const VisionDetails = () => {
       description:
         'Practice gratitude every morning to start your day off on a positive note.',
       time: '5-10 minutes',
+      imageSource: 'https://picsum.photos/400',
     },
     {
       id: 2,
-      title: 'Morning Gratitude',
+      title: 'Meditation',
       description:
-        'Practice gratitude every morning to start your day off on a positive note.',
-      time: '5-10 minutes',
+        'Take some time to quiet your mind and focus on your breath.',
+      time: '5-20 minutes',
+      imageSource: 'https://picsum.photos/300',
     },
     {
       id: 3,
-      title: 'Morning Gratitude',
+      title: 'Journaling',
       description:
-        'Practice gratitude every morning to start your day off on a positive note.',
-      time: '5-10 minutes',
+        'Write down your thoughts and feelings to gain clarity and insight.',
+      time: '10-30 minutes',
+      imageSource: 'https://picsum.photos/200',
     },
     {
       id: 4,
-      title: 'Morning Gratitude',
+      title: 'Yoga',
       description:
-        'Practice gratitude every morning to start your day off on a positive note.',
-      time: '5-10 minutes',
+        'Move your body and connect with your breath in a yoga practice.',
+      time: '30-60 minutes',
+      imageSource: 'https://picsum.photos/100',
+    },
+    {
+      id: 5,
+      title: 'Yoga',
+      description:
+        'Move your body and connect with your breath in a yoga practice.',
+      time: '30-60 minutes',
+      imageSource: 'https://picsum.photos/500',
+    },
+    {
+      id: 6,
+      title: 'Yoga',
+      description:
+        'Move your body and connect with your breath in a yoga practice.',
+      time: '30-60 minutes',
+      imageSource: 'https://picsum.photos/600',
     },
   ];
 
@@ -58,11 +107,30 @@ const VisionDetails = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.Image
-        source={require('../../assets/premium.jpg')}
-        style={[styles.coverImage, { height: headerHeight }]}
-      />
-
+      <Animated.View
+        style={[
+          styles.coverImage,
+          {
+            height: headerHeight,
+          },
+        ]}
+      >
+        <Image
+          source={require('../../assets/premium.jpg')}
+          style={styles.coverImage}
+        />
+        <View style={styles.overlay} />
+      </Animated.View>
+      <View
+        style={{
+          alignItems: 'flex-end',
+          marginRight: 20,
+        }}
+      >
+        <View style={styles.playButton}>
+          <Ionicons name="play" size={20} color={colors.white} />
+        </View>
+      </View>
       <ScrollView
         style={styles.contentContainer}
         onScroll={Animated.event(
@@ -75,33 +143,21 @@ const VisionDetails = () => {
           title="Morning Gratitude"
           description="Practice gratitude every morning to start your day off on a positive note."
           dayProgress={50}
+          targetDays={90}
+          achievedDays={85}
         />
         <TouchableOpacity style={styles.startButton}>
-          <Text style={styles.startButtonText}>Start Practice</Text>
+          <Text style={styles.startButtonText}>Add Affermations</Text>
         </TouchableOpacity>
-        <View style={styles.practicesContainer}>
-          <Text style={styles.practicesHeading}>Affermations</Text>
+        <Text style={styles.practicesHeading}>Affermations</Text>
+        <View>
           {practices.map(practice => (
             <AffirmationCard
               key={practice.id}
               affirmation={practice.title}
-              time={practice.time}
+              imageSource={practice.imageSource}
             />
           ))}
-        </View>
-        <View style={styles.resourcesContainer}>
-          <Text style={styles.resourcesHeading}>Resources</Text>
-          <View style={styles.resources}>
-            <TouchableOpacity style={styles.resource}>
-              <Text style={styles.resourceText}>Vision Board Templates</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.resource}>
-              <Text style={styles.resourceText}>Guided Visualizations</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.resource}>
-              <Text style={styles.resourceText}>Gratitude Journal Prompts</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </ScrollView>
     </View>
@@ -144,13 +200,31 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 16,
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundImage:
+      'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.67) 35%, rgba(0,255,199,0.1) 100%)',
+    zIndex: 1,
+  },
   startButtonText: {
     color: colors.text,
     fontWeight: 'bold',
   },
   practicesContainer: {
-    marginTop: 24,
-    marginBottom: 16,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 90,
+  },
+  playButton: {
+    backgroundColor: colors.secondary,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
+    marginTop: -35,
   },
   practicesHeading: {
     fontSize: 18,

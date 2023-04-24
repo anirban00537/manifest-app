@@ -15,13 +15,16 @@ export default VisionboardTab;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 7,
-    paddingVertical: 2,
-    backgroundColor: colors.background2,
-    margin: 2,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    backgroundColor: colors.primary,
+    margin: 4,
     borderRadius: 4,
+    // borderWidth: 1,
+    // borderColor: colors.border,
   },
   text: {
     color: 'white',
+    fontSize: 14,
   },
 });

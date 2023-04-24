@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Visioncard from '../Components/Cards/Vision.card';
 import VisionboardTab from '../Components/Tabs/Visionboard.tab';
 import colors from '../constants/colors';
+import { StatusBar } from 'expo-status-bar';
 
 const VisionBoard = ({ navigation }: any) => {
   const { colors, dark } = useTheme(); // retrieve the theme colors

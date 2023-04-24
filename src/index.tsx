@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import { Main } from './navigation/Main';
+import colors from './constants/colors';
 
 export default function App() {
   return (
@@ -12,8 +13,8 @@ export default function App() {
       <PaperProvider>
         <StatusBar
           // translucent={true}
-          // backgroundColor="transparent"
-          style="dark" // set to "light" to use light-colored status bar icons
+          backgroundColor={colors.background}
+          style="light" // set to "light" to use light-colored status bar icons
         />
         <SafeAreaView style={{ flex: 1 }}>
           <NavigationContainer>
