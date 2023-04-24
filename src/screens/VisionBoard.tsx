@@ -1,5 +1,5 @@
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Card, Paragraph, Title, useTheme } from 'react-native-paper';
+import { Card, FAB, Paragraph, Title, useTheme } from 'react-native-paper';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Visioncard from '../Components/Cards/Vision.card';
@@ -72,6 +72,14 @@ const VisionBoard = ({ navigation }: any) => {
           {/* Add more cards as needed */}
         </View>
       </ScrollView>
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        color="white"
+        onPress={() => {
+          navigation.navigate('OtherStacks', { screen: 'CreateVisionCard' });
+        }}
+      />
     </View>
   );
 };
@@ -105,6 +113,14 @@ const styles = StyleSheet.create({
   boardTabContainer: {
     flexDirection: 'row',
     // marginHorizontal: 15,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.primary,
+    color: colors.text,
   },
 });
 

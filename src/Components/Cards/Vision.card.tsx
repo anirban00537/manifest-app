@@ -30,7 +30,7 @@ const Visioncard = ({ data }: any) => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => {
-        navigation.navigate('OtherStacks', { screen: 'VisionDetails' });
+        navigation.navigate('AffermationDetailsAndEdit');
       }}
     >
       <Card>
