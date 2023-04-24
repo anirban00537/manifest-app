@@ -14,7 +14,7 @@ const VisionBoard = ({ navigation }: any) => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <Title style={styles.title}>My Visionboard</Title>
+          <Title style={styles.title}>Visionboard</Title>
           <MaterialCommunityIcons
             name="crown"
             size={32}
@@ -33,27 +33,42 @@ const VisionBoard = ({ navigation }: any) => {
           <Visioncard
             data={{
               uri: 'https://cdn.punchng.com/wp-content/uploads/2021/04/26133326/Leadway-Money-Boss.jpg',
+              completedCount: 5,
+              targetCount: 20,
             }}
           />
           <Visioncard
             data={{
               uri: 'https://cdn.corporatefinanceinstitute.com/assets/cash-money.jpg',
+              completedCount: 5,
+              targetCount: 20,
             }}
             navigation={navigation}
           />
           <Visioncard
             data={{
               uri: 'https://img.etimg.com/photo/91783506/91783506.jpg',
+              completedCount: 5,
+              targetCount: 20,
             }}
             navigation={navigation}
           />
           <Visioncard
             data={{
               uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU10dE4-XEUOU_mkq_pqkTO-doa2ObtORaFA',
+              completedCount: 5,
+              targetCount: 20,
             }}
             navigation={navigation}
           />
-          <Visioncard navigation={navigation} />
+          <Visioncard
+            data={{
+              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU10dE4-XEUOU_mkq_pqkTO-doa2ObtORaFA',
+              completedCount: 5,
+              targetCount: 20,
+            }}
+            navigation={navigation}
+          />
           {/* Add more cards as needed */}
         </View>
       </ScrollView>

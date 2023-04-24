@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {
-  Badge,
   Card,
   IconButton,
   Paragraph,
   Title,
   Menu,
-  useTheme, // import the useTheme hook
+  useTheme,
+  ProgressBar, // import the ProgressBar component
 } from 'react-native-paper';
 import colors from '../../constants/colors';
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +20,12 @@ import { useNavigation } from '@react-navigation/native';
 const Visioncard = ({ data }: any) => {
   const [isDone, setIsDone] = useState(false);
   const navigation: any = useNavigation();
+
+  const { targetCount, completedCount } = data;
+
+  // Calculate the progress percentage
+  const progress = completedCount / targetCount;
+
   return (
     <TouchableOpacity
       style={styles.card}
@@ -35,19 +41,21 @@ const Visioncard = ({ data }: any) => {
           <View
             style={[styles.overlay, { backgroundColor: colors.background }]}
           />
-          {/* @ts-ignore */}
           <Title style={[styles.cardTitle, { color: colors.text }]}>
             My Visions
           </Title>
-          <View style={styles.badgeContainer}>
-            <Badge
-              style={[
-                isDone ? styles.doneBadge : styles.notDoneBadge,
-                { backgroundColor: colors.primary },
-              ]}
-            >
-              {isDone ? 'Done' : 'Not Done'}
-            </Badge>
+          {/* Replace Badge with ProgressBar */}
+          <View style={styles.progressContainer}>
+            <ProgressBar
+              progress={progress}
+              color={colors.primary}
+              style={styles.progressBar}
+            />
+            <View style={styles.progressTextContainer}>
+              <Paragraph
+                style={styles.progressText}
+              >{`${completedCount} / ${targetCount}`}</Paragraph>
+            </View>
           </View>
         </ImageBackground>
       </Card>
@@ -73,14 +81,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  badgeContainer: {
+  progressContainer: {
     alignSelf: 'flex-start',
+    width: '100%',
   },
-  notDoneBadge: {
-    paddingHorizontal: 8,
+  progressBar: {
+    height: 8,
+    borderRadius: 4,
   },
-  doneBadge: {
-    paddingHorizontal: 8,
+  progressTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  progressText: {
+    fontSize: 12,
+    color: colors.text,
+    marginTop: 4,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

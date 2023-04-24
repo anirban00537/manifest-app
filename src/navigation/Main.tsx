@@ -7,6 +7,7 @@ import VisionBoard from '../screens/VisionBoard';
 import JournalHomeScreen from '../screens/Journal';
 import colors from '../constants/colors';
 import VisionDetails from '../screens/VisionDetails';
+import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,6 +33,15 @@ const OtherStacks = () => (
       component={VisionDetails}
       options={{
         title: 'VisionDetails',
+        headerTitleAlign: 'center',
+        headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="AffermationDetailsAndEdit"
+      component={AffermationDetailsAndEdit}
+      options={{
+        title: 'AffermationDetailsAndEdit',
         headerTitleAlign: 'center',
         headerShown: false,
       }}

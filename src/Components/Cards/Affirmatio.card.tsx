@@ -23,6 +23,7 @@ const AffirmationCard = ({
   imageSource,
   onDelete,
   onEdit,
+  navigation,
 }: any) => {
   const [visible, setVisible] = useState(false);
   const closeMenu = () => {
@@ -32,7 +33,12 @@ const AffirmationCard = ({
     setVisible(true);
   };
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => {
+        navigation.navigate('AffermationDetailsAndEdit');
+      }}
+    >
       <Card>
         <ImageBackground
           source={{

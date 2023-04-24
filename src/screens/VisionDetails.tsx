@@ -15,38 +15,8 @@ import AffirmationCard from '../Components/Cards/Affirmatio.card';
 import { FAB, IconButton } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
-const VisionDetails = () => {
+const VisionDetails = ({ navigation }: any) => {
   const scrollY = useRef(new Animated.Value(0)).current;
-  const weekProgress = [
-    {
-      day: 'Monday',
-      progress: 20, // in percentage
-    },
-    {
-      day: 'Tuesday',
-      progress: 35,
-    },
-    {
-      day: 'Wednesday',
-      progress: 55,
-    },
-    {
-      day: 'Thursday',
-      progress: 70,
-    },
-    {
-      day: 'Friday',
-      progress: 80,
-    },
-    {
-      day: 'Saturday',
-      progress: 90,
-    },
-    {
-      day: 'Sunday',
-      progress: 100,
-    },
-  ];
 
   const practices = [
     {
@@ -156,6 +126,7 @@ const VisionDetails = () => {
               key={practice.id}
               affirmation={practice.title}
               imageSource={practice.imageSource}
+              navigation={navigation}
             />
           ))}
         </View>
