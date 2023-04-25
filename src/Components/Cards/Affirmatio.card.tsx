@@ -7,31 +7,25 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Card, Title, Menu, Divider } from 'react-native-paper';
 import colors from '../../constants/colors';
-import {
-  Button,
-  Card,
-  Divider,
-  IconButton,
-  MD3Colors,
-  Menu,
-  Title,
-} from 'react-native-paper';
 
 const AffirmationCard = ({
   affirmation,
-  imageSource,
   onDelete,
   onEdit,
   navigation,
 }: any) => {
   const [visible, setVisible] = useState(false);
+
   const closeMenu = () => {
     setVisible(false);
   };
+
   const openMenu = () => {
     setVisible(true);
   };
+
   return (
     <TouchableOpacity
       style={styles.card}
@@ -40,29 +34,31 @@ const AffirmationCard = ({
       }}
     >
       <Card>
-        <ImageBackground
-          source={{
-            uri: imageSource ? imageSource : 'https://picsum.photos/200',
-          }}
-          style={styles.cardBackground}
-        >
-          <View
-            style={{
-              ...StyleSheet.absoluteFillObject,
-              backgroundColor: 'rgba(0,0,0,0.4)',
-            }}
-          />
-          <Title style={[styles.cardTitle, { color: colors.text }]}>
-            {affirmation}
-          </Title>
-        </ImageBackground>
+        <Card.Content style={styles.cardContent}>
+          <View style={styles.cardHeader}>
+            <Title style={[styles.cardTitle, { color: colors.text }]}>
+              {affirmation}
+            </Title>
+            <Menu
+              visible={visible}
+              onDismiss={closeMenu}
+              anchor={
+                <TouchableOpacity onPress={openMenu}>
+                  <Ionicons name="ellipsis-vertical" size={24} color="#888" />
+                </TouchableOpacity>
+              }
+            >
+              <Menu.Item onPress={onEdit} title="Edit" />
+              <Divider />
+              <Menu.Item onPress={onDelete} title="Delete" />
+            </Menu>
+          </View>
+        </Card.Content>
       </Card>
     </TouchableOpacity>
   );
 };
 
-{
-}
 const styles = StyleSheet.create({
   card: {
     width: '100%',
@@ -82,7 +78,6 @@ const styles = StyleSheet.create({
     height: 150,
     padding: 6,
     backgroundColor: '#ffffff',
-    borderRadius: 10,
     borderWidth: 0,
     borderColor: '#000000',
     borderBottomWidth: 0,
@@ -102,15 +97,17 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
   },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#ffffff',
-    textAlign: 'center',
-    textShadowColor: '#000',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
-    paddingHorizontal: 12,
     paddingVertical: 8,
   },
   badgeContainer: {
@@ -125,6 +122,9 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     opacity: 0.5,
+  },
+  cardContent: {
+    backgroundColor: colors.background,
   },
 });
 

@@ -15,12 +15,12 @@ import * as ImagePicker from 'expo-image-picker';
 //@ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import colors from '../../constants/colors';
+import AffirmationCard from '../Cards/Affirmatio.card';
 
 const ImageUploader = () => {
   const navigation = useNavigation();
 
   const [image, setImage] = useState(null);
-  const [affirmation, setAffirmation] = useState('');
   const [imageList, setImageList] = useState<any>([]);
 
   const pickImage = async () => {
@@ -37,15 +37,13 @@ const ImageUploader = () => {
   };
 
   const handleAdd = () => {
-    if (image && affirmation) {
+    if (image) {
       const newImage = {
-        id: uuidv4(),
-        imageUri: image,
-        affirmation,
+        id: Math.random(),
+        imageSource: image,
       };
       setImageList([...imageList, newImage]);
       setImage(null);
-      setAffirmation('');
       Keyboard.dismiss();
     }
   };
@@ -54,19 +52,6 @@ const ImageUploader = () => {
     const updatedImageList = imageList.filter((image: any) => image.id !== id);
     setImageList(updatedImageList);
   };
-
-  const renderImageItem = ({ item }: any) => (
-    <View style={styles.imageItem}>
-      <Image source={{ uri: item.imageUri }} style={styles.imagePreview} />
-      <Text style={styles.affirmationText}>{item.affirmation}</Text>
-      <TouchableOpacity
-        style={styles.removeButton}
-        onPress={() => handleRemove(item.id)}
-      >
-        <Text style={styles.removeButtonText}>Remove</Text>
-      </TouchableOpacity>
-    </View>
-  );
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -78,24 +63,18 @@ const ImageUploader = () => {
           {image && (
             <Image source={{ uri: image }} style={styles.imagePreview} />
           )}
-          <Text style={styles.label}>Affirmation</Text>
-          <TextInput
-            style={[styles.input, styles.multilineInput]}
-            onChangeText={text => setAffirmation(text)}
-            value={affirmation}
-            multiline={true}
-            placeholder="Enter affirmation"
-          />
-          <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
-            <Text style={styles.buttonText}>Add</Text>
-          </TouchableOpacity>
+          {image && (
+            <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
+          )}
         </View>
         {imageList.length > 0 && (
           <View style={styles.imageListContainer}>
             <Text style={styles.listTitle}>Image List</Text>
             <FlatList
               data={imageList}
-              renderItem={renderImageItem}
+              renderItem={AffirmationCard}
               keyExtractor={item => item.id}
               contentContainerStyle={styles.imageList}
             />
@@ -108,8 +87,7 @@ const ImageUploader = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
-    padding: 20,
+    backgroundColor: colors.background,
   },
   form: {
     marginBottom: 20,
@@ -132,13 +110,13 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   pickImageButton: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.primary,
     padding: 10,
     borderRadius: 5,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   addButton: {
-    backgroundColor: colors.green,
+    backgroundColor: colors.primary,
     padding: 10,
     borderRadius: 5,
     alignSelf: 'flex-end',

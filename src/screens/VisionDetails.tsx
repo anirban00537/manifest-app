@@ -21,7 +21,8 @@ const VisionDetails = ({ navigation }: any) => {
   const practices = [
     {
       id: 1,
-      title: 'Morning Gratitude',
+      title:
+        'Morning Gratitude and long story short for my buddies and more and morePractice gratitude every morning to start your day off on a positive note.Practice gratitude every morning to start your day off on a positive note.',
       description:
         'Practice gratitude every morning to start your day off on a positive note.',
       time: '5-10 minutes',

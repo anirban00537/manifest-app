@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../constants/colors';
@@ -23,7 +24,7 @@ const CreateVisionCard = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Create Vision Board Card</Text>
       <View style={styles.form}>
         <Text style={styles.label}>Title</Text>
@@ -41,22 +42,15 @@ const CreateVisionCard = () => {
           multiline={true}
           placeholder="Enter description"
         />
-        <Text style={styles.label}>Image URL</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={text => setImageUrl(text)}
-          value={imageUrl}
-          placeholder="Enter image URL"
-        />
         {imageUrl !== '' && (
           <Image source={{ uri: imageUrl }} style={styles.imagePreview} />
         )}
+        <ImageUploader />
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
-      <ImageUploader />
-    </View>
+    </ScrollView>
   );
 };
 
