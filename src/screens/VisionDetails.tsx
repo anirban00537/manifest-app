@@ -12,11 +12,13 @@ import colors from '../constants/colors';
 import PracticeCard from '../Components/Cards/Affirmatio.card';
 import VisionProgressCard from '../Components/Cards/Progress.card';
 import AffirmationCard from '../Components/Cards/Affirmatio.card';
-import { FAB, IconButton } from 'react-native-paper';
+import { FAB, IconButton, Modal, Portal } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
+import AddAffermationModal from '../Components/Modal/AddAffermation.modal';
 
 const VisionDetails = ({ navigation }: any) => {
   const scrollY = useRef(new Animated.Value(0)).current;
+  const [visible, setVisible] = React.useState(false);
 
   const practices = [
     {
@@ -69,6 +71,9 @@ const VisionDetails = ({ navigation }: any) => {
     outputRange: [200, 50], // Change the output range here
     extrapolate: 'clamp',
   });
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
 
   return (
     <View style={styles.container}>
@@ -128,14 +133,13 @@ const VisionDetails = ({ navigation }: any) => {
           ))}
         </View>
       </ScrollView>
+      <AddAffermationModal visible={visible} hideModal={hideModal} />
       <FAB
         style={styles.fab}
         icon="plus"
         color="white"
         label="Add Affirmation"
-        onPress={() => {
-          navigation.navigate('PremiumStack');
-        }}
+        onPress={showModal}
       />
     </View>
   );
