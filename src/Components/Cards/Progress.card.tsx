@@ -16,7 +16,6 @@ const VisionProgressCard = ({ title, description, dayProgress }: any) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.progress}>{`${dayProgress}%`}</Text>
       </View>
       <Text style={styles.description}>{description}</Text>
       <ProgressBar progress={dayProgress / 100} color={colors.primary} />
@@ -27,6 +26,8 @@ const VisionProgressCard = ({ title, description, dayProgress }: any) => {
         <Text style={styles.progressLabel}>{`${missedDays} days missed`}</Text>
         <Text style={styles.progressLabel}>{`${targetDays} days target`}</Text>
       </View>
+      <Text style={styles.progress}>{`${505} times manifested`}</Text>
+
       <View style={styles.secondaryProgress}>
         <View
           style={[
@@ -55,13 +56,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background1,
     borderRadius: 8,
-    padding: 16,
+    padding: 10,
     // marginBottom: 16,
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 8,
   },
   title: {
@@ -70,9 +71,10 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   progress: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: colors.primary,
+    marginTop: 10,
   },
   description: {
     fontSize: 16,

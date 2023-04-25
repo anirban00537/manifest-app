@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Card, Title, Menu, Divider } from 'react-native-paper';
+import { Card, Title, Menu, Divider, Paragraph } from 'react-native-paper';
 import colors from '../../constants/colors';
 
 const AffirmationCard = ({
@@ -15,116 +15,56 @@ const AffirmationCard = ({
   onDelete,
   onEdit,
   navigation,
+  date,
 }: any) => {
   const [visible, setVisible] = useState(false);
 
-  const closeMenu = () => {
-    setVisible(false);
-  };
-
-  const openMenu = () => {
-    setVisible(true);
-  };
-
   return (
     <TouchableOpacity
-      style={styles.card}
       onPress={() => {
         navigation.navigate('AffermationDetailsAndEdit');
       }}
     >
-      <Card>
-        <Card.Content style={styles.cardContent}>
-          <View style={styles.cardHeader}>
-            <Title style={[styles.cardTitle, { color: colors.text }]}>
-              {affirmation}
-            </Title>
-            <Menu
-              visible={visible}
-              onDismiss={closeMenu}
-              anchor={
-                <TouchableOpacity onPress={openMenu}>
-                  <Ionicons name="ellipsis-vertical" size={24} color="#888" />
-                </TouchableOpacity>
-              }
-            >
-              <Menu.Item onPress={onEdit} title="Edit" />
-              <Divider />
-              <Menu.Item onPress={onDelete} title="Delete" />
-            </Menu>
-          </View>
-        </Card.Content>
-      </Card>
+      <View style={styles.container}>
+        <Card elevation={3} style={styles.card}>
+          <Card.Content>
+            <View style={styles.contentContainer}>
+              <Title style={styles.title}>{affirmation}</Title>
+              {/* Content here */}
+            </View>
+            {/* Date here */}
+            <Paragraph style={styles.date}>{date}</Paragraph>
+          </Card.Content>
+        </Card>
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    // marginBottom: 12,
+  },
   card: {
-    width: '100%',
-    marginVertical: 8,
-    elevation: 3,
-    borderRadius: 6,
+    borderRadius: 10,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    backgroundColor: colors.background1,
+    color: colors.text,
   },
-  cardBackground: {
-    height: 150,
-    padding: 6,
-    backgroundColor: '#ffffff',
-    borderWidth: 0,
-    borderColor: '#000000',
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3,
-    overflow: 'hidden',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    resizeMode: 'cover',
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-  },
-  cardHeader: {
+  contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  cardTitle: {
-    fontSize: 18,
+  title: {
     fontWeight: 'bold',
-    color: '#ffffff',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-    paddingVertical: 8,
+    color: colors.text,
+    textAlign: 'left',
+    fontSize: 15,
   },
-  badgeContainer: {
-    alignSelf: 'flex-start',
-  },
-  notDoneBadge: {
-    paddingHorizontal: 8,
-  },
-  doneBadge: {
-    paddingHorizontal: 8,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    opacity: 0.5,
-  },
-  cardContent: {
-    backgroundColor: colors.background,
+  date: {
+    marginTop: 10,
+    color: colors.primary,
   },
 });
 

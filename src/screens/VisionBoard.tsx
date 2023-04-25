@@ -24,11 +24,11 @@ const VisionBoard = ({ navigation }: any) => {
             }}
           />
         </View>
-        <View style={styles.boardTabContainer}>
+        {/* <View style={styles.boardTabContainer}>
           <VisionboardTab data={{ title: 'All' }} />
           <VisionboardTab data={{ title: 'Done' }} />
           <VisionboardTab data={{ title: 'Not Achived' }} />
-        </View>
+        </View> */}
         <View style={styles.cardsContainer}>
           <Visioncard
             data={{

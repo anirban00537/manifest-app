@@ -25,48 +25,42 @@ const VisionDetails = ({ navigation }: any) => {
         'Morning Gratitude and long story short for my buddies and more and morePractice gratitude every morning to start your day off on a positive note.Practice gratitude every morning to start your day off on a positive note.',
       description:
         'Practice gratitude every morning to start your day off on a positive note.',
-      time: '5-10 minutes',
-      imageSource: 'https://picsum.photos/400',
+      date: 'Thursday 2:22pm',
     },
     {
       id: 2,
       title: 'Meditation',
       description:
         'Take some time to quiet your mind and focus on your breath.',
-      time: '5-20 minutes',
-      imageSource: 'https://picsum.photos/300',
+      date: 'Thursday 2:22pm',
     },
     {
       id: 3,
       title: 'Journaling',
       description:
         'Write down your thoughts and feelings to gain clarity and insight.',
-      time: '10-30 minutes',
-      imageSource: 'https://picsum.photos/200',
+      date: 'Thursday 2:22pm',
     },
     {
       id: 4,
       title: 'Yoga',
       description:
         'Move your body and connect with your breath in a yoga practice.',
-      time: '30-60 minutes',
-      imageSource: 'https://picsum.photos/100',
+      date: 'Thursday 2:22pm',
     },
     {
       id: 5,
       title: 'Yoga',
       description:
         'Move your body and connect with your breath in a yoga practice.',
-      time: '30-60 minutes',
-      imageSource: 'https://picsum.photos/500',
+      date: 'Thursday 2:22pm',
     },
     {
       id: 6,
       title: 'Yoga',
       description:
         'Move your body and connect with your breath in a yoga practice.',
-      time: '30-60 minutes',
-      imageSource: 'https://picsum.photos/600',
+      date: 'Thursday 2:22pm',
     },
   ];
 
@@ -117,21 +111,32 @@ const VisionDetails = ({ navigation }: any) => {
           targetDays={90}
           achievedDays={85}
         />
-        <TouchableOpacity style={styles.startButton}>
-          <Text style={styles.startButtonText}>Add Affermations</Text>
-        </TouchableOpacity>
-        <Text style={styles.practicesHeading}>Affermations</Text>
+        <View style={{ paddingHorizontal: 15 }}>
+          {/* <TouchableOpacity style={styles.startButton}>
+            <Text style={styles.startButtonText}>Add Affermations</Text>
+          </TouchableOpacity> */}
+          <Text style={styles.practicesHeading}>Affermations</Text>
+        </View>
         <View>
           {practices.map(practice => (
             <AffirmationCard
               key={practice.id}
               affirmation={practice.title}
-              imageSource={practice.imageSource}
+              date={practice.date}
               navigation={navigation}
             />
           ))}
         </View>
       </ScrollView>
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        color="white"
+        label="Add Affirmation"
+        onPress={() => {
+          navigation.navigate('PremiumStack');
+        }}
+      />
     </View>
   );
 };
@@ -202,7 +207,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: colors.text,
-    marginBottom: 8,
+    // marginBottom: 8,
   },
   resourcesContainer: {
     marginBottom: 24,
@@ -223,6 +228,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   resourceText: {
+    color: colors.text,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.primary,
     color: colors.text,
   },
 });
