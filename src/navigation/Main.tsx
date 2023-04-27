@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,6 +9,7 @@ import colors from '../constants/colors';
 import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
+import LoginScreen from '../screens/Login';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,7 +18,19 @@ const tabBarIcon = (name: any, focused: boolean) => {
   const color = focused ? colors.primary : 'gray';
   return <MaterialIcons name={name} size={24} color={color} />;
 };
-
+const LoginStacks = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="login"
+      component={LoginScreen}
+      options={{
+        title: 'LoginScreen',
+        headerTitleAlign: 'center',
+        headerShown: false,
+      }}
+    />
+  </Stack.Navigator>
+);
 const OtherStacks = () => (
   <Stack.Navigator>
     <Stack.Screen
@@ -92,13 +105,21 @@ const MainTabs = () => (
   </Tab.Navigator>
 );
 
-export const Main = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-  >
-    <Stack.Screen name="MainTabs" component={MainTabs} />
-    <Stack.Screen name="OtherStacks" component={OtherStacks} />
-  </Stack.Navigator>
-);
+export const Main = () => {
+  const [loggedin, setLoggedin] = useState(true);
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      {loggedin ? (
+        <Stack.Screen name="MainTabs" component={MainTabs} />
+      ) : (
+        <Stack.Screen name="LoginStacks" component={LoginStacks} />
+      )}
+      <Stack.Screen name="OtherStacks" component={OtherStacks} />
+    </Stack.Navigator>
+  );
+};

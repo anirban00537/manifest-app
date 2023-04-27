@@ -23,10 +23,11 @@ const VisionDetails = ({ navigation }: any) => {
   const practices = [
     {
       id: 1,
-      title:
-        'Morning Gratitude and long story short for my buddies and more and morePractice gratitude every morning to start your day off on a positive note.Practice gratitude every morning to start your day off on a positive note.',
+      title: 'Morning Gratitude',
       description:
         'Practice gratitude every morning to start your day off on a positive note.',
+      time: '5-10 minutes',
+      imageSource: 'https://picsum.photos/400',
       date: 'Thursday 2:22pm',
     },
     {
@@ -34,6 +35,8 @@ const VisionDetails = ({ navigation }: any) => {
       title: 'Meditation',
       description:
         'Take some time to quiet your mind and focus on your breath.',
+      time: '5-20 minutes',
+      imageSource: 'https://picsum.photos/300',
       date: 'Thursday 2:22pm',
     },
     {
@@ -41,6 +44,8 @@ const VisionDetails = ({ navigation }: any) => {
       title: 'Journaling',
       description:
         'Write down your thoughts and feelings to gain clarity and insight.',
+      time: '10-30 minutes',
+      imageSource: 'https://picsum.photos/200',
       date: 'Thursday 2:22pm',
     },
     {
@@ -48,6 +53,8 @@ const VisionDetails = ({ navigation }: any) => {
       title: 'Yoga',
       description:
         'Move your body and connect with your breath in a yoga practice.',
+      time: '30-60 minutes',
+      imageSource: 'https://picsum.photos/100',
       date: 'Thursday 2:22pm',
     },
     {
@@ -55,6 +62,8 @@ const VisionDetails = ({ navigation }: any) => {
       title: 'Yoga',
       description:
         'Move your body and connect with your breath in a yoga practice.',
+      time: '30-60 minutes',
+      imageSource: 'https://picsum.photos/500',
       date: 'Thursday 2:22pm',
     },
     {
@@ -62,10 +71,11 @@ const VisionDetails = ({ navigation }: any) => {
       title: 'Yoga',
       description:
         'Move your body and connect with your breath in a yoga practice.',
+      time: '30-60 minutes',
+      imageSource: 'https://picsum.photos/600',
       date: 'Thursday 2:22pm',
     },
   ];
-
   const headerHeight = scrollY.interpolate({
     inputRange: [0, 200],
     outputRange: [200, 50], // Change the output range here
@@ -116,7 +126,7 @@ const VisionDetails = ({ navigation }: any) => {
           targetDays={90}
           achievedDays={85}
         />
-        <View style={{ paddingHorizontal: 15 }}>
+        <View>
           {/* <TouchableOpacity style={styles.startButton}>
             <Text style={styles.startButtonText}>Add Affermations</Text>
           </TouchableOpacity> */}
@@ -129,6 +139,7 @@ const VisionDetails = ({ navigation }: any) => {
               affirmation={practice.title}
               date={practice.date}
               navigation={navigation}
+              imageSource={practice.imageSource}
             />
           ))}
         </View>
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 16,
+    padding: 22,
   },
   heading: {
     fontSize: 24,
