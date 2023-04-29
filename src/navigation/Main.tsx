@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,6 +10,8 @@ import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
 import LoginScreen from '../screens/Login';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,7 +108,22 @@ const MainTabs = () => (
 );
 
 export const Main = () => {
-  const [loggedin, setLoggedin] = useState(true);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  GoogleSignin.configure({
+    webClientId:
+      '873523094633-b6g6qma0f75sfq6knjdi15d5lttdaa0e.apps.googleusercontent.com',
+  });
+
+  // Handle user state changes
+  function onAuthStateChanged(user: any) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   return (
     <Stack.Navigator
@@ -114,7 +131,7 @@ export const Main = () => {
         headerShown: false,
       }}
     >
-      {loggedin ? (
+      {user ? (
         <Stack.Screen name="MainTabs" component={MainTabs} />
       ) : (
         <Stack.Screen name="LoginStacks" component={LoginStacks} />

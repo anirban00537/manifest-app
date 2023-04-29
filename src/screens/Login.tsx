@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Button, Title, Paragraph } from 'react-native-paper';
 import colors from '../constants/colors';
 import { AntDesign } from '@expo/vector-icons';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const LoginScreen = () => {
+  async function onGoogleButtonPress() {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  }
+
+  // if (initializing) return null;
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -26,6 +42,11 @@ const LoginScreen = () => {
         <Button
           mode="contained"
           style={styles.googleLoginButton}
+          onPress={() =>
+            onGoogleButtonPress().then(() =>
+              console.log('Signed in with Google!'),
+            )
+          }
           icon={() => <AntDesign name="google" size={24} color="black" />}
         >
           Login with Google

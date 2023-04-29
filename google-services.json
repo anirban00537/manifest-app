@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "873523094633",
+    "project_id": "manifest-staging-97ce4",
+    "storage_bucket": "manifest-staging-97ce4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873523094633:android:bcc0dea9a45886f6892ef8",
+        "android_client_info": {
+          "package_name": "com.manifest.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873523094633-3ec1fv92j65p0bl9hp3n119n6g8uvtud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manifest.myapp",
+            "certificate_hash": "f120cd523a90a0c418b59344c82e40b50a130683"
+          }
+        },
+        {
+          "client_id": "873523094633-eorfv8i1o4i5bj60o4690gjm85fgg591.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manifest.myapp",
+            "certificate_hash": "a36d498dde158abd5fcec01464f60bb32f43aa35"
+          }
+        },
+        {
+          "client_id": "873523094633-b6g6qma0f75sfq6knjdi15d5lttdaa0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIVO_QB8jTV54yr-Ho3uoOfd_CFy2BVx8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873523094633-b6g6qma0f75sfq6knjdi15d5lttdaa0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
