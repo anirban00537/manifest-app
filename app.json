@@ -22,7 +22,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "googleServicesFile": "./google-services.json",
       "package": "com.manifest.myapp"
     },
     "web": {
@@ -33,7 +32,6 @@
       "react": "18.2.0",
       "react-native": "0.71.6",
       "react-native-svg": "^13.9.0"
-    },
-    "plugins": ["@react-native-google-signin/google-signin"]
+    }
   }
 }
