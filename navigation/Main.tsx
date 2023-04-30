@@ -9,6 +9,7 @@ import colors from '../constants/colors';
 import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
+import LoginPage from '../screens/Login';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,8 +18,20 @@ const tabBarIcon = (name: any, focused: boolean) => {
   const color = focused ? colors.primary : 'gray';
   return <Icon name={name} size={20} color={color} />;
 };
-
-const OtherStacks = () => (
+const UnAuthStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Premium"
+      component={LoginPage}
+      options={{
+        title: 'Premium',
+        headerTitleAlign: 'center',
+        headerShown: false,
+      }}
+    />
+  </Stack.Navigator>
+);
+const AuthenticatedStack = () => (
   <Stack.Navigator>
     <Stack.Screen
       name="Premium"
@@ -92,13 +105,23 @@ const MainTabs = () => (
 );
 
 export const Main = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="MainTabs" component={MainTabs} />
-      <Stack.Screen name="OtherStacks" component={OtherStacks} />
+      {loggedIn ? (
+        <>
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+          <Stack.Screen
+            name="AuthenticatedStack"
+            component={AuthenticatedStack}
+          />
+        </>
+      ) : (
+        <Stack.Screen name="UnAuthStack" component={UnAuthStack} />
+      )}
     </Stack.Navigator>
   );
 };
