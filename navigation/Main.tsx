@@ -10,6 +10,7 @@ import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
 import LoginPage from '../screens/Login';
+import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -106,6 +107,14 @@ const MainTabs = () => (
 
 export const Main = () => {
   const [loggedIn, setLoggedIn] = useState(false);
+  auth().onAuthStateChanged(user => {
+    if (user) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  });
+
   return (
     <Stack.Navigator
       screenOptions={{

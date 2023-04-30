@@ -7,14 +7,31 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import auth from '@react-native-firebase/auth';
+
 import colors from '../constants/colors';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 const LoginPage = () => {
+  async function handleGoogleButtonPress() {
+    try {
+      // get the user id token
+      const {idToken} = await GoogleSignin.signIn();
+      // create a credential using the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // authenticate the user using the credential
+      return auth().signInWithCredential(googleCredential);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }
   return (
     <View style={styles.container}>
       <Icon name="google" size={60} color="#DB4437" />
       <Text style={styles.title}>Sign in with Google</Text>
 
-      <TouchableOpacity style={styles.buttonContainer}>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={handleGoogleButtonPress}>
         <Icon name="google" size={20} color="#fff" style={styles.icon} />
         <Text style={styles.buttonText}>Sign in with Google</Text>
       </TouchableOpacity>
