@@ -1,12 +1,13 @@
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {Card, FAB, Paragraph, Title, useTheme} from 'react-native-paper';
-import React from 'react';
+import React, {useEffect} from 'react';
 import FA from 'react-native-vector-icons/FontAwesome';
 import Visioncard from '../Components/Cards/Vision.card';
 import colors from '../constants/colors';
+import {useGetVisionBoard} from '../hooks/visionboard.hook';
 
 const VisionBoard = ({navigation}: any) => {
-  const {colors, dark} = useTheme(); // retrieve the theme colors
+  const {error, loading, visionBoards} = useGetVisionBoard();
 
   return (
     <View style={styles.container}>
@@ -18,56 +19,22 @@ const VisionBoard = ({navigation}: any) => {
             size={26}
             color="#F5A623"
             onPress={() => {
-              navigation.navigate('OtherStacks', {screen: 'Premium'});
+              navigation.navigate('AuthenticatedStack', {screen: 'Premium'});
             }}
           />
         </View>
-        {/* <View style={styles.boardTabContainer}>
-          <VisionboardTab data={{ title: 'All' }} />
-          <VisionboardTab data={{ title: 'Done' }} />
-          <VisionboardTab data={{ title: 'Not Achived' }} />
-        </View> */}
         <View style={styles.cardsContainer}>
-          <Visioncard
-            data={{
-              uri: 'https://cdn.punchng.com/wp-content/uploads/2021/04/26133326/Leadway-Money-Boss.jpg',
-              completedCount: 5,
-              targetCount: 20,
-            }}
-          />
-          <Visioncard
-            data={{
-              uri: 'https://cdn.corporatefinanceinstitute.com/assets/cash-money.jpg',
-              completedCount: 5,
-              targetCount: 20,
-            }}
-            navigation={navigation}
-          />
-          <Visioncard
-            data={{
-              uri: 'https://img.etimg.com/photo/91783506/91783506.jpg',
-              completedCount: 5,
-              targetCount: 20,
-            }}
-            navigation={navigation}
-          />
-          <Visioncard
-            data={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU10dE4-XEUOU_mkq_pqkTO-doa2ObtORaFA',
-              completedCount: 5,
-              targetCount: 20,
-            }}
-            navigation={navigation}
-          />
-          <Visioncard
-            data={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU10dE4-XEUOU_mkq_pqkTO-doa2ObtORaFA',
-              completedCount: 5,
-              targetCount: 20,
-            }}
-            navigation={navigation}
-          />
-          {/* Add more cards as needed */}
+          {visionBoards?.map((item: any) => (
+            <Visioncard
+              key={item.id}
+              data={{
+                uri: 'https://cdn.punchng.com/wp-content/uploads/2021/04/26133326/Leadway-Money-Boss.jpg',
+                completedCount: 5,
+                targetCount: 20,
+              }}
+              item={item}
+            />
+          ))}
         </View>
       </ScrollView>
       <FAB
@@ -75,7 +42,9 @@ const VisionBoard = ({navigation}: any) => {
         icon="plus"
         color="white"
         onPress={() => {
-          navigation.navigate('OtherStacks', {screen: 'CreateVisionCard'});
+          navigation.navigate('AuthenticatedStack', {
+            screen: 'CreateVisionCard',
+          });
         }}
       />
     </View>
@@ -110,7 +79,6 @@ const styles = StyleSheet.create({
   },
   boardTabContainer: {
     flexDirection: 'row',
-    // marginHorizontal: 15,
   },
   fab: {
     position: 'absolute',

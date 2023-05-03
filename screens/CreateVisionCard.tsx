@@ -11,16 +11,16 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import colors from '../constants/colors';
 import ImageUploader from '../Components/Affermation/AddAffermation';
+import {useVisionBoardCreate} from '../hooks/visionboard.hook';
 
 const CreateVisionCard = () => {
-  const navigation = useNavigation();
-
+  const {createVisionBoard} = useVisionBoardCreate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
   const handleSave = () => {
-    // Save the new vision board card
+    createVisionBoard(title, description);
   };
 
   return (
