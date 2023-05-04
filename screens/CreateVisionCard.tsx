@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,20 +8,37 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import colors from '../constants/colors';
 import ImageUploader from '../Components/Affermation/AddAffermation';
-import {useVisionBoardCreate} from '../hooks/visionboard.hook';
+import {RealmContext} from '../models';
+import {VisionCard} from '../models/visioncard.model';
+const {useRealm} = RealmContext;
 
 const CreateVisionCard = () => {
-  const {createVisionBoard} = useVisionBoardCreate();
+  const realm = useRealm();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const handleSave = () => {
-    createVisionBoard(title, description);
-  };
+  const handleCreateVisionCard = useCallback(
+    (description: string, title: string): void => {
+      if (!description) {
+        return;
+      }
+
+      // Everything in the function passed to "realm.write" is a transaction and will
+      // hence succeed or fail together. A transcation is the smallest unit of transfer
+      // in Realm so we want to be mindful of how much we put into one single transaction
+      // and split them up if appropriate (more commonly seen server side). Since clients
+      // may occasionally be online during short time spans we want to increase the probability
+      // of sync participants to successfully sync everything in the transaction, otherwise
+      // no changes propagate and the transaction needs to start over when connectivity allows.
+      realm.write(() => {
+        return new VisionCard(realm, description, title);
+      });
+    },
+    [realm, title, description],
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -46,7 +63,11 @@ const CreateVisionCard = () => {
           <Image source={{uri: imageUrl}} style={styles.imagePreview} />
         )}
         {/* <ImageUploader /> */}
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => {
+            handleCreateVisionCard(description, title);
+          }}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>

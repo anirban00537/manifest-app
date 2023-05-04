@@ -1,14 +1,21 @@
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {Card, FAB, Paragraph, Title, useTheme} from 'react-native-paper';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import FA from 'react-native-vector-icons/FontAwesome';
 import Visioncard from '../Components/Cards/Vision.card';
 import colors from '../constants/colors';
-import {useGetVisionBoard} from '../hooks/visionboard.hook';
+import {RealmContext} from '../models';
+import {VisionCard} from '../models/visioncard.model';
+const {useRealm, useQuery} = RealmContext;
 
 const VisionBoard = ({navigation}: any) => {
-  const {error, loading, visionBoards} = useGetVisionBoard();
-
+  const result = useQuery(VisionCard);
+  const realm = useRealm();
+  useEffect(() => {
+    realm.subscriptions.update(mutableSubs => {
+      mutableSubs.add(realm.objects(VisionCard));
+    });
+  }, [realm, result]);
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -24,7 +31,7 @@ const VisionBoard = ({navigation}: any) => {
           />
         </View>
         <View style={styles.cardsContainer}>
-          {visionBoards?.map((item: any) => (
+          {result?.map((item: any) => (
             <Visioncard
               key={item.id}
               data={{
