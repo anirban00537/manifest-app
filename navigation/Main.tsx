@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -9,8 +9,6 @@ import colors from '../constants/colors';
 import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
-import LoginPage from '../screens/Login';
-import auth from '@react-native-firebase/auth';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,19 +17,7 @@ const tabBarIcon = (name: any, focused: boolean) => {
   const color = focused ? colors.primary : 'gray';
   return <Icon name={name} size={20} color={color} />;
 };
-const UnAuthStack = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="Premium"
-      component={LoginPage}
-      options={{
-        title: 'Premium',
-        headerTitleAlign: 'center',
-        headerShown: false,
-      }}
-    />
-  </Stack.Navigator>
-);
+
 const AuthenticatedStack = () => (
   <Stack.Navigator>
     <Stack.Screen
@@ -106,31 +92,13 @@ const MainTabs = () => (
 );
 
 export const Main = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  auth().onAuthStateChanged(user => {
-    if (user) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
-  });
-
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      {loggedIn ? (
-        <>
-          <Stack.Screen name="MainTabs" component={MainTabs} />
-          <Stack.Screen
-            name="AuthenticatedStack"
-            component={AuthenticatedStack}
-          />
-        </>
-      ) : (
-        <Stack.Screen name="UnAuthStack" component={UnAuthStack} />
-      )}
+      <Stack.Screen name="MainTabs" component={MainTabs} />
+      <Stack.Screen name="AuthenticatedStack" component={AuthenticatedStack} />
     </Stack.Navigator>
   );
 };
