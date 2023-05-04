@@ -5,25 +5,24 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import {Main} from './navigation/Main';
 import {SafeAreaView} from 'react-native';
-import {createRealmContext} from '@realm/react';
-import {VisionCard} from './db/realm';
+
+import {RealmContext} from './models';
 
 const App = () => {
   GoogleSignin.configure({
     webClientId:
       '469012389462-atmhi36bembrin6cq0uh73ucc4aabtfo.apps.googleusercontent.com',
   });
-  const {RealmProvider} = createRealmContext({
-    schema: [VisionCard],
-  });
+  const {RealmProvider} = RealmContext;
+
   return (
     <PaperProvider>
       <SafeAreaView style={{flex: 1}}>
-        <NavigationContainer>
-          <RealmProvider>
+        <RealmProvider>
+          <NavigationContainer>
             <Main />
-          </RealmProvider>
-        </NavigationContainer>
+          </NavigationContainer>
+        </RealmProvider>
       </SafeAreaView>
     </PaperProvider>
   );
