@@ -8,7 +8,7 @@ import {useGetVisionBoard} from '../hooks/visionboard.hook';
 
 const VisionBoard = ({navigation}: any) => {
   const {error, loading, visionBoards} = useGetVisionBoard();
-  // an
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
