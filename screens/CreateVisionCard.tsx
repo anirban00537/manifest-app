@@ -12,15 +12,79 @@ import colors from '../constants/colors';
 import {useVisionBoardCreate} from '../hooks/visionboard.hook';
 import AddAffermationModal from '../Components/Modal/AddAffermation.modal';
 import {Button} from 'react-native-paper';
-
-const CreateVisionCard = () => {
+import AffirmationCard from '../Components/Cards/Affirmatio.card';
+const practices = [
+  {
+    id: 1,
+    affirmation: 'Morning Gratitude',
+    description:
+      'Practice gratitude every morning to start your day off on a positive note.',
+    time: '5-10 minutes',
+    imageSource: 'https://picsum.photos/400',
+    date: 'Thursday 2:22pm',
+  },
+  {
+    id: 2,
+    affirmation: 'Meditation',
+    description: 'Take some time to quiet your mind and focus on your breath.',
+    time: '5-20 minutes',
+    imageSource: 'https://picsum.photos/300',
+    date: 'Thursday 2:22pm',
+  },
+  {
+    id: 3,
+    affirmation: 'Journaling',
+    description:
+      'Write down your thoughts and feelings to gain clarity and insight.',
+    time: '10-30 minutes',
+    imageSource: 'https://picsum.photos/200',
+    date: 'Thursday 2:22pm',
+  },
+  {
+    id: 4,
+    affirmation: 'Yoga',
+    description:
+      'Move your body and connect with your breath in a yoga practice.',
+    time: '30-60 minutes',
+    imageSource: 'https://picsum.photos/100',
+    date: 'Thursday 2:22pm',
+  },
+  {
+    id: 5,
+    affirmation: 'Yoga',
+    description:
+      'Move your body and connect with your breath in a yoga practice.',
+    time: '30-60 minutes',
+    imageSource: 'https://picsum.photos/500',
+    date: 'Thursday 2:22pm',
+  },
+  {
+    id: 6,
+    affirmation: 'Yoga',
+    description:
+      'Move your body and connect with your breath in a yoga practice.',
+    time: '30-60 minutes',
+    imageSource: 'https://picsum.photos/600',
+    date: 'Thursday 2:22pm',
+  },
+];
+const CreateVisionCard = ({navigation}: any) => {
   const [visible, setVisible] = React.useState(false);
-
-  const {createVisionBoard} = useVisionBoardCreate();
+  const [affirmations, setAffirmations] = useState<any>([]);
   const [title, setTitle] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const {createVisionBoard} = useVisionBoardCreate();
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const handleSaveAffirmation = (affirmation: string, imageurl: string) => {
+    setAffirmations([
+      ...affirmations,
+      {
+        affirmation: affirmation,
+        imageSource: imageurl,
+      },
+    ]);
+    hideModal();
+  };
   const handleSave = () => {
     createVisionBoard(title);
   };
@@ -36,13 +100,26 @@ const CreateVisionCard = () => {
           value={title}
           placeholder="Enter title"
         />
-        {imageUrl !== '' && (
-          <Image source={{uri: imageUrl}} style={styles.imagePreview} />
-        )}
-        <Button onPress={showModal}>Add</Button>
-        <AddAffermationModal visible={visible} hideModal={hideModal} />
-
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+        <TouchableOpacity style={styles.button} onPress={showModal}>
+          <Text style={styles.buttonText}>Add Affirmations</Text>
+        </TouchableOpacity>
+        <AddAffermationModal
+          visible={visible}
+          hideModal={hideModal}
+          handleSave={handleSaveAffirmation}
+        />
+        <View>
+          {affirmations?.map((practice: any) => (
+            <AffirmationCard
+              key={practice.id}
+              affirmation={practice.affirmation}
+              date={practice.date}
+              navigation={navigation}
+              imageSource={practice.imageSource}
+            />
+          ))}
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleSave}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -90,11 +167,12 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     marginBottom: 16,
   },
-  saveButton: {
+  button: {
     backgroundColor: colors.primary,
     padding: 12,
     borderRadius: 4,
     alignItems: 'center',
+    marginBottom: 40,
   },
   buttonText: {
     fontSize: 18,

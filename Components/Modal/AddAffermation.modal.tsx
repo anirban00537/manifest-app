@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState<any>(null);
   const [affirmation, setAffirmation] = useState('');
   const [showImage, setShowImage] = useState(!!image);
 
@@ -28,7 +28,7 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
   };
 
   const handleRemoveImage = () => {
-    setImage('');
+    setImage(null);
     setShowImage(false);
   };
 
@@ -83,7 +83,11 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
             mode="contained"
             style={{backgroundColor: colors.primary}}
             labelStyle={{color: colors.white}}
-            onPress={handleAddAffirmation}>
+            onPress={() => {
+              handleSave(affirmation, image);
+              setImage(null);
+              setAffirmation('');
+            }}>
             Add Affirmation
           </Button>
         </View>
