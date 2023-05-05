@@ -6,11 +6,11 @@ import {executeSql, getDBConnection} from './db.hook';
 
 export const useVisionBoardCreate = () => {
   const navigation = useNavigation();
-  const createVisionBoard = async (title: string, description: string) => {
+  const createVisionBoard = async (title: string) => {
     try {
       const db = await getDBConnection();
-      const sql = 'INSERT INTO visionBoards (title, description) VALUES (?, ?)';
-      const args = [title, description];
+      const sql = 'INSERT INTO visionBoards (title) VALUES (?)';
+      const args = [title];
       const result: any = await executeSql(sql, args, db);
 
       console.log(`Created new vision board with ID: ${result.insertId}`);
@@ -33,8 +33,7 @@ export const useGetVisionBoard = () => {
     try {
       const sql = `CREATE TABLE IF NOT EXISTS visionBoards (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT
+        title TEXT NOT NULL
       )`;
       const db = await getDBConnection();
 
@@ -61,7 +60,6 @@ export const useGetVisionBoard = () => {
         visionBoardsData.push({
           id: row.id,
           title: row.title,
-          description: row.description,
         });
       }
       setVisionBoards(visionBoardsData);

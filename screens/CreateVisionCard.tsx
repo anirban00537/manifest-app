@@ -8,19 +8,21 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import colors from '../constants/colors';
-import ImageUploader from '../Components/Affermation/AddAffermation';
 import {useVisionBoardCreate} from '../hooks/visionboard.hook';
+import AddAffermationModal from '../Components/Modal/AddAffermation.modal';
+import {Button} from 'react-native-paper';
 
 const CreateVisionCard = () => {
+  const [visible, setVisible] = React.useState(false);
+
   const {createVisionBoard} = useVisionBoardCreate();
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
   const handleSave = () => {
-    createVisionBoard(title, description);
+    createVisionBoard(title);
   };
 
   return (
@@ -34,18 +36,12 @@ const CreateVisionCard = () => {
           value={title}
           placeholder="Enter title"
         />
-        <Text style={styles.label}>Description</Text>
-        <TextInput
-          style={[styles.input, styles.multilineInput]}
-          onChangeText={text => setDescription(text)}
-          value={description}
-          multiline={true}
-          placeholder="Enter description"
-        />
         {imageUrl !== '' && (
           <Image source={{uri: imageUrl}} style={styles.imagePreview} />
         )}
-        {/* <ImageUploader /> */}
+        <Button onPress={showModal}>Add</Button>
+        <AddAffermationModal visible={visible} hideModal={hideModal} />
+
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
