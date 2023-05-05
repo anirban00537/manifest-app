@@ -1,4 +1,4 @@
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, Text} from 'react-native';
 import {Card, FAB, Paragraph, Title, useTheme} from 'react-native-paper';
 import React, {useEffect} from 'react';
 import FA from 'react-native-vector-icons/FontAwesome';
@@ -8,27 +8,28 @@ import {useGetVisionBoard} from '../hooks/visionboard.hook';
 
 const VisionBoard = ({navigation}: any) => {
   const {error, loading, visionBoards} = useGetVisionBoard();
-
+  console.log(visionBoards, 'visionBoards');
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <Title style={styles.title}>Visionboard</Title>
-          <FA
+          <Text style={styles.title}>Good Morning</Text>
+          <Text style={styles.secondaryTitle}>Add a new vision card</Text>
+          {/* <FA
             name="diamond"
             size={26}
             color="#F5A623"
             onPress={() => {
               navigation.navigate('AuthenticatedStack', {screen: 'Premium'});
             }}
-          />
+          /> */}
         </View>
         <View style={styles.cardsContainer}>
           {visionBoards?.map((item: any) => (
             <Visioncard
               key={item.id}
               data={{
-                uri: 'https://cdn.punchng.com/wp-content/uploads/2021/04/26133326/Leadway-Money-Boss.jpg',
+                uri: item.affirmations[0].imageUrl,
                 completedCount: 5,
                 targetCount: 20,
               }}
@@ -57,15 +58,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
+    alignItems: 'flex-start',
+    paddingTop: 24,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 40,
     color: colors.text,
+    fontWeight: '500',
+  },
+  secondaryTitle: {
+    fontSize: 15,
+    fontWeight: '400',
+    color: colors.primary,
+    marginBottom: 5,
   },
   scrollView: {
     flex: 1,

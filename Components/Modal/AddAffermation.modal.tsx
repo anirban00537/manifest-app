@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
   const [image, setImage] = useState<any>(null);
   const [affirmation, setAffirmation] = useState('');
-  const [showImage, setShowImage] = useState(!!image);
 
   const handleAddAffirmation = () => {
     ImagePicker.openPicker({
@@ -22,14 +21,12 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
         console.log('ImagePicker Error: ', response.error);
       } else {
         setImage(response.path);
-        setShowImage(true);
       }
     });
   };
 
   const handleRemoveImage = () => {
     setImage(null);
-    setShowImage(false);
   };
 
   return (
@@ -39,7 +36,7 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
         onDismiss={hideModal}
         contentContainerStyle={styles.containerStyle}>
         <Text style={styles.title}>Add New Affirmation</Text>
-        {showImage && (
+        {image && (
           <>
             <Image
               source={{uri: image}}
@@ -53,7 +50,7 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
             />
           </>
         )}
-        {!showImage && (
+        {!image && (
           <IconButton
             style={styles.imagePickerButton}
             icon={() => (

@@ -69,10 +69,15 @@ const practices = [
   },
 ];
 const CreateVisionCard = ({navigation}: any) => {
-  const [visible, setVisible] = React.useState(false);
-  const [affirmations, setAffirmations] = useState<any>([]);
-  const [title, setTitle] = useState('');
-  const {createVisionBoard} = useVisionBoardCreate();
+  const {
+    createVisionBoard,
+    affirmations,
+    setAffirmations,
+    setTitle,
+    setVisible,
+    title,
+    visible,
+  } = useVisionBoardCreate();
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleSaveAffirmation = (affirmation: string, imageurl: string) => {
@@ -109,13 +114,13 @@ const CreateVisionCard = ({navigation}: any) => {
           handleSave={handleSaveAffirmation}
         />
         <View>
-          {affirmations?.map((practice: any) => (
+          {affirmations?.map((affirmation: any, index: any) => (
             <AffirmationCard
-              key={practice.id}
-              affirmation={practice.affirmation}
-              date={practice.date}
+              key={index}
+              affirmation={affirmation.affirmation}
+              date={affirmation.date}
               navigation={navigation}
-              imageSource={practice.imageSource}
+              imageSource={affirmation.imageSource}
             />
           ))}
         </View>
