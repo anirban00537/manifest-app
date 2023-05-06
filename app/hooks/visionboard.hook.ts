@@ -1,11 +1,7 @@
 import {useNavigation, useIsFocused} from '@react-navigation/native';
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import {ObjectId} from 'bson';
+import {useMemo, useState} from 'react';
 //@ts-ignore
-import {executeSql, getDBConnection} from './db.hook';
-import RNFS from 'react-native-fs';
 import {RealmContext} from '../models';
-import {VisionBoard} from '../models/VisionBoard';
 
 export const useVisionBoardCreate = () => {
   const [visible, setVisible] = useState(false);
@@ -27,6 +23,33 @@ export const useVisionBoardCreate = () => {
         });
       });
       navigation.goBack();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const editAffirmationByVisionBoardId = async (
+    visionBoardId: string,
+    affirmationId: string,
+    url: string,
+    title: string,
+  ) => {
+    try {
+      await realm.write(() => {
+        const visionBoard: any = realm.objectForPrimaryKey(
+          'VisionBoard',
+          visionBoardId,
+        );
+        if (!visionBoard)
+          throw new Error(`VisionBoard with id ${visionBoardId} not found`);
+        const affirmation = visionBoard.affirmation.find(
+          (a: any) => a._id.toHexString() === affirmationId,
+        );
+        if (!affirmation)
+          throw new Error(`Affirmation with id ${affirmationId} not found`);
+        affirmation.url = url;
+        affirmation.title = title;
+        visionBoard.updatedAt = new Date();
+      });
     } catch (error) {
       console.error(error);
     }
@@ -110,6 +133,35 @@ export const useGetVisionBoardDetails = () => {
       throw error;
     }
   };
+  const addAffirmationToVisionBoard = async (
+    visionBoardId: string,
+    affirmation: {_id: any; url: string; title: string},
+  ) => {
+    try {
+      const visionBoard: any = realm.objectForPrimaryKey(
+        'VisionBoard',
+        visionBoardId,
+      );
 
-  return {loading, error, getVisionBoardDetails, visionDetails};
+      if (!visionBoard) {
+        throw new Error(`Could not find VisionBoard with id ${visionBoardId}`);
+      }
+
+      await realm.write(() => {
+        visionBoard.affirmation.push(affirmation);
+        visionBoard.updatedAt = new Date();
+      });
+      getVisionBoardDetails(visionBoardId);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return {
+    loading,
+    error,
+    getVisionBoardDetails,
+    visionDetails,
+    addAffirmationToVisionBoard,
+  };
 };

@@ -1,8 +1,12 @@
 export const Affirmation = {
   name: 'Affirmation',
+  primaryKey: '_id',
   properties: {
+    _id: 'objectId',
     url: 'string',
     title: 'string',
+    createdAt: {type: 'date', default: new Date()},
+    updatedAt: {type: 'date', default: new Date()},
   },
 };
 export const VisionBoard = {
@@ -11,8 +15,8 @@ export const VisionBoard = {
   properties: {
     _id: 'objectId',
     title: 'string',
-    createdAt: 'date',
-    updatedAt: 'date',
+    createdAt: {type: 'date', default: new Date()},
+    updatedAt: {type: 'date', default: new Date()},
     affirmation: {type: 'list', objectType: 'Affirmation'},
   },
 };

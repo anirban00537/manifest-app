@@ -8,22 +8,21 @@ import {
   Animated,
 } from 'react-native';
 import colors from '../constants/colors';
-import PracticeCard from '../components/Cards/Affirmatio.card';
-import VisionProgressCard from '../components/Cards/Progress.card';
+import VisionDetailsCard from '../components/Cards/VisionDetails.card';
 import AffirmationCard from '../components/Cards/Affirmatio.card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import {FAB, IconButton, Modal, Portal} from 'react-native-paper';
-// import {Ionicons} from '@expo/vector-icons';
+import {FAB} from 'react-native-paper';
+
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
-import {
-  useGetVisionBoard,
-  useGetVisionBoardDetails,
-} from '../hooks/visionboard.hook';
+import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
 
 const VisionDetails = ({navigation, route}: any) => {
-  const {getVisionBoardDetails, visionDetails}: any =
-    useGetVisionBoardDetails();
+  const {
+    getVisionBoardDetails,
+    visionDetails,
+    addAffirmationToVisionBoard,
+  }: any = useGetVisionBoardDetails();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [visible, setVisible] = React.useState(false);
   const {_id} = route.params;
@@ -36,10 +35,17 @@ const VisionDetails = ({navigation, route}: any) => {
     outputRange: [200, 50], // Change the output range here
     extrapolate: 'clamp',
   });
-
+  console.log(visionDetails?.affirmation, 'visionDetails?.affirmation');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-
+  const handleEditFunction = (affirmation: any, image: any) => {
+    addAffirmationToVisionBoard(_id, {
+      _id: new Realm.BSON.ObjectId(),
+      url: image,
+      title: affirmation,
+    });
+    hideModal();
+  };
   return (
     <View style={styles.container}>
       <Animated.View
@@ -75,28 +81,32 @@ const VisionDetails = ({navigation, route}: any) => {
           {useNativeDriver: false},
         )}
         scrollEventThrottle={16}>
-        <VisionProgressCard
+        <VisionDetailsCard
           title={visionDetails?.title}
-          dayProgress={50}
-          targetDays={90}
-          achievedDays={85}
+          totalAffirmations={50}
         />
         <View>
           <Text style={styles.practicesHeading}>Affermations</Text>
         </View>
         <View>
-          {visionDetails?.affirmation?.map((practice: any, index: number) => (
-            <AffirmationCard
-              key={index}
-              affirmation={practice.title}
-              date={practice.date}
-              navigation={navigation}
-              imageSource={practice.url}
-            />
-          ))}
+          {visionDetails?.affirmation?.map(
+            (affirmation: any, index: number) => (
+              <AffirmationCard
+                key={index}
+                affirmation={affirmation.title}
+                date={new Date(affirmation.createdAt).toLocaleString()}
+                navigation={navigation}
+                imageSource={affirmation.url}
+              />
+            ),
+          )}
         </View>
       </ScrollView>
-      <AddAffermationModal visible={visible} hideModal={hideModal} />
+      <AddAffermationModal
+        visible={visible}
+        hideModal={hideModal}
+        handleSave={handleEditFunction}
+      />
       <FAB
         style={styles.fab}
         icon="plus"

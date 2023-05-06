@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import colors from '../../constants/colors';
 
 const AffirmationCard = ({
@@ -15,8 +14,7 @@ const AffirmationCard = ({
     <TouchableOpacity
       onPress={() => {
         navigation.navigate('AffermationDetailsAndEdit');
-      }}
-    >
+      }}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
           <Image
@@ -46,13 +44,13 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    height: 150,
+    height: 130,
     justifyContent: 'flex-end',
   },
   image: {
     height: '100%',
     width: '100%',
-    borderRadius: 10,
+    borderRadius: 5,
     resizeMode: 'cover',
   },
   contentContainer: {

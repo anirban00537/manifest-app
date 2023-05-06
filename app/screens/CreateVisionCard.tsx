@@ -84,6 +84,7 @@ const CreateVisionCard = ({navigation}: any) => {
     setAffirmations([
       ...affirmations,
       {
+        _id: new Realm.BSON.ObjectId(),
         title: affirmation,
         url: imageurl,
       },
