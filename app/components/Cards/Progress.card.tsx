@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { ProgressBar } from 'react-native-paper';
+import {View, Text, StyleSheet} from 'react-native';
+import {ProgressBar} from 'react-native-paper';
 import colors from '../../constants/colors';
 
-const VisionProgressCard = ({ title, description, dayProgress }: any) => {
+const VisionProgressCard = ({title, dayProgress}: any) => {
   const targetDays = 21;
   const achievedDays = Math.round((dayProgress / 100) * targetDays);
   const missedDays = targetDays - achievedDays;
@@ -17,12 +17,11 @@ const VisionProgressCard = ({ title, description, dayProgress }: any) => {
       <View style={styles.header}>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <Text style={styles.description}>{description}</Text>
+      {/* <Text style={styles.description}>{description}</Text> */}
       <ProgressBar progress={dayProgress / 100} color={colors.primary} />
       <View style={styles.progressLabels}>
         <Text
-          style={styles.progressLabel}
-        >{`${achievedDays} days completed`}</Text>
+          style={styles.progressLabel}>{`${achievedDays} days completed`}</Text>
         <Text style={styles.progressLabel}>{`${missedDays} days missed`}</Text>
         <Text style={styles.progressLabel}>{`${targetDays} days target`}</Text>
       </View>
@@ -32,19 +31,19 @@ const VisionProgressCard = ({ title, description, dayProgress }: any) => {
         <View
           style={[
             styles.secondaryProgressIndicator,
-            { width: `${twentyOneDayProgress}%` },
+            {width: `${twentyOneDayProgress}%`},
           ]}
         />
         <View
           style={[
             styles.secondaryProgressIndicator,
-            { width: `${ninetyDayProgress}%` },
+            {width: `${ninetyDayProgress}%`},
           ]}
         />
         <View
           style={[
             styles.secondaryProgressIndicator,
-            { width: `${threeSixtyFiveDayProgress}%` },
+            {width: `${threeSixtyFiveDayProgress}%`},
           ]}
         />
       </View>

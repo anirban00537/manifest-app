@@ -1,27 +1,11 @@
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import {ObjectId} from 'bson';
 //@ts-ignore
 import {executeSql, getDBConnection} from './db.hook';
 import RNFS from 'react-native-fs';
 import {RealmContext} from '../models';
 import {VisionBoard} from '../models/VisionBoard';
-
-const saveImageToDevice = async (imageSource: string) => {
-  try {
-    const timestamp = Date.now();
-    const randomNumber = Math.floor(Math.random() * 10000);
-    const fileName = `image_${timestamp}_${randomNumber}.jpg`;
-    const downloadDest = `${RNFS.DocumentDirectoryPath}/${fileName}`;
-    const res = await RNFS.downloadFile({
-      fromUrl: imageSource,
-      toFile: downloadDest,
-    });
-    console.log(`Image saved to device: ${res}`);
-    return downloadDest;
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 export const useVisionBoardCreate = () => {
   const [visible, setVisible] = useState(false);
@@ -39,18 +23,7 @@ export const useVisionBoardCreate = () => {
           title: title,
           createdAt: Date(),
           updatedAt: Date(),
-          images: [
-            {
-              url: 'https://example.com/beach.jpg',
-              title: 'Beach',
-              caption: 'Relaxing at the beach',
-            },
-            {
-              url: 'https://example.com/mountain.jpg',
-              title: 'Mountain',
-              caption: 'Conquering the mountain',
-            },
-          ],
+          affirmation: affirmations,
         });
       });
       navigation.goBack();
@@ -71,15 +44,72 @@ export const useVisionBoardCreate = () => {
 };
 
 export const useGetVisionBoard = () => {
-  // const [visionBoards, setVisionBoards] = useState<any>([]);
   const isFocused = useIsFocused();
+  const [visionDetails, setVisionDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const {useQuery} = RealmContext;
+  const {useRealm} = RealmContext;
+  const realm = useRealm();
 
   const result = useQuery('VisionBoard');
+  const getVisionBoardDetails = async (_id: any) => {
+    setLoading(true);
+    try {
+      const visionBoard: any = await realm.objectForPrimaryKey(
+        'VisionBoard',
+        _id,
+      );
+
+      if (visionBoard) {
+        setVisionDetails(visionBoard);
+        setLoading(false);
+      } else {
+        setLoading(false);
+
+        throw new Error(`No vision board found with _id: ${_id}`);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      throw error;
+    }
+  };
 
   const visionBoards = useMemo(() => result.sorted('createdAt'), [result]);
 
-  return {visionBoards, loading, error};
+  return {visionBoards, loading, error, getVisionBoardDetails};
+};
+export const useGetVisionBoardDetails = () => {
+  const [visionDetails, setVisionDetails] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const {useRealm} = RealmContext;
+  const realm = useRealm();
+
+  const getVisionBoardDetails = async (_id: any) => {
+    setLoading(true);
+
+    try {
+      const visionBoard: any = await realm.objectForPrimaryKey(
+        'VisionBoard',
+        _id,
+      );
+
+      if (visionBoard) {
+        setVisionDetails(visionBoard);
+        setLoading(false);
+      } else {
+        setLoading(false);
+
+        throw new Error(`No vision board found with _id: ${_id}`);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      throw error;
+    }
+  };
+
+  return {loading, error, getVisionBoardDetails, visionDetails};
 };

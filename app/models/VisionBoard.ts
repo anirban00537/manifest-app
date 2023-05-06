@@ -1,18 +1,18 @@
-export const VisionBoardImage = {
-  name: 'VisionBoardImage',
+export const Affirmation = {
+  name: 'Affirmation',
   properties: {
     url: 'string',
     title: 'string',
-    caption: 'string',
   },
 };
 export const VisionBoard = {
   name: 'VisionBoard',
+  primaryKey: '_id',
   properties: {
     _id: 'objectId',
     title: 'string',
     createdAt: 'date',
     updatedAt: 'date',
-    images: {type: 'list', objectType: 'VisionBoardImage'},
+    affirmation: {type: 'list', objectType: 'Affirmation'},
   },
 };

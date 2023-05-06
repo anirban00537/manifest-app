@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   ImageBackground,
@@ -7,20 +7,15 @@ import {
 } from 'react-native';
 import {
   Card,
-  IconButton,
   Paragraph,
   Title,
-  Menu,
-  useTheme,
   ProgressBar, // import the ProgressBar component
 } from 'react-native-paper';
 import colors from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
 
 const Visioncard = ({data, item}: any) => {
-  const [isDone, setIsDone] = useState(false);
   const navigation: any = useNavigation();
-  console.log(item?.title, 'item');
   const {targetCount, completedCount} = data;
 
   // Calculate the progress percentage
@@ -30,11 +25,19 @@ const Visioncard = ({data, item}: any) => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => {
-        navigation.navigate('AuthenticatedStack', {screen: 'VisionDetails'});
+        navigation.navigate('AuthenticatedStack', {
+          screen: 'VisionDetails',
+          params: {_id: item._id},
+        });
       }}>
       <Card>
         <ImageBackground
-          source={{uri: data?.uri ? data.uri : 'https://picsum.photos/700'}}
+          source={{
+            uri:
+              item?.affirmation.length > 0 && item.affirmation[0].url
+                ? item.affirmation[0].url
+                : 'https://picsum.photos/700',
+          }}
           style={styles.cardBackground}>
           <View
             style={[styles.overlay, {backgroundColor: colors.background}]}

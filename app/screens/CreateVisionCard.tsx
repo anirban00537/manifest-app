@@ -84,8 +84,8 @@ const CreateVisionCard = ({navigation}: any) => {
     setAffirmations([
       ...affirmations,
       {
-        affirmation: affirmation,
-        imageSource: 'imageurl',
+        title: affirmation,
+        url: imageurl,
       },
     ]);
     hideModal();
@@ -117,10 +117,10 @@ const CreateVisionCard = ({navigation}: any) => {
           {affirmations?.map((affirmation: any, index: any) => (
             <AffirmationCard
               key={index}
-              affirmation={affirmation.affirmation}
+              affirmation={affirmation.title}
               date={affirmation.date}
               navigation={navigation}
-              imageSource={affirmation.imageSource}
+              imageSource={affirmation.url}
             />
           ))}
         </View>

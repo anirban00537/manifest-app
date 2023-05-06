@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -16,67 +16,21 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {FAB, IconButton, Modal, Portal} from 'react-native-paper';
 // import {Ionicons} from '@expo/vector-icons';
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
+import {
+  useGetVisionBoard,
+  useGetVisionBoardDetails,
+} from '../hooks/visionboard.hook';
 
-const VisionDetails = ({navigation}: any) => {
+const VisionDetails = ({navigation, route}: any) => {
+  const {getVisionBoardDetails, visionDetails}: any =
+    useGetVisionBoardDetails();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [visible, setVisible] = React.useState(false);
+  const {_id} = route.params;
+  useEffect(() => {
+    getVisionBoardDetails(_id);
+  }, [_id]);
 
-  const practices = [
-    {
-      id: 1,
-      title: 'Morning Gratitude',
-      description:
-        'Practice gratitude every morning to start your day off on a positive note.',
-      time: '5-10 minutes',
-      imageSource: 'https://picsum.photos/400',
-      date: 'Thursday 2:22pm',
-    },
-    {
-      id: 2,
-      title: 'Meditation',
-      description:
-        'Take some time to quiet your mind and focus on your breath.',
-      time: '5-20 minutes',
-      imageSource: 'https://picsum.photos/300',
-      date: 'Thursday 2:22pm',
-    },
-    {
-      id: 3,
-      title: 'Journaling',
-      description:
-        'Write down your thoughts and feelings to gain clarity and insight.',
-      time: '10-30 minutes',
-      imageSource: 'https://picsum.photos/200',
-      date: 'Thursday 2:22pm',
-    },
-    {
-      id: 4,
-      title: 'Yoga',
-      description:
-        'Move your body and connect with your breath in a yoga practice.',
-      time: '30-60 minutes',
-      imageSource: 'https://picsum.photos/100',
-      date: 'Thursday 2:22pm',
-    },
-    {
-      id: 5,
-      title: 'Yoga',
-      description:
-        'Move your body and connect with your breath in a yoga practice.',
-      time: '30-60 minutes',
-      imageSource: 'https://picsum.photos/500',
-      date: 'Thursday 2:22pm',
-    },
-    {
-      id: 6,
-      title: 'Yoga',
-      description:
-        'Move your body and connect with your breath in a yoga practice.',
-      time: '30-60 minutes',
-      imageSource: 'https://picsum.photos/600',
-      date: 'Thursday 2:22pm',
-    },
-  ];
   const headerHeight = scrollY.interpolate({
     inputRange: [0, 200],
     outputRange: [200, 50], // Change the output range here
@@ -96,7 +50,11 @@ const VisionDetails = ({navigation}: any) => {
           },
         ]}>
         <Image
-          source={require('../assets/premium.jpg')}
+          source={
+            visionDetails?.affirmation[0]?.url
+              ? {uri: visionDetails?.affirmation[0].url}
+              : require('../assets/premium.jpg')
+          }
           style={styles.coverImage}
         />
         <View style={styles.overlay} />
@@ -118,26 +76,22 @@ const VisionDetails = ({navigation}: any) => {
         )}
         scrollEventThrottle={16}>
         <VisionProgressCard
-          title="Morning Gratitude"
-          description="Practice gratitude every morning to start your day off on a positive note."
+          title={visionDetails?.title}
           dayProgress={50}
           targetDays={90}
           achievedDays={85}
         />
         <View>
-          {/* <TouchableOpacity style={styles.startButton}>
-            <Text style={styles.startButtonText}>Add Affermations</Text>
-          </TouchableOpacity> */}
           <Text style={styles.practicesHeading}>Affermations</Text>
         </View>
         <View>
-          {practices.map(practice => (
+          {visionDetails?.affirmation?.map((practice: any, index: number) => (
             <AffirmationCard
-              key={practice.id}
+              key={index}
               affirmation={practice.title}
               date={practice.date}
               navigation={navigation}
-              imageSource={practice.imageSource}
+              imageSource={practice.url}
             />
           ))}
         </View>

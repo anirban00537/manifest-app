@@ -8,7 +8,6 @@ import {useGetVisionBoard} from '../hooks/visionboard.hook';
 
 const VisionBoard = ({navigation}: any) => {
   const {error, loading, visionBoards} = useGetVisionBoard();
-  console.log(visionBoards, 'visionBoards');
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -21,8 +20,6 @@ const VisionBoard = ({navigation}: any) => {
             <Visioncard
               key={index}
               data={{
-                // uri: item.affirmations[0].imageUrl,
-                uri: '',
                 completedCount: 5,
                 targetCount: 20,
               }}
