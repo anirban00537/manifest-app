@@ -1,17 +1,18 @@
-import {Realm} from '@realm/react';
-
-interface Affirmation {
-  affirmation: string;
-  imageSource: string;
-}
-
-export class VisionBoard extends Realm.Object<VisionBoard> {
-  _id: Realm.BSON.ObjectId = new Realm.BSON.ObjectId();
-  title!: string;
-  createdAt: Date = new Date();
-  updatedAt: Date = new Date();
-
-  constructor(realm: Realm, title: string) {
-    super(realm, {title});
-  }
-}
+export const VisionBoardImage = {
+  name: 'VisionBoardImage',
+  properties: {
+    url: 'string',
+    title: 'string',
+    caption: 'string',
+  },
+};
+export const VisionBoard = {
+  name: 'VisionBoard',
+  properties: {
+    _id: 'objectId',
+    title: 'string',
+    createdAt: 'date',
+    updatedAt: 'date',
+    images: {type: 'list', objectType: 'VisionBoardImage'},
+  },
+};

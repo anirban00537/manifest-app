@@ -34,8 +34,24 @@ export const useVisionBoardCreate = () => {
   const createVisionBoard = async (title: string) => {
     try {
       await realm.write(() => {
-        const visionBoard = new VisionBoard(realm, title);
-        return visionBoard;
+        realm.create('VisionBoard', {
+          _id: new Realm.BSON.ObjectId(),
+          title: title,
+          createdAt: Date(),
+          updatedAt: Date(),
+          images: [
+            {
+              url: 'https://example.com/beach.jpg',
+              title: 'Beach',
+              caption: 'Relaxing at the beach',
+            },
+            {
+              url: 'https://example.com/mountain.jpg',
+              title: 'Mountain',
+              caption: 'Conquering the mountain',
+            },
+          ],
+        });
       });
       navigation.goBack();
     } catch (error) {
@@ -61,7 +77,7 @@ export const useGetVisionBoard = () => {
   const [error, setError] = useState(null);
   const {useQuery} = RealmContext;
 
-  const result = useQuery(VisionBoard);
+  const result = useQuery('VisionBoard');
 
   const visionBoards = useMemo(() => result.sorted('createdAt'), [result]);
 
