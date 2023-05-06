@@ -25,17 +25,17 @@ const saveImageToDevice = async (imageSource: string) => {
 
 export const useVisionBoardCreate = () => {
   const [visible, setVisible] = useState(false);
-  const [affirmations, setAffirmations] = useState<any>([]);
+  const [affirmations, setAffirmations] = useState<any[]>([]);
   const [title, setTitle] = useState('');
   const navigation = useNavigation();
   const {useRealm} = RealmContext;
 
+  const realm = useRealm();
   const createVisionBoard = async (title: string) => {
     try {
-      const realm = await useRealm();
-
       await realm.write(() => {
-        return new VisionBoard(realm, title);
+        const visionBoard = new VisionBoard(realm, title);
+        return visionBoard;
       });
       navigation.goBack();
     } catch (error) {

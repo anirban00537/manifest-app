@@ -17,11 +17,12 @@ const VisionBoard = ({navigation}: any) => {
           <Text style={styles.secondaryTitle}>Add a new vision card</Text>
         </View>
         <View style={styles.cardsContainer}>
-          {visionBoards?.map((item: any) => (
+          {visionBoards?.map((item: any, index: any) => (
             <Visioncard
-              key={item.id}
+              key={index}
               data={{
-                uri: item.affirmations[0].imageUrl,
+                // uri: item.affirmations[0].imageUrl,
+                uri: '',
                 completedCount: 5,
                 targetCount: 20,
               }}

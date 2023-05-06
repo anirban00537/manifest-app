@@ -85,7 +85,7 @@ const CreateVisionCard = ({navigation}: any) => {
       ...affirmations,
       {
         affirmation: affirmation,
-        imageSource: imageurl,
+        imageSource: 'imageurl',
       },
     ]);
     hideModal();
