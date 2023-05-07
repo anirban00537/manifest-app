@@ -16,6 +16,7 @@ import {FAB} from 'react-native-paper';
 
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const VisionDetails = ({navigation, route}: any) => {
   const {
@@ -48,32 +49,6 @@ const VisionDetails = ({navigation, route}: any) => {
   };
   return (
     <View style={styles.container}>
-      <Animated.View
-        style={[
-          styles.coverImage,
-          {
-            height: headerHeight,
-          },
-        ]}>
-        <Image
-          source={
-            visionDetails?.affirmation[0]?.url
-              ? {uri: visionDetails?.affirmation[0].url}
-              : require('../assets/premium.jpg')
-          }
-          style={styles.coverImage}
-        />
-        <View style={styles.overlay} />
-      </Animated.View>
-      <View
-        style={{
-          alignItems: 'flex-end',
-          marginRight: 20,
-        }}>
-        <View style={styles.playButton}>
-          <Icon name="play" size={20} color={colors.white} />
-        </View>
-      </View>
       <ScrollView
         style={styles.contentContainer}
         onScroll={Animated.event(
@@ -81,25 +56,35 @@ const VisionDetails = ({navigation, route}: any) => {
           {useNativeDriver: false},
         )}
         scrollEventThrottle={16}>
-        <VisionDetailsCard
-          title={visionDetails?.title}
-          totalAffirmations={50}
-        />
-        <View>
-          <Text style={styles.practicesHeading}>Affermations</Text>
+        <VisionDetailsCard totalAffirmations={50} targetDays={100} />
+
+        <View style={{alignItems: 'center'}}>
+          <View style={styles.playButton}>
+            <Icon name="play" size={20} color={colors.white} />
+            <Text style={styles.playButtonText}>Play</Text>
+          </View>
         </View>
-        <View>
-          {visionDetails?.affirmation?.map(
-            (affirmation: any, index: number) => (
-              <AffirmationCard
-                key={index}
-                affirmation={affirmation.title}
-                date={new Date(affirmation.createdAt).toLocaleString()}
-                navigation={navigation}
-                imageSource={affirmation.url}
-              />
-            ),
-          )}
+
+        <View style={{padding: 15}}>
+          <View style={styles.header}>
+            <Text style={styles.title}>{visionDetails?.title}</Text>
+          </View>
+          <View>
+            <Text style={styles.practicesHeading}>Affermations</Text>
+          </View>
+          <View>
+            {visionDetails?.affirmation?.map(
+              (affirmation: any, index: number) => (
+                <AffirmationCard
+                  key={index}
+                  affirmation={affirmation.title}
+                  date={new Date(affirmation.createdAt).toLocaleString()}
+                  navigation={navigation}
+                  imageSource={affirmation.url}
+                />
+              ),
+            )}
+          </View>
         </View>
       </ScrollView>
       <AddAffermationModal
@@ -107,6 +92,7 @@ const VisionDetails = ({navigation, route}: any) => {
         hideModal={hideModal}
         handleSave={handleEditFunction}
       />
+
       <FAB
         style={styles.fab}
         icon="plus"
@@ -127,11 +113,22 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    opacity: 0.5,
+    opacity: 0.8,
   },
   contentContainer: {
     flex: 1,
-    padding: 22,
+    // padding: 22,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  title: {
+    fontSize: 45,
+    fontWeight: 'bold',
+    color: colors.text,
   },
   heading: {
     fontSize: 24,
@@ -154,12 +151,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 16,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    backgroundImage:
-      'linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.67) 35%, rgba(0,255,199,0.1) 100%)',
-    zIndex: 1,
+  playButtonText: {
+    color: colors.white,
+    marginLeft: 10,
   },
   startButtonText: {
     color: colors.text,
@@ -172,19 +166,20 @@ const styles = StyleSheet.create({
     marginBottom: 90,
   },
   playButton: {
-    backgroundColor: colors.secondary,
-    width: 60,
-    height: 60,
+    backgroundColor: colors.primary,
+    width: 158,
+    height: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 50,
-    marginTop: -35,
+    borderRadius: 10,
+    flexDirection: 'row',
+    marginTop: -50,
   },
   practicesHeading: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     color: colors.text,
-    // marginBottom: 8,
+    marginBottom: 10,
   },
   resourcesContainer: {
     marginBottom: 24,

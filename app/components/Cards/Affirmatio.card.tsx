@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../constants/colors';
 
 const AffirmationCard = ({
@@ -28,6 +30,24 @@ const AffirmationCard = ({
           <Text style={styles.title}>{affirmation}</Text>
           <Text style={styles.date}>{date}</Text>
         </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={onEdit}>
+            <Icon
+              name="edit"
+              size={20}
+              color={colors.white}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDelete}>
+            <Icon
+              name="trash"
+              size={20}
+              color={colors.white}
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -37,26 +57,24 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginVertical: 12,
-    backgroundColor: colors.background1,
-    // borderRadius: 10,
+    marginVertical: 4,
+    borderRadius: 10,
     overflow: 'hidden',
   },
   imageContainer: {
     flex: 1,
-    height: 130,
-    justifyContent: 'flex-end',
+    height: 100,
+    backgroundColor: colors.background,
+    justifyContent: 'flex-start',
   },
   image: {
-    height: '100%',
-    width: '100%',
+    height: 100,
     borderRadius: 5,
     resizeMode: 'cover',
   },
   contentContainer: {
     flex: 2,
     paddingHorizontal: 16,
-    paddingVertical: 4,
   },
   title: {
     fontWeight: 'bold',
@@ -64,11 +82,22 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 15,
     marginBottom: 8,
+    fontFamily: 'Montserrat-SemiBold',
   },
   date: {
     color: colors.primary,
     textAlign: 'left',
-    marginBottom: 8,
+    fontFamily: 'OpenSans-Regular',
+  },
+  iconContainer: {
+    flex: 0.5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 5,
+  },
+  icon: {
+    marginHorizontal: 5,
   },
 });
 

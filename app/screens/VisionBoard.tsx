@@ -5,14 +5,16 @@ import FA from 'react-native-vector-icons/FontAwesome';
 import Visioncard from '../components/Cards/Vision.card';
 import colors from '../constants/colors';
 import {useGetVisionBoard} from '../hooks/visionboard.hook';
+import {getGreetingMessage} from '../common/functions';
 
 const VisionBoard = ({navigation}: any) => {
   const {error, loading, visionBoards} = useGetVisionBoard();
+  const greeting = getGreetingMessage();
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <Text style={styles.title}>Good Morning</Text>
+          <Text style={styles.title}>{greeting}</Text>
           <Text style={styles.secondaryTitle}>Add a new vision card</Text>
         </View>
         <View style={styles.cardsContainer}>
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    padding: 5,
   },
   header: {
     flexDirection: 'column',

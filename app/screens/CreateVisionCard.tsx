@@ -4,70 +4,15 @@ import {
   Text,
   TextInput,
   View,
-  Image,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import colors from '../constants/colors';
 import {useVisionBoardCreate} from '../hooks/visionboard.hook';
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
-import {Button} from 'react-native-paper';
 import AffirmationCard from '../components/Cards/Affirmatio.card';
-const practices = [
-  {
-    id: 1,
-    affirmation: 'Morning Gratitude',
-    description:
-      'Practice gratitude every morning to start your day off on a positive note.',
-    time: '5-10 minutes',
-    imageSource: 'https://picsum.photos/400',
-    date: 'Thursday 2:22pm',
-  },
-  {
-    id: 2,
-    affirmation: 'Meditation',
-    description: 'Take some time to quiet your mind and focus on your breath.',
-    time: '5-20 minutes',
-    imageSource: 'https://picsum.photos/300',
-    date: 'Thursday 2:22pm',
-  },
-  {
-    id: 3,
-    affirmation: 'Journaling',
-    description:
-      'Write down your thoughts and feelings to gain clarity and insight.',
-    time: '10-30 minutes',
-    imageSource: 'https://picsum.photos/200',
-    date: 'Thursday 2:22pm',
-  },
-  {
-    id: 4,
-    affirmation: 'Yoga',
-    description:
-      'Move your body and connect with your breath in a yoga practice.',
-    time: '30-60 minutes',
-    imageSource: 'https://picsum.photos/100',
-    date: 'Thursday 2:22pm',
-  },
-  {
-    id: 5,
-    affirmation: 'Yoga',
-    description:
-      'Move your body and connect with your breath in a yoga practice.',
-    time: '30-60 minutes',
-    imageSource: 'https://picsum.photos/500',
-    date: 'Thursday 2:22pm',
-  },
-  {
-    id: 6,
-    affirmation: 'Yoga',
-    description:
-      'Move your body and connect with your breath in a yoga practice.',
-    time: '30-60 minutes',
-    imageSource: 'https://picsum.photos/600',
-    date: 'Thursday 2:22pm',
-  },
-];
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 const CreateVisionCard = ({navigation}: any) => {
   const {
     createVisionBoard,
@@ -79,6 +24,7 @@ const CreateVisionCard = ({navigation}: any) => {
     visible,
   } = useVisionBoardCreate();
   const showModal = () => setVisible(true);
+  const [step, setStep] = useState(0);
   const hideModal = () => setVisible(false);
   const handleSaveAffirmation = (affirmation: string, imageurl: string) => {
     setAffirmations([
@@ -97,42 +43,66 @@ const CreateVisionCard = ({navigation}: any) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Create Vision Board Card</Text>
+      <Text style={styles.title}>Create VisionCard</Text>
       <View style={styles.form}>
-        <Text style={styles.label}>Title</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={text => setTitle(text)}
-          value={title}
-          placeholder="Enter title"
-        />
-        <TouchableOpacity style={styles.button} onPress={showModal}>
-          <Text style={styles.buttonText}>Add Affirmations</Text>
-        </TouchableOpacity>
-        <AddAffermationModal
-          visible={visible}
-          hideModal={hideModal}
-          handleSave={handleSaveAffirmation}
-        />
-        <View>
-          {affirmations?.map((affirmation: any, index: any) => (
-            <AffirmationCard
-              key={index}
-              affirmation={affirmation.title}
-              date={affirmation.date}
-              navigation={navigation}
-              imageSource={affirmation.url}
+        {step === 0 && (
+          <>
+            <Text style={styles.label}>Board Name</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => setTitle(text)}
+              value={title}
+              placeholder="Enter title"
             />
-          ))}
-        </View>
-        <TouchableOpacity style={styles.button} onPress={handleSave}>
-          <Text style={styles.buttonText}>Save</Text>
-        </TouchableOpacity>
+            {title && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  setStep(1);
+                }}>
+                <Text style={styles.buttonText}>Next</Text>
+              </TouchableOpacity>
+            )}
+          </>
+        )}
+        {step === 1 && (
+          <>
+            <TouchableOpacity
+              style={styles.buttonUploadArea}
+              onPress={showModal}>
+              <Icon
+                name="plus"
+                size={20}
+                color="white"
+                style={styles.buttonIcon}
+              />
+              <Text style={styles.buttonText}>Add Affirmations</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleSave}>
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableOpacity>
+            <AddAffermationModal
+              visible={visible}
+              hideModal={hideModal}
+              handleSave={handleSaveAffirmation}
+            />
+            <View>
+              {affirmations?.map((affirmation: any, index: any) => (
+                <AffirmationCard
+                  key={index}
+                  affirmation={affirmation.title}
+                  date={affirmation.date}
+                  navigation={navigation}
+                  imageSource={affirmation.url}
+                />
+              ))}
+            </View>
+          </>
+        )}
       </View>
     </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -140,7 +110,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
+    marginTop: 10,
     fontWeight: 'bold',
     marginBottom: 16,
     color: colors.text,
@@ -178,13 +149,72 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 4,
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonUploadArea: {
+    backgroundColor: colors.background2,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 12,
+    height: 120,
+    borderRadius: 4,
+    alignItems: 'center',
+    marginBottom: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
+    marginLeft: 8,
+  },
+  buttonIcon: {
+    color: 'white',
+    fontSize: 34,
+    marginBottom: 10,
+  },
+  affirmationContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  affirmationText: {
+    flex: 1,
+    fontSize: 16,
+    color: colors.text,
+  },
+  affirmationImage: {
+    width: 60,
+    height: 60,
+    marginRight: 8,
+    borderRadius: 30,
+  },
+  saveButton: {
+    backgroundColor: colors.success,
+    padding: 12,
+    borderRadius: 4,
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  cancelButton: {
+    backgroundColor: colors.danger,
+    padding: 12,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 4,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: colors.text,
   },
 });
-
 export default CreateVisionCard;
