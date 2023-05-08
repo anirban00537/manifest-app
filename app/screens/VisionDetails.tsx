@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import colors from '../constants/colors';
 import VisionDetailsCard from '../components/Cards/VisionDetails.card';
-import AffirmationCard from '../components/Cards/Affirmatio.card';
+import Visioncard from '../components/Cards/Affirmatio.card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {FAB} from 'react-native-paper';
@@ -36,7 +36,6 @@ const VisionDetails = ({navigation, route}: any) => {
     outputRange: [200, 50], // Change the output range here
     extrapolate: 'clamp',
   });
-  console.log(visionDetails?.affirmation, 'visionDetails?.affirmation');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleEditFunction = (affirmation: any, image: any) => {
@@ -57,8 +56,15 @@ const VisionDetails = ({navigation, route}: any) => {
         )}
         scrollEventThrottle={16}>
         <VisionDetailsCard totalAffirmations={50} targetDays={100} />
+        <View style={styles.header}>
+          <Text style={styles.title}>{visionDetails?.title}</Text>
+        </View>
 
-        <View style={{alignItems: 'center'}}>
+        <View style={styles.buttonContainer}>
+          <View style={styles.MoreButton}>
+            <Icon name="trash" size={20} color={colors.white} />
+            <Text style={styles.playButtonText}>Trash</Text>
+          </View>
           <View style={styles.playButton}>
             <Icon name="play" size={20} color={colors.white} />
             <Text style={styles.playButtonText}>Play</Text>
@@ -66,21 +72,17 @@ const VisionDetails = ({navigation, route}: any) => {
         </View>
 
         <View style={{padding: 15}}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{visionDetails?.title}</Text>
-          </View>
           <View>
             <Text style={styles.practicesHeading}>Affermations</Text>
           </View>
-          <View>
+          <View style={styles.cardsContainer}>
             {visionDetails?.affirmation?.map(
               (affirmation: any, index: number) => (
-                <AffirmationCard
+                <Visioncard
                   key={index}
-                  affirmation={affirmation.title}
-                  date={new Date(affirmation.createdAt).toLocaleString()}
-                  navigation={navigation}
-                  imageSource={affirmation.url}
+                  date={affirmation.date}
+                  image={affirmation.url}
+                  title={affirmation.title}
                 />
               ),
             )}
@@ -119,14 +121,21 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 22,
   },
+  cardsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 90,
+  },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
+    marginHorizontal: 15,
   },
   title: {
-    fontSize: 45,
+    fontSize: 25,
     fontWeight: 'bold',
     color: colors.text,
   },
@@ -165,16 +174,34 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 90,
   },
+  buttonContainer: {
+    alignItems: 'flex-start',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    marginHorizontal: 15,
+  },
   playButton: {
     backgroundColor: colors.primary,
-    width: 158,
+    width: '48%',
     height: 48,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
     flexDirection: 'row',
-    marginTop: -50,
   },
+  MoreButton: {
+    backgroundColor: colors.danger,
+    // borderWidth: 1,
+    // borderColor: colors.white,
+    // shadowColor: colors.background1,
+    width: '48%',
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    flexDirection: 'row',
+  },
+
   practicesHeading: {
     fontSize: 24,
     fontWeight: 'bold',

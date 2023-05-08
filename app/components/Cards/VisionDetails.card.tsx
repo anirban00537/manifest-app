@@ -15,9 +15,9 @@ const VisionBoardUserActivityDetails = ({
 
   return (
     <LinearGradient
-      colors={[colors.primaryDark, 'black']}
+      colors={[colors.dark1, colors.primary]}
       start={{x: 0, y: 0}}
-      end={{x: 0, y: 1}}
+      end={{x: 2, y: 1}}
       style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
@@ -65,9 +65,10 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    height: 250,
+    height: 200,
     marginBottom: 16,
-    borderRadius: 10,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 
   progressText: {

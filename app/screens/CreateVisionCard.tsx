@@ -90,10 +90,10 @@ const CreateVisionCard = ({navigation}: any) => {
               {affirmations?.map((affirmation: any, index: any) => (
                 <AffirmationCard
                   key={index}
-                  affirmation={affirmation.title}
                   date={affirmation.date}
                   navigation={navigation}
-                  imageSource={affirmation.url}
+                  image={affirmation.url}
+                  title={affirmation.title}
                 />
               ))}
             </View>

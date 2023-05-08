@@ -14,7 +14,7 @@ import {
 import colors from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
 
-const Visioncard = ({data, item}: any) => {
+const Visioncard = ({data, item, title, image}: any) => {
   const navigation: any = useNavigation();
   const {targetCount, completedCount} = data;
 
@@ -33,17 +33,14 @@ const Visioncard = ({data, item}: any) => {
       <Card>
         <ImageBackground
           source={{
-            uri:
-              item?.affirmation.length > 0 && item.affirmation[0].url
-                ? item.affirmation[0].url
-                : 'https://picsum.photos/700',
+            uri: image,
           }}
           style={styles.cardBackground}>
           <View
             style={[styles.overlay, {backgroundColor: colors.background}]}
           />
           <Title style={[styles.cardTitle, {color: colors.text}]}>
-            {item?.title}
+            {title}
           </Title>
           {/* Replace Badge with ProgressBar */}
           <View style={styles.progressContainer}>
@@ -67,14 +64,14 @@ const Visioncard = ({data, item}: any) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: '48%',
+    width: '100%',
     marginVertical: 8,
     elevation: 3,
     borderRadius: 16,
     overflow: 'hidden',
   },
   cardBackground: {
-    height: 300,
+    height: 150,
     justifyContent: 'flex-end',
     padding: 16,
   },

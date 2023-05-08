@@ -26,6 +26,12 @@ const VisionBoard = ({navigation}: any) => {
                 targetCount: 20,
               }}
               item={item}
+              image={
+                item?.affirmation.length > 0 && item.affirmation[0].url
+                  ? item.affirmation[0].url
+                  : 'https://picsum.photos/700'
+              }
+              title={item?.title}
             />
           ))}
         </View>
@@ -72,8 +78,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   cardsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    // flexDirection: 'row',
+    // flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginBottom: 90,
   },
