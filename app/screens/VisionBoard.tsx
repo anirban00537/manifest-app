@@ -8,7 +8,7 @@ import {useGetVisionBoard} from '../hooks/visionboard.hook';
 import {getGreetingMessage} from '../common/functions';
 
 const VisionBoard = ({navigation}: any) => {
-  const {error, loading, visionBoards} = useGetVisionBoard();
+  const {error, loading, visionBoards,} = useGetVisionBoard();
   const greeting = getGreetingMessage();
   return (
     <View style={styles.container}>

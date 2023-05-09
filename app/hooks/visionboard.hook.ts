@@ -101,7 +101,12 @@ export const useGetVisionBoard = () => {
 
   const visionBoards = useMemo(() => result.sorted('createdAt'), [result]);
 
-  return {visionBoards, loading, error, getVisionBoardDetails};
+  return {
+    visionBoards,
+    loading,
+    error,
+    getVisionBoardDetails,
+  };
 };
 export const useGetVisionBoardDetails = () => {
   const [visionDetails, setVisionDetails] = useState();
@@ -131,6 +136,23 @@ export const useGetVisionBoardDetails = () => {
       setLoading(false);
       console.error(error);
       throw error;
+    }
+  };
+  const deleteVisionBoard = async (visionBoardId: string, navigation: any) => {
+    try {
+      await realm.write(() => {
+        const visionBoard: any = realm.objectForPrimaryKey(
+          'VisionBoard',
+          visionBoardId,
+        );
+        if (!visionBoard)
+          throw new Error(`VisionBoard with id ${visionBoardId} not found`);
+        realm.delete(visionBoard.affirmation);
+        realm.delete(visionBoard);
+        navigation.goBack();
+      });
+    } catch (error) {
+      console.error(error);
     }
   };
   const addAffirmationToVisionBoard = async (
@@ -163,5 +185,6 @@ export const useGetVisionBoardDetails = () => {
     getVisionBoardDetails,
     visionDetails,
     addAffirmationToVisionBoard,
+    deleteVisionBoard,
   };
 };

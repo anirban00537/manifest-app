@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  TouchableOpacity,
   Animated,
 } from 'react-native';
 import colors from '../constants/colors';
@@ -16,13 +17,13 @@ import {FAB} from 'react-native-paper';
 
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const VisionDetails = ({navigation, route}: any) => {
   const {
     getVisionBoardDetails,
     visionDetails,
     addAffirmationToVisionBoard,
+    deleteVisionBoard,
   }: any = useGetVisionBoardDetails();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [visible, setVisible] = React.useState(false);
@@ -61,14 +62,18 @@ const VisionDetails = ({navigation, route}: any) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <View style={styles.MoreButton}>
+          <TouchableOpacity
+            style={styles.MoreButton}
+            onPress={() => {
+              deleteVisionBoard(_id, navigation);
+            }}>
             <Icon name="trash" size={20} color={colors.white} />
             <Text style={styles.playButtonText}>Trash</Text>
-          </View>
-          <View style={styles.playButton}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.playButton}>
             <Icon name="play" size={20} color={colors.white} />
             <Text style={styles.playButtonText}>Play</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={{padding: 15}}>
@@ -181,7 +186,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   playButton: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background1,
     width: '48%',
     height: 48,
     alignItems: 'center',
@@ -190,10 +195,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   MoreButton: {
-    backgroundColor: colors.danger,
-    // borderWidth: 1,
-    // borderColor: colors.white,
-    // shadowColor: colors.background1,
+    backgroundColor: colors.background1,
+
     width: '48%',
     height: 48,
     alignItems: 'center',
