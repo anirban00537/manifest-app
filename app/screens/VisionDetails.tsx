@@ -3,20 +3,17 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   ScrollView,
   TouchableOpacity,
-  Animated,
 } from 'react-native';
 import colors from '../constants/colors';
 import VisionDetailsCard from '../components/Cards/VisionDetails.card';
 import Visioncard from '../components/Cards/Affirmatio.card';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import {FAB} from 'react-native-paper';
-
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
+import Empty from '../components/Cards/Empty.card';
 
 const VisionDetails = ({navigation, route}: any) => {
   const {
@@ -25,18 +22,11 @@ const VisionDetails = ({navigation, route}: any) => {
     addAffirmationToVisionBoard,
     deleteVisionBoard,
   }: any = useGetVisionBoardDetails();
-  const scrollY = useRef(new Animated.Value(0)).current;
   const [visible, setVisible] = React.useState(false);
   const {_id} = route.params;
   useEffect(() => {
     getVisionBoardDetails(_id);
   }, [_id]);
-
-  const headerHeight = scrollY.interpolate({
-    inputRange: [0, 200],
-    outputRange: [200, 50], // Change the output range here
-    extrapolate: 'clamp',
-  });
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleEditFunction = (affirmation: any, image: any) => {
@@ -47,20 +37,18 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
+  console.log(visionDetails?.affirmation, 'visionDetails?.affirmation');
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.contentContainer}
-        onScroll={Animated.event(
-          [{nativeEvent: {contentOffset: {y: scrollY}}}],
-          {useNativeDriver: false},
-        )}
-        scrollEventThrottle={16}>
-        <VisionDetailsCard totalAffirmations={50} targetDays={100} />
+      <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
+        <VisionDetailsCard
+          totalAffirmations={50}
+          targetDays={100}
+          navigation={navigation}
+        />
         <View style={styles.header}>
           <Text style={styles.title}>{visionDetails?.title}</Text>
         </View>
-
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.MoreButton}
@@ -78,20 +66,25 @@ const VisionDetails = ({navigation, route}: any) => {
 
         <View style={{padding: 15}}>
           <View>
-            <Text style={styles.practicesHeading}>Affermations</Text>
+            <Text style={styles.practicesHeading}>Vision Cards</Text>
           </View>
-          <View style={styles.cardsContainer}>
-            {visionDetails?.affirmation?.map(
-              (affirmation: any, index: number) => (
-                <Visioncard
-                  key={index}
-                  date={affirmation.date}
-                  image={affirmation.url}
-                  title={affirmation.title}
-                />
-              ),
-            )}
-          </View>
+          {visionDetails?.affirmation?.length === 0 && (
+            <Empty msg={'No Visionboard'} />
+          )}
+          {visionDetails?.affirmation?.length > 0 && (
+            <View style={styles.cardsContainer}>
+              {visionDetails?.affirmation?.map(
+                (affirmation: any, index: number) => (
+                  <Visioncard
+                    key={index}
+                    date={affirmation?.createdAt}
+                    image={affirmation.url}
+                    title={affirmation.title}
+                  />
+                ),
+              )}
+            </View>
+          )}
         </View>
       </ScrollView>
       <AddAffermationModal
@@ -134,7 +127,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: 15,
     marginHorizontal: 15,
@@ -189,6 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background1,
     width: '48%',
     height: 48,
+    elevation: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
@@ -196,7 +190,7 @@ const styles = StyleSheet.create({
   },
   MoreButton: {
     backgroundColor: colors.background1,
-
+    elevation: 10,
     width: '48%',
     height: 48,
     alignItems: 'center',
@@ -206,8 +200,8 @@ const styles = StyleSheet.create({
   },
 
   practicesHeading: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '600',
     color: colors.text,
     marginBottom: 10,
   },

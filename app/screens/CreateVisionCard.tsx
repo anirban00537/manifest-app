@@ -78,9 +78,12 @@ const CreateVisionCard = ({navigation}: any) => {
               />
               <Text style={styles.buttonText}>Add Affirmations</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
+            {affirmations.length !== 0 && (
+              <TouchableOpacity style={styles.button} onPress={handleSave}>
+                <Text style={styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+            )}
+
             <AddAffermationModal
               visible={visible}
               hideModal={hideModal}
@@ -154,9 +157,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonUploadArea: {
-    backgroundColor: colors.background2,
+    backgroundColor: colors.background1,
     borderWidth: 1,
-    borderColor: colors.border,
+    // borderColor: colors.border,
     padding: 12,
     height: 120,
     borderRadius: 4,

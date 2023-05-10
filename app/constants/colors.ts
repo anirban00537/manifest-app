@@ -9,7 +9,7 @@ export default {
   background3: '#4F4F4F',
   text: '#EFEFEF',
   grayText: '#95A5A6',
-  border: '#444444',
+  border: '#ffff',
   success: '#28A745',
   danger: '#DC3545',
   warning: '#FFC107',

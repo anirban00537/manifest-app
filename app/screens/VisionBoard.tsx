@@ -6,36 +6,45 @@ import Visioncard from '../components/Cards/Vision.card';
 import colors from '../constants/colors';
 import {useGetVisionBoard} from '../hooks/visionboard.hook';
 import {getGreetingMessage} from '../common/functions';
+import Empty from '../components/Cards/Empty.card';
 
 const VisionBoard = ({navigation}: any) => {
-  const {error, loading, visionBoards,} = useGetVisionBoard();
+  const {error, loading, visionBoards} = useGetVisionBoard();
   const greeting = getGreetingMessage();
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.header}>
-          <Text style={styles.title}>{greeting}</Text>
-          <Text style={styles.secondaryTitle}>Add a new vision card</Text>
+      {visionBoards.length === 0 && (
+        <View style={styles.emptyContainer}>
+          <Empty msg={'No Visionboard'} />
         </View>
-        <View style={styles.cardsContainer}>
-          {visionBoards?.map((item: any, index: any) => (
-            <Visioncard
-              key={index}
-              data={{
-                completedCount: 5,
-                targetCount: 20,
-              }}
-              item={item}
-              image={
-                item?.affirmation.length > 0 && item.affirmation[0].url
-                  ? item.affirmation[0].url
-                  : 'https://picsum.photos/700'
-              }
-              title={item?.title}
-            />
-          ))}
-        </View>
-      </ScrollView>
+      )}
+      {visionBoards.length > 0 && (
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.header}>
+            <Text style={styles.title}>{greeting}</Text>
+            <Text style={styles.secondaryTitle}>Add a new vision card</Text>
+          </View>
+          <View style={styles.cardsContainer}>
+            {visionBoards?.map((item: any, index: any) => (
+              <Visioncard
+                key={index}
+                data={{
+                  completedCount: 5,
+                  targetCount: 20,
+                }}
+                item={item}
+                image={
+                  item?.affirmation.length > 0 && item.affirmation[0].url
+                    ? item.affirmation[0].url
+                    : 'https://picsum.photos/700'
+                }
+                title={item?.title}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      )}
       <FAB
         style={styles.fab}
         icon="plus"
@@ -54,37 +63,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    padding: 5,
+    padding: 20,
   },
   header: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    marginTop: 20,
     alignItems: 'flex-start',
-    paddingTop: 24,
   },
   title: {
-    fontSize: 40,
+    fontSize: 32,
+    fontWeight: 'bold',
     color: colors.text,
-    fontWeight: '500',
+    marginBottom: 10,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   secondaryTitle: {
-    fontSize: 15,
-    fontWeight: '400',
+    fontSize: 16,
     color: colors.primary,
-    marginBottom: 5,
+    marginBottom: 10,
+    textAlign: 'center',
   },
   scrollView: {
     flex: 1,
-    padding: 16,
   },
   cardsContainer: {
-    // flexDirection: 'row',
-    // flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 90,
-  },
-  boardTabContainer: {
+    flex: 1,
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
   fab: {
     position: 'absolute',
@@ -92,7 +101,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: colors.primary,
-    color: colors.text,
   },
 });
 
