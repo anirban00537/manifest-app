@@ -33,7 +33,7 @@ const Visioncard = ({item, title, image}: any) => {
           <Title
             style={[
               styles.cardTitle,
-              {color: colors.text, fontFamily: 'Roboto-Bold'},
+              {color: colors.text, fontFamily: 'Poppins-SemiBold'},
             ]}>
             {title}
           </Title>
@@ -59,11 +59,10 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 8,
-    textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    textShadowOffset: {width: 1, height: 1},
-    textShadowRadius: 2,
+    // textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    // textShadowOffset: {width: 1, height: 1},
+    // textShadowRadius: 2,
   },
 
   overlay: {

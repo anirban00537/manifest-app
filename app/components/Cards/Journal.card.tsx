@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Card, Paragraph, Title } from 'react-native-paper';
+import {StyleSheet, Text, View} from 'react-native';
+import {Card, Paragraph, Title} from 'react-native-paper';
 import colors from '../../constants/colors';
 
-const JournalCard = ({ data }: any) => {
+const JournalCard = ({data}: any) => {
   return (
     <View style={styles.container}>
       <Card elevation={3} style={styles.card}>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: colors.text,
   },
   date: {

@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
+    fontSize: 29,
     color: colors.text,
-    marginBottom: 10,
+    marginBottom: 5,
+    fontFamily: 'Poppins-SemiBold',
   },
   emptyContainer: {
     flex: 1,
@@ -81,10 +81,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   secondaryTitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: colors.primary,
-    marginBottom: 10,
+    // marginBottom: 10,
     textAlign: 'center',
+    fontFamily: 'Poppins-Regular',
   },
   scrollView: {
     flex: 1,
