@@ -23,7 +23,7 @@ const VisionBoard = ({navigation}: any) => {
         <ScrollView style={styles.scrollView}>
           <View style={styles.header}>
             <Text style={styles.title}>{greeting}</Text>
-            <Text style={styles.secondaryTitle}>Add a new vision card</Text>
+            <Text style={styles.secondaryTitle}>Welcome Back</Text>
           </View>
           <View style={styles.cardsContainer}>
             {visionBoards?.map((item: any, index: any) => (
@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 29,
     color: colors.text,
-    marginBottom: 5,
     fontFamily: 'Poppins-SemiBold',
   },
   emptyContainer: {
@@ -81,8 +80,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   secondaryTitle: {
-    fontSize: 18,
-    color: colors.primary,
+    fontSize: 22,
+    color: colors.primaryLight,
     // marginBottom: 10,
     textAlign: 'center',
     fontFamily: 'Poppins-Regular',
