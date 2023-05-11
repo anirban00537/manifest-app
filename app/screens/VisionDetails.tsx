@@ -58,7 +58,13 @@ const VisionDetails = ({navigation, route}: any) => {
             <Icon name="trash" size={20} color={colors.white} />
             <Text style={styles.playButtonText}>Trash</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.playButton}>
+          <TouchableOpacity
+            style={styles.playButton}
+            onPress={() => {
+              navigation.navigate('AuthenticatedStack', {
+                screen: 'Player',
+              });
+            }}>
             <Icon name="play" size={20} color={colors.white} />
             <Text style={styles.playButtonText}>Play</Text>
           </TouchableOpacity>

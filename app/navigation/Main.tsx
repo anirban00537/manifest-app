@@ -9,6 +9,7 @@ import colors from '../constants/colors';
 import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
+import Player from '../screens/Player';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,6 +39,16 @@ const AuthenticatedStack = () => (
         headerShown: false,
       }}
     />
+    <Stack.Screen
+      name="Player"
+      component={Player}
+      options={{
+        title: 'Player',
+        headerTitleAlign: 'center',
+        headerShown: false,
+      }}
+    />
+
     <Stack.Screen
       name="AffermationDetailsAndEdit"
       component={AffermationDetailsAndEdit}
@@ -83,6 +94,16 @@ const MainTabs = () => (
       component={JournalHomeScreen}
       options={{
         title: 'Journal',
+        tabBarIcon: ({focused}) => tabBarIcon('file-signature', focused),
+        headerShown: false,
+        tabBarLabel: () => null, // hide the tab title
+      }}
+    />
+    <Tab.Screen
+      name="Player"
+      component={Player}
+      options={{
+        title: 'Player',
         tabBarIcon: ({focused}) => tabBarIcon('file-signature', focused),
         headerShown: false,
         tabBarLabel: () => null, // hide the tab title
