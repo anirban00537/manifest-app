@@ -7,68 +7,61 @@ import {
   Animated,
   StyleSheet,
 } from 'react-native';
+import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
 
 const {width} = Dimensions.get('window');
-
-const affirmations = [
-  {
-    image: require('../assets/adaptive-icon.png'),
-    text: 'You are amazing',
-  },
-  {
-    image: require('../assets/canvas.png'),
-    text: 'You can achieve anything',
-  },
-  {
-    image: require('../assets/premium.jpg'),
-    text: 'You are worthy of love and happiness',
-  },
-];
-
-const Player = () => {
-  const [currentDetails, setCurrentDetails] = useState(affirmations[0]);
-  const opacityValue = useRef(new Animated.Value(1)).current;
+const Player = ({navigation, route}: any) => {
+  const {getVisionBoardDetails, visionDetails}: any =
+    useGetVisionBoardDetails();
+  const {_id} = route.params;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const currentIndex = affirmations.indexOf(currentDetails);
-      const nextIndex = (currentIndex + 1) % affirmations.length;
-      setCurrentDetails(affirmations[nextIndex]);
-      console.log('@@@@@@@@@@@');
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [currentDetails]);
+    getVisionBoardDetails(_id);
+  }, [_id]);
 
   useEffect(() => {
-    Animated.timing(opacityValue, {
+    const intervalId = setInterval(() => {
+      setCurrentIndex(
+        (currentIndex + 1) % (visionDetails?.affirmation.length || 1),
+      );
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [currentIndex, visionDetails]);
+
+  const currentDetails = visionDetails?.affirmation[currentIndex];
+
+  useEffect(() => {
+    // Animate opacity when the image changes
+    Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 500,
       useNativeDriver: true,
     }).start(() => {
-      Animated.timing(opacityValue, {
+      Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 500,
         useNativeDriver: true,
       }).start();
     });
-  }, [currentDetails]);
+  }, [currentIndex, visionDetails, fadeAnim]);
 
   return (
     <View style={styles.container}>
       <View style={styles.slide}>
         <Animated.Image
-          source={currentDetails.image}
-          style={[styles.image, {opacity: opacityValue}]}
+          source={{uri: currentDetails?.url}}
+          style={[styles.image, {opacity: fadeAnim}]}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{currentDetails.text}</Text>
+          <Text style={styles.text}>{currentDetails?.title}</Text>
         </View>
       </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

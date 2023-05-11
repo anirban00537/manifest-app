@@ -63,6 +63,7 @@ const VisionDetails = ({navigation, route}: any) => {
             onPress={() => {
               navigation.navigate('AuthenticatedStack', {
                 screen: 'Player',
+                params: {_id: _id},
               });
             }}>
             <Icon name="play" size={20} color={colors.white} />

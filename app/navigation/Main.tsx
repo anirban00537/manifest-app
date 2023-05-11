@@ -99,16 +99,6 @@ const MainTabs = () => (
         tabBarLabel: () => null, // hide the tab title
       }}
     />
-    <Tab.Screen
-      name="Player"
-      component={Player}
-      options={{
-        title: 'Player',
-        tabBarIcon: ({focused}) => tabBarIcon('file-signature', focused),
-        headerShown: false,
-        tabBarLabel: () => null, // hide the tab title
-      }}
-    />
   </Tab.Navigator>
 );
 
