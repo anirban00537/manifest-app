@@ -7,7 +7,7 @@ import {Circle} from 'react-native-svg';
 import FA from 'react-native-vector-icons/FontAwesome5';
 
 const VisionBoardUserActivityDetails = ({
-  totalAffirmations,
+  days,
   targetDays,
   navigation,
 }: any) => {
@@ -34,25 +34,29 @@ const VisionBoardUserActivityDetails = ({
       <View
         style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
         <AnimatedCircularProgress
-          size={160}
+          size={165}
           width={10}
-          fill={progress}
+          fill={days?.completedPercentage}
           tintColor={colors.green}
           backgroundColor={colors.dark1}
-          // rotation={-115}
           backgroundWidth={20}
           lineCap="round"
-          // arcSweepAngle={240}
           duration={1500}
           renderCap={({center}) => (
             <Circle cx={center.x} cy={center.y} r="10" fill={colors.white} />
           )}>
           {() => (
             <>
-              <Text style={styles.progressText}>{`${progress} Days`}</Text>
-              {targetDays && (
-                <Text style={styles.targetText}>{`/ ${targetDays} Days`}</Text>
-              )}
+              <>
+                <Text
+                  style={
+                    styles.progressText
+                  }>{`${days?.daysPassed} Days`}</Text>
+                <Text
+                  style={
+                    styles.targetText
+                  }>{`/ ${days?.daysBetween} Days`}</Text>
+              </>
             </>
           )}
         </AnimatedCircularProgress>
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   progressText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '900',
     color: colors.text,
   },

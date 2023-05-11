@@ -15,6 +15,7 @@ export const VisionBoard = {
   properties: {
     _id: 'objectId',
     title: 'string',
+    endDate: {type: 'date', default: new Date()},
     createdAt: {type: 'date', default: new Date()},
     updatedAt: {type: 'date', default: new Date()},
     affirmation: {type: 'list', objectType: 'Affirmation'},

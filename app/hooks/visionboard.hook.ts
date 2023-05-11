@@ -5,6 +5,7 @@ import {RealmContext} from '../models';
 
 export const useVisionBoardCreate = () => {
   const [visible, setVisible] = useState(false);
+  const [endDate, setendDate] = useState(false);
   const [affirmations, setAffirmations] = useState<any[]>([]);
   const [title, setTitle] = useState('');
   const navigation = useNavigation();
@@ -17,6 +18,7 @@ export const useVisionBoardCreate = () => {
         realm.create('VisionBoard', {
           _id: new Realm.BSON.ObjectId(),
           title: title,
+          endDate: endDate,
           createdAt: Date(),
           updatedAt: Date(),
           affirmation: affirmations,
@@ -63,6 +65,8 @@ export const useVisionBoardCreate = () => {
     setAffirmations,
     title,
     setTitle,
+    endDate,
+    setendDate,
   };
 };
 
@@ -114,6 +118,26 @@ export const useGetVisionBoardDetails = () => {
   const [error, setError] = useState(null);
   const {useRealm} = RealmContext;
   const realm = useRealm();
+  const getDaysBetweenDates = (startDate: any, endDate: any) => {
+    const start: any = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Calculate the number of milliseconds between the two dates
+    const millisecondsPerDay = 86400000; // Number of milliseconds in a day
+    const timeDiff = end.getTime() - start.getTime();
+
+    // Calculate the number of days between the two dates, rounded down to the nearest integer
+    const daysBetween = Math.floor(timeDiff / millisecondsPerDay);
+
+    // Calculate the number of days that have passed since the start date, rounded down to the nearest integer
+    //@ts-ignore
+    const daysPassed = Math.floor((new Date() - start) / millisecondsPerDay);
+
+    // Calculate the completed days percentage
+    const completedPercentage = Math.floor((daysPassed / daysBetween) * 100);
+
+    return {daysBetween, daysPassed, completedPercentage};
+  };
 
   const getVisionBoardDetails = async (_id: any) => {
     setLoading(true);
@@ -184,6 +208,7 @@ export const useGetVisionBoardDetails = () => {
     error,
     getVisionBoardDetails,
     visionDetails,
+    getDaysBetweenDates,
     addAffirmationToVisionBoard,
     deleteVisionBoard,
   };

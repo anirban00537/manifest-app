@@ -1,7 +1,6 @@
 import {StyleSheet, View, ScrollView, Text} from 'react-native';
-import {Card, FAB, Paragraph, Title, useTheme} from 'react-native-paper';
-import React, {useEffect} from 'react';
-import FA from 'react-native-vector-icons/FontAwesome';
+import {FAB,} from 'react-native-paper';
+import React from 'react';
 import Visioncard from '../components/Cards/Vision.card';
 import colors from '../constants/colors';
 import {useGetVisionBoard} from '../hooks/visionboard.hook';
@@ -9,7 +8,7 @@ import {getGreetingMessage} from '../common/functions';
 import Empty from '../components/Cards/Empty.card';
 
 const VisionBoard = ({navigation}: any) => {
-  const {error, loading, visionBoards} = useGetVisionBoard();
+  const {visionBoards} = useGetVisionBoard();
   const greeting = getGreetingMessage();
 
   return (
@@ -22,8 +21,8 @@ const VisionBoard = ({navigation}: any) => {
       {visionBoards.length > 0 && (
         <ScrollView style={styles.scrollView}>
           <View style={styles.header}>
-            <Text style={styles.title}>{greeting}</Text>
-            <Text style={styles.secondaryTitle}>Welcome Back</Text>
+            <Text style={styles.title}>Welcome Back</Text>
+            <Text style={styles.secondaryTitle}>{greeting}</Text>
           </View>
           <View style={styles.cardsContainer}>
             {visionBoards?.map((item: any, index: any) => (
@@ -72,6 +71,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 29,
     color: colors.text,
+
     fontFamily: 'Poppins-SemiBold',
   },
   emptyContainer: {

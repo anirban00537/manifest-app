@@ -20,6 +20,7 @@ const VisionDetails = ({navigation, route}: any) => {
     getVisionBoardDetails,
     visionDetails,
     addAffirmationToVisionBoard,
+    getDaysBetweenDates,
     deleteVisionBoard,
   }: any = useGetVisionBoardDetails();
   const [visible, setVisible] = React.useState(false);
@@ -37,13 +38,20 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
-  console.log(visionDetails?.affirmation, 'visionDetails?.affirmation');
+  console.log(
+    getDaysBetweenDates(visionDetails?.createdAt, visionDetails?.endDate),
+    'createdAt?.affirmation',
+  );
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
         <VisionDetailsCard
           totalAffirmations={50}
           targetDays={100}
+          days={getDaysBetweenDates(
+            visionDetails?.createdAt,
+            visionDetails?.endDate,
+          )}
           navigation={navigation}
         />
         <View style={styles.header}>

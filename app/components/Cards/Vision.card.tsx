@@ -5,30 +5,32 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {Card, Paragraph, Title, ProgressBar} from 'react-native-paper';
+import {Card, Title} from 'react-native-paper';
 import colors from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
-const Visioncard = ({item, title, image}: any) => {
+const Visioncard = ({item, title, image, animatedValue}: any) => {
   const navigation: any = useNavigation();
 
   return (
     <TouchableOpacity
-      style={styles.card}
+      style={styles.constinar}
       onPress={() => {
         navigation.navigate('AuthenticatedStack', {
           screen: 'VisionDetails',
           params: {_id: item._id},
         });
       }}>
-      <Card>
+      <Card style={styles.card}>
         <ImageBackground
           source={{
             uri: image,
           }}
           style={styles.cardBackground}>
-          <View
-            style={[styles.overlay, {backgroundColor: colors.background}]}
+          <LinearGradient
+            colors={['rgba(0,0,0,0)', 'rgba(0,0,0,2.7)']}
+            style={styles.gradient}
           />
           <Title
             style={[
@@ -44,6 +46,11 @@ const Visioncard = ({item, title, image}: any) => {
 };
 
 const styles = StyleSheet.create({
+  constinar: {
+    width: '100%',
+    padding: 5,
+  },
+
   card: {
     width: '100%',
     marginVertical: 8,
@@ -58,16 +65,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   cardTitle: {
-    fontSize: 24,
+    fontSize: 22,
     marginBottom: 8,
-    // textShadowColor: 'rgba(0, 0, 0, 0.5)',
-    // textShadowOffset: {width: 1, height: 1},
-    // textShadowRadius: 2,
+    paddingTop: 5,
   },
 
-  overlay: {
+  gradient: {
     ...StyleSheet.absoluteFillObject,
-    opacity: 0.5,
   },
 });
 

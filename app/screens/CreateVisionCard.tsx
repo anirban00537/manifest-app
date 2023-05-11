@@ -12,6 +12,7 @@ import {useVisionBoardCreate} from '../hooks/visionboard.hook';
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
 import AffirmationCard from '../components/Cards/Affirmatio.card';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import DatePicker from '../components/Datepicker';
 
 const CreateVisionCard = ({navigation}: any) => {
   const {
@@ -22,6 +23,9 @@ const CreateVisionCard = ({navigation}: any) => {
     setVisible,
     title,
     visible,
+    endDate,
+    
+    setendDate,
   } = useVisionBoardCreate();
   const showModal = () => setVisible(true);
   const [step, setStep] = useState(0);
@@ -37,6 +41,10 @@ const CreateVisionCard = ({navigation}: any) => {
     ]);
     hideModal();
   };
+  const handleEndDate = (date: any) => {
+    setendDate(date);
+  };
+
   const handleSave = () => {
     createVisionBoard(title);
   };
@@ -54,7 +62,10 @@ const CreateVisionCard = ({navigation}: any) => {
               value={title}
               placeholder="Enter title"
             />
-            {title && (
+            <View>
+              <DatePicker onDateSelect={handleEndDate} />
+            </View>
+            {title && endDate && (
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
