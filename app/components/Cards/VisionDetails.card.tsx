@@ -77,12 +77,14 @@ const styles = StyleSheet.create({
 
   progressText: {
     fontSize: 16,
-    fontWeight: '900',
+    // fontWeight: '900',
+    fontFamily: 'Poppins-SemiBold',
     color: colors.text,
   },
   targetText: {
     fontSize: 12,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     color: colors.text,
   },
   backButton: {
@@ -98,8 +100,9 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: colors.text,
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 

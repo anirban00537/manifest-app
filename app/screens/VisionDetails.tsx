@@ -75,7 +75,7 @@ const VisionDetails = ({navigation, route}: any) => {
               });
             }}>
             <Icon name="play" size={20} color={colors.white} />
-            <Text style={styles.playButtonText}>Play</Text>
+            <Text style={styles.playButtonText}>Start Movie</Text>
           </TouchableOpacity>
         </View>
 
@@ -142,19 +142,20 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
     marginHorizontal: 15,
   },
   title: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontFamily: 'Poppins-SemiBold',
     color: colors.text,
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     color: colors.text,
     marginVertical: 16,
     alignSelf: 'center',
@@ -179,7 +180,8 @@ const styles = StyleSheet.create({
   },
   startButtonText: {
     color: colors.text,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
   },
   practicesContainer: {
     flexDirection: 'row',
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   playButton: {
-    backgroundColor: colors.background1,
+    backgroundColor: colors.primaryDark,
     width: '48%',
     height: 48,
     elevation: 10,
@@ -216,16 +218,17 @@ const styles = StyleSheet.create({
 
   practicesHeading: {
     fontSize: 17,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: colors.text,
     marginBottom: 10,
+    fontFamily: 'Poppins-SemiBold',
   },
   resourcesContainer: {
     marginBottom: 24,
   },
   resourcesHeading: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins-SemiBold',
     color: colors.text,
     marginBottom: 8,
   },
@@ -240,6 +243,7 @@ const styles = StyleSheet.create({
   },
   resourceText: {
     color: colors.text,
+    fontFamily: 'Poppins-Regular',
   },
   fab: {
     position: 'absolute',
