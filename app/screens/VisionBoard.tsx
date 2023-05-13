@@ -1,11 +1,12 @@
 import {StyleSheet, View, ScrollView, Text} from 'react-native';
-import {FAB,} from 'react-native-paper';
+import {FAB} from 'react-native-paper';
 import React from 'react';
 import Visioncard from '../components/Cards/Vision.card';
 import colors from '../constants/colors';
 import {useGetVisionBoard} from '../hooks/visionboard.hook';
 import {getGreetingMessage} from '../common/functions';
 import Empty from '../components/Cards/Empty.card';
+import LinearGradient from 'react-native-linear-gradient';
 
 const VisionBoard = ({navigation}: any) => {
   const {visionBoards} = useGetVisionBoard();
@@ -64,14 +65,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     padding: 20,
   },
+  gradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '100%',
+  },
   header: {
     marginTop: 20,
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 20,
   },
   title: {
-    fontSize: 29,
+    fontSize: 40,
     color: colors.text,
-
     fontFamily: 'Poppins-SemiBold',
   },
   emptyContainer: {
@@ -82,22 +90,22 @@ const styles = StyleSheet.create({
   secondaryTitle: {
     fontSize: 22,
     color: colors.primaryLight,
-    // marginBottom: 10,
     textAlign: 'center',
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-SemiBold',
   },
   scrollView: {
     flex: 1,
+    marginTop: 20,
   },
   cardsContainer: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    marginBottom: 100,
   },
   fab: {
     position: 'absolute',
-    margin: 16,
+    margin: 20,
     right: 0,
     bottom: 0,
     backgroundColor: colors.primary,

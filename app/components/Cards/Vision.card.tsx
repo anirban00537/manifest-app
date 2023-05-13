@@ -8,9 +8,9 @@ import {
 import {Card, Title} from 'react-native-paper';
 import colors from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const Visioncard = ({item, title, image, animatedValue}: any) => {
+const Visioncard = ({item, title, image}: any) => {
   const navigation: any = useNavigation();
 
   return (
@@ -28,29 +28,36 @@ const Visioncard = ({item, title, image, animatedValue}: any) => {
             uri: image,
           }}
           style={styles.cardBackground}>
-          <LinearGradient
-            colors={['rgba(0,0,0,0)', 'rgba(0,0,0,2.7)']}
-            style={styles.gradient}
-          />
-          <Title
-            style={[
-              styles.cardTitle,
-              {color: colors.text, fontFamily: 'Poppins-SemiBold'},
-            ]}>
-            {title}
-          </Title>
+          <View style={styles.gradient} />
+          <View style={styles.cardContent}>
+            <Title
+              style={[
+                styles.cardTitle,
+                {color: colors.text, fontFamily: 'Poppins-SemiBold'},
+              ]}>
+              {title}
+            </Title>
+            <View style={styles.cardFooter}>
+              <Title style={styles.cardFooterText}>
+                Affirmed a total of {55} times
+              </Title>
+              <Icon
+                name="play-circle-outline"
+                size={46}
+                color={colors.primary}
+              />
+            </View>
+          </View>
         </ImageBackground>
       </Card>
     </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
   constinar: {
     width: '100%',
     padding: 5,
   },
-
   card: {
     width: '100%',
     marginVertical: 8,
@@ -69,9 +76,23 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingTop: 5,
   },
-
   gradient: {
     ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', // semi-transparent black
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardFooterText: {
+    fontSize: 16,
+    // marginLeft: 8,
+    color: colors.primary,
   },
 });
 

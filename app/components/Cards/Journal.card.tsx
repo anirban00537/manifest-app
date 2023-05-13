@@ -22,12 +22,11 @@ const JournalCard = ({data}: any) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 12,
-    // backgroundColor: colors.background,
   },
   card: {
     borderRadius: 10,
     overflow: 'hidden',
-    backgroundColor: colors.background1,
+    backgroundColor: colors.background,
     color: colors.text,
   },
   contentContainer: {

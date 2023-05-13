@@ -17,7 +17,7 @@ const {width} = Dimensions.get('window');
 
 const VisionBoardUserActivityDetails = ({days, navigation}: any) => {
   const remainingPercentage = 100 - (days?.completedPercentage ?? 0);
-
+  console.log(days, 'daysdays');
   return (
     <ImageBackground
       source={require('../../assets/premium.jpg')}
@@ -53,9 +53,7 @@ const VisionBoardUserActivityDetails = ({days, navigation}: any) => {
             )}>
             {() => (
               <>
-                <Text style={styles.progressText}>
-                  {`${remainingPercentage}%`}
-                </Text>
+                <Text style={styles.progressText}>{`${days.daysBetween}`}</Text>
                 <Text style={styles.targetText}>Day's Remaining</Text>
               </>
             )}
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   progressText: {
-    fontSize: 50,
+    fontSize: 60,
     color: '#fff',
     fontWeight: 'bold',
   },
