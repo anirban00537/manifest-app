@@ -1,108 +1,141 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  ImageBackground,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import colors from '../../constants/colors';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {Circle} from 'react-native-svg';
 import FA from 'react-native-vector-icons/FontAwesome5';
+import colors from '../../constants/colors';
 
-const VisionBoardUserActivityDetails = ({
-  days,
-  targetDays,
-  navigation,
-}: any) => {
-  const progress = 50; // This is just an example value for demonstration purposes
+const {width} = Dimensions.get('window');
+
+const VisionBoardUserActivityDetails = ({days, navigation}: any) => {
+  const remainingPercentage = 100 - (days?.completedPercentage ?? 0);
 
   return (
-    <LinearGradient
-      colors={[colors.dark1, colors.primary]}
-      start={{x: 0, y: 0}}
-      end={{x: 2, y: 1}}
-      style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}>
-        <FA
-          name="arrow-left"
-          size={20}
-          color={colors.text}
-          onPress={() => navigation.canGoBack()}
-          style={styles.backButtonIcon}
-        />
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity>
-      <View
-        style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
-        <AnimatedCircularProgress
-          size={165}
-          width={10}
-          fill={days?.completedPercentage}
-          tintColor={colors.green}
-          backgroundColor={colors.dark1}
-          backgroundWidth={20}
-          lineCap="round"
-          duration={1500}
-          renderCap={({center}) => (
-            <Circle cx={center.x} cy={center.y} r="10" fill={colors.white} />
-          )}>
-          {() => (
-            <>
+    <ImageBackground
+      source={require('../../assets/premium.jpg')}
+      style={styles.backgroundImage}>
+      <LinearGradient
+        colors={[colors.primary, 'rgba(0,0,0,0.5)', 'rgba(0,0,0,0.3)']}
+        start={{x: 2, y: 0}}
+        end={{x: 0, y: 3}}
+        style={styles.container}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <FA
+            name="arrow-left"
+            size={20}
+            color="white"
+            style={styles.backButtonIcon}
+          />
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+        <View style={styles.circularProgressContainer}>
+          <AnimatedCircularProgress
+            size={width / 2.2}
+            width={10}
+            fill={days?.completedPercentage}
+            tintColor="#5bc5a7"
+            backgroundColor="#181818"
+            backgroundWidth={20}
+            lineCap="round"
+            duration={1500}
+            renderCap={({center}) => (
+              <Circle cx={center.x} cy={center.y} r="10" fill="#5bc5a7" />
+            )}>
+            {() => (
               <>
-                <Text
-                  style={
-                    styles.progressText
-                  }>{`${days?.daysPassed} Days`}</Text>
-                <Text
-                  style={
-                    styles.targetText
-                  }>{`/ ${days?.daysBetween} Days`}</Text>
+                <Text style={styles.progressText}>
+                  {`${remainingPercentage}%`}
+                </Text>
+                <Text style={styles.targetText}>Day's Remaining</Text>
               </>
-            </>
-          )}
-        </AnimatedCircularProgress>
-      </View>
-    </LinearGradient>
+            )}
+          </AnimatedCircularProgress>
+        </View>
+        <View style={styles.daysContainer}>
+          <Text style={styles.daysText}>{`55`}</Text>
+          <Text style={styles.targetDaysText}>{`Total practice sessions`}</Text>
+        </View>
+        <Text style={styles.practiceText}>
+          Keep practicing to achieve optimal results.
+        </Text>
+      </LinearGradient>
+    </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    height: 200,
-    marginBottom: 16,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-
-  progressText: {
-    fontSize: 16,
-    // fontWeight: '900',
-    fontFamily: 'Poppins-SemiBold',
-    color: colors.text,
-  },
-  targetText: {
-    fontSize: 12,
-    // fontWeight: 'bold',
-    fontFamily: 'Poppins-SemiBold',
-    color: colors.text,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   backButton: {
     position: 'absolute',
+    top: 20,
+    left: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    top: 10,
-    left: 10,
-    padding: 10,
+    backgroundColor: 'transparent',
   },
   backButtonIcon: {
-    marginRight: 10,
+    marginRight: 5,
   },
   backButtonText: {
-    fontSize: 18,
-    // fontWeight: 'bold',
-    color: colors.text,
-    fontFamily: 'Poppins-SemiBold',
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  circularProgressContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  progressText: {
+    fontSize: 50,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  targetText: {
+    fontSize: 13,
+    color: colors.white,
+    // opacity: 0.7,
+  },
+  daysContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginBottom: 10,
+  },
+  daysText: {
+    fontSize: 44,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  targetDaysText: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 0.7,
+    marginLeft: 5,
+  },
+  practiceText: {
+    fontSize: 16,
+    color: colors.white,
+    textAlign: 'center',
+    opacity: 0.7,
   },
 });
 

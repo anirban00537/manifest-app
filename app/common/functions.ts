@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function getGreetingMessage() {
   const now = new Date();
   const currentHour = now.getHours();
@@ -11,4 +13,8 @@ export function getGreetingMessage() {
   } else {
     return 'Good Night';
   }
+}
+
+export function formateDate(date: any) {
+  return moment(date).format('MMMM Do YYYY, h:mm:ss a');
 }
