@@ -1,13 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  Dimensions,
-  Animated,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, Dimensions, Animated, StyleSheet} from 'react-native';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
+import Tts from 'react-native-tts';
 
 const {width} = Dimensions.get('window');
 const Player = ({navigation, route}: any) => {
@@ -15,7 +9,7 @@ const Player = ({navigation, route}: any) => {
     useGetVisionBoardDetails();
   const {_id} = route.params;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+  const fadeAnim = useRef(new Animated.Value(5)).current; // Initial value for opacity: 0
 
   useEffect(() => {
     getVisionBoardDetails(_id);
@@ -33,6 +27,19 @@ const Player = ({navigation, route}: any) => {
 
   const currentDetails = visionDetails?.affirmation[currentIndex];
 
+  const speakNextImage = () => {
+    if (currentDetails?.title) {
+      Tts.speak(currentDetails?.title, {
+        //@ts-ignore
+        onDone: () => {
+          setCurrentIndex(
+            (currentIndex + 1) % (visionDetails?.affirmation.length || 1),
+          );
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     // Animate opacity when the image changes
     Animated.timing(fadeAnim, {
@@ -44,10 +51,14 @@ const Player = ({navigation, route}: any) => {
         toValue: 1,
         duration: 500,
         useNativeDriver: true,
-      }).start();
+      }).start(speakNextImage);
     });
-  }, [currentIndex, visionDetails, fadeAnim]);
 
+    return () => {
+      // Stop TTS if component unmounts or image changes
+      Tts.stop();
+    };
+  }, [currentIndex, visionDetails, fadeAnim]);
   return (
     <View style={styles.container}>
       <View style={styles.slide}>
@@ -62,6 +73,7 @@ const Player = ({navigation, route}: any) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
