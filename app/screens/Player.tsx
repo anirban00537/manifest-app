@@ -14,51 +14,28 @@ const Player = ({navigation, route}: any) => {
   useEffect(() => {
     getVisionBoardDetails(_id);
   }, [_id]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentIndex(
-        (currentIndex + 1) % (visionDetails?.affirmation.length || 1),
-      );
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, [currentIndex, visionDetails]);
-
-  const currentDetails = visionDetails?.affirmation[currentIndex];
-
   const speakNextImage = () => {
-    if (currentDetails?.title) {
-      Tts.speak(currentDetails?.title, {
-        //@ts-ignore
-        onDone: () => {
+    setTimeout(async () => {
+      if (currentDetails?.title) {
+        await Tts.speak(currentDetails?.title);
+        await Tts.addEventListener('tts-finish', event => {
           setCurrentIndex(
             (currentIndex + 1) % (visionDetails?.affirmation.length || 1),
           );
-        },
-      });
-    }
+        });
+      }
+    }, 1500);
   };
-
   useEffect(() => {
-    // Animate opacity when the image changes
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(speakNextImage);
-    });
-
+    speakNextImage();
+  }, [currentIndex, visionDetails]);
+  useEffect(() => {
     return () => {
-      // Stop TTS if component unmounts or image changes
       Tts.stop();
     };
-  }, [currentIndex, visionDetails, fadeAnim]);
+  }, []);
+  const currentDetails = visionDetails?.affirmation[currentIndex];
+
   return (
     <View style={styles.container}>
       <View style={styles.slide}>
