@@ -20,7 +20,7 @@ const DatePicker = ({onDateSelect}: any) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Button
         mode="outlined"
         onPress={() => setDatePickerVisible(true)}
@@ -48,25 +48,29 @@ const DatePicker = ({onDateSelect}: any) => {
 };
 
 const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    alignSelf: 'center',
+  container: {
+    marginBottom: 20,
   },
   button: {
     width: '100%',
-    alignSelf: 'center',
-    // marginTop: 20,
-    marginBottom: 10,
-    borderRadius: 10,
-    backgroundColor: colors.background1,
-    elevation: 0,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    backgroundColor: colors.background,
+    borderWidth: 0.3,
+    borderColor: colors.grayText,
   },
   buttonLabel: {
     fontSize: 18,
     fontWeight: 'bold',
     color: colors.primary,
+  },
+  modal: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignSelf: 'center',
   },
 });
 

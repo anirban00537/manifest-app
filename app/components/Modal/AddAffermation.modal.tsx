@@ -13,8 +13,6 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
     ImagePicker.openPicker({
       mediaType: 'photo',
     }).then((response: any) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -62,30 +60,31 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
         <TextInput
           style={styles.input}
           value={affirmation}
-          onChangeText={text => setAffirmation(text)}
+          onChangeText={setAffirmation}
           placeholder="Type your affirmation here"
-          placeholderTextColor={colors.white}
+          placeholderTextColor={colors.background2}
         />
         <View style={styles.buttonContainer}>
           <Button
             mode="outlined"
-            style={{
-              backgroundColor: colors.danger,
-            }}
-            labelStyle={{color: colors.white}}
-            onPress={hideModal}>
+            style={styles.cancelButton}
+            labelStyle={styles.buttonLabel}
+            onPress={() => {
+              setAffirmation(''), setImage(null);
+              hideModal();
+            }}>
             Cancel
           </Button>
           <Button
             mode="contained"
-            style={{backgroundColor: colors.primary}}
-            labelStyle={{color: colors.white}}
+            style={styles.addButton}
+            labelStyle={styles.buttonLabel}
             onPress={() => {
               handleSave(affirmation, image);
               setImage(null);
               setAffirmation('');
             }}>
-            Add Affirmation
+            Add
           </Button>
         </View>
       </Modal>
@@ -95,58 +94,77 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
 
 const styles = StyleSheet.create({
   containerStyle: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.background1,
     padding: 20,
-    borderRadius: 10,
     marginHorizontal: 20,
+    borderRadius: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
+    color: colors.text,
     marginBottom: 10,
-    color: colors.white,
   },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: colors.background2,
-    borderRadius: 5,
-    padding: 10,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 20,
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 20,
   },
   imagePickerButton: {
     backgroundColor: colors.primary,
-    height: 80,
-    width: 80,
-    borderRadius: 40,
-    alignSelf: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     justifyContent: 'center',
-    marginVertical: 20,
-  },
-  image: {
-    height: 200,
-    width: '100%',
-    borderRadius: 10,
+    alignItems: 'center',
+    alignSelf: 'center',
     marginBottom: 20,
   },
   removeImageButton: {
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: colors.background,
+    backgroundColor: colors.secondary,
     borderRadius: 20,
     width: 40,
     height: 40,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  removeImageIcon: {
+  input: {
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    padding: 10,
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.text,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cancelButton: {
+    backgroundColor: colors.background,
+    borderWidth: 0,
+    borderRadius: 10,
+    padding: 10,
+    width: '45%',
+  },
+  addButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    padding: 10,
+    width: '45%',
+  },
+  buttonLabel: {
+    fontWeight: 'bold',
+    fontSize: 16,
     color: colors.white,
-    fontSize: 24,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
 });
 

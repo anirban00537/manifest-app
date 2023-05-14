@@ -13,6 +13,7 @@ import AddAffermationModal from '../components/Modal/AddAffermation.modal';
 import AffirmationCard from '../components/Cards/Affirmatio.card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from '../components/Datepicker';
+import FA from 'react-native-vector-icons/FontAwesome5';
 
 const CreateVisionCard = ({navigation}: any) => {
   const {
@@ -24,7 +25,7 @@ const CreateVisionCard = ({navigation}: any) => {
     title,
     visible,
     endDate,
-    
+
     setendDate,
   } = useVisionBoardCreate();
   const showModal = () => setVisible(true);
@@ -51,184 +52,146 @@ const CreateVisionCard = ({navigation}: any) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Create VisionCard</Text>
-      <View style={styles.form}>
-        {step === 0 && (
-          <>
-            <Text style={styles.label}>Board Name</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => setTitle(text)}
-              value={title}
-              placeholder="Enter title"
-            />
-            <View>
-              <DatePicker onDateSelect={handleEndDate} />
-            </View>
-            {title && endDate && (
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  setStep(1);
-                }}>
-                <Text style={styles.buttonText}>Next</Text>
-              </TouchableOpacity>
-            )}
-          </>
-        )}
-        {step === 1 && (
-          <>
-            <TouchableOpacity
-              style={styles.buttonUploadArea}
-              onPress={showModal}>
-              <Icon
-                name="plus"
-                size={20}
-                color="white"
-                style={styles.buttonIcon}
-              />
-              <Text style={styles.buttonText}>Add Affirmations</Text>
-            </TouchableOpacity>
-            {affirmations.length !== 0 && (
-              <TouchableOpacity style={styles.button} onPress={handleSave}>
-                <Text style={styles.buttonText}>Save</Text>
-              </TouchableOpacity>
-            )}
-
-            <AddAffermationModal
-              visible={visible}
-              hideModal={hideModal}
-              handleSave={handleSaveAffirmation}
-            />
-            <View>
-              {affirmations?.map((affirmation: any, index: any) => (
-                <AffirmationCard
-                  key={index}
-                  date={affirmation.date}
-                  navigation={navigation}
-                  image={affirmation.url}
-                  title={affirmation.title}
-                />
-              ))}
-            </View>
-          </>
-        )}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginHorizontal: 22,
+          height: 80,
+        }}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}>
+          <FA
+            name="arrow-left"
+            size={20}
+            color="white"
+            style={styles.backButtonIcon}
+          />
+        </TouchableOpacity>
+        <Text style={styles.title}>Create Visionboard</Text>
+        <TouchableOpacity
+          disabled={
+            !title || !endDate || affirmations.length <= 0 ? true : false
+          }
+          style={styles.addButton}
+          onPress={handleSave}>
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableOpacity>
       </View>
+      <View style={styles.form}>
+        <Text style={styles.label}>Board Name</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={setTitle}
+          value={title}
+          placeholder="Enter title"
+          placeholderTextColor={colors.white}
+        />
+        <View style={styles.datePickerContainer}>
+          <Text style={styles.label}>End Date</Text>
+          <DatePicker onDateSelect={handleEndDate} />
+        </View>
+      </View>
+      <View style={styles.affirmationContainer}>
+        <TouchableOpacity
+          style={styles.addAffirmationButton}
+          onPress={() => showModal()}>
+          <Icon name="plus" size={20} color={colors.white} />
+          <Text style={styles.addAffirmationButtonText}>Add Affirmation</Text>
+        </TouchableOpacity>
+        {affirmations.map((affirmation, index) => (
+          <AffirmationCard
+            key={index}
+            date={affirmation.date}
+            navigation={navigation}
+            image={affirmation.url}
+            title={affirmation.title}
+          />
+        ))}
+      </View>
+      <AddAffermationModal
+        visible={visible}
+        hideModal={hideModal}
+        handleSave={handleSaveAffirmation}
+      />
     </ScrollView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: colors.background,
   },
   title: {
-    fontSize: 30,
-    marginTop: 10,
+    fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 16,
-    color: colors.text,
+    textAlign: 'center',
+    justifyContent: 'center',
+    color: colors.white,
+    textTransform: 'uppercase',
   },
   form: {
-    flex: 1,
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   label: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
-    color: colors.text,
+    marginBottom: 10,
+    color: colors.white,
   },
   input: {
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 4,
-    padding: 8,
-    marginBottom: 16,
-    color: colors.text,
+    backgroundColor: colors.background,
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 20,
+    color: colors.white,
+    borderWidth: 0.3,
+    borderColor: colors.grayText,
   },
-  multilineInput: {
-    height: 80,
-    textAlignVertical: 'top',
+  datePickerContainer: {
+    marginBottom: 20,
   },
-  imagePreview: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-    marginBottom: 16,
+  backButtonIcon: {
+    marginRight: 5,
   },
-  button: {
-    backgroundColor: colors.primary,
-    padding: 12,
-    borderRadius: 4,
+
+  addButton: {
+    backgroundColor: colors.background,
     alignItems: 'center',
-    marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  buttonUploadArea: {
-    backgroundColor: colors.background1,
-    borderWidth: 1,
-    // borderColor: colors.border,
-    padding: 12,
-    height: 120,
-    borderRadius: 4,
-    alignItems: 'center',
-    marginBottom: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
   },
   buttonText: {
-    fontSize: 18,
+    color: colors.primary,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
-    marginLeft: 8,
-  },
-  buttonIcon: {
-    color: 'white',
-    fontSize: 34,
-    marginBottom: 10,
+    textTransform: 'capitalize',
   },
   affirmationContainer: {
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  addAffirmationButton: {
+    backgroundColor: colors.background,
+    borderRadius: 5,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 20,
   },
-  affirmationText: {
-    flex: 1,
+  addAffirmationButtonText: {
+    color: colors.white,
     fontSize: 16,
-    color: colors.text,
-  },
-  affirmationImage: {
-    width: 60,
-    height: 60,
-    marginRight: 8,
-    borderRadius: 30,
-  },
-  saveButton: {
-    backgroundColor: colors.success,
-    padding: 12,
-    borderRadius: 4,
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  cancelButton: {
-    backgroundColor: colors.danger,
-    padding: 12,
-    borderRadius: 4,
-    alignItems: 'center',
-  },
-  modalContainer: {
-    backgroundColor: 'white',
-    padding: 16,
-    borderRadius: 4,
-  },
-  modalTitle: {
-    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 16,
-    color: colors.text,
+    marginLeft: 10,
   },
 });
+
 export default CreateVisionCard;
