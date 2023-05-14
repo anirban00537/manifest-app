@@ -28,12 +28,11 @@ const Player = ({navigation, route}: any) => {
   };
   useEffect(() => {
     speakNextImage();
-  }, [currentIndex, visionDetails]);
-  useEffect(() => {
     return () => {
       Tts.stop();
     };
-  }, []);
+  }, [currentIndex, visionDetails]);
+
   const currentDetails = visionDetails?.affirmation[currentIndex];
 
   return (
