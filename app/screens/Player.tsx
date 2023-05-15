@@ -69,11 +69,12 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     position: 'absolute',
-    bottom: 0,
     padding: 20,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    height: '100%',
     width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
     color: '#fff',

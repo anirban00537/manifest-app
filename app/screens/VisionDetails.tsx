@@ -13,9 +13,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {FAB} from 'react-native-paper';
 import AddAffermationModal from '../components/Modal/AddAffermation.modal';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
+
 import Empty from '../components/Cards/Empty.card';
+import {useIsFocused} from '@react-navigation/native';
 
 const VisionDetails = ({navigation, route}: any) => {
+  const isFocused = useIsFocused();
+
   const {
     getVisionBoardDetails,
     visionDetails,
@@ -28,7 +32,8 @@ const VisionDetails = ({navigation, route}: any) => {
   const {_id} = route.params;
   useEffect(() => {
     getVisionBoardDetails(_id);
-  }, [_id]);
+    console.log('callibnggggg');
+  }, [_id, isFocused]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleAddFunction = (affirmation: any, image: any) => {
