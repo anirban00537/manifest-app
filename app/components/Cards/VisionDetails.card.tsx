@@ -15,7 +15,11 @@ import colors from '../../constants/colors';
 
 const {width} = Dimensions.get('window');
 
-const VisionBoardUserActivityDetails = ({days, navigation}: any) => {
+const VisionBoardUserActivityDetails = ({
+  days,
+  navigation,
+  visionDetails,
+}: any) => {
   const remainingPercentage = 100 - (days?.completedPercentage ?? 0);
   console.log(days, 'daysdays');
   return (
@@ -60,7 +64,7 @@ const VisionBoardUserActivityDetails = ({days, navigation}: any) => {
           </AnimatedCircularProgress>
         </View>
         <View style={styles.daysContainer}>
-          <Text style={styles.daysText}>{`55`}</Text>
+          <Text style={styles.daysText}>{visionDetails?.total_practiced}</Text>
           <Text style={styles.targetDaysText}>{`Total practice sessions`}</Text>
         </View>
         <Text style={styles.practiceText}>

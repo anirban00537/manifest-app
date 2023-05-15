@@ -22,6 +22,7 @@ const VisionDetails = ({navigation, route}: any) => {
     addAffirmationToVisionBoard,
     getDaysBetweenDates,
     deleteVisionBoard,
+    updatePractice,
   }: any = useGetVisionBoardDetails();
   const [visible, setVisible] = React.useState(false);
   const {_id} = route.params;
@@ -30,7 +31,7 @@ const VisionDetails = ({navigation, route}: any) => {
   }, [_id]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const handleEditFunction = (affirmation: any, image: any) => {
+  const handleAddFunction = (affirmation: any, image: any) => {
     addAffirmationToVisionBoard(_id, {
       _id: new Realm.BSON.ObjectId(),
       url: image,
@@ -38,10 +39,7 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
-  console.log(
-    getDaysBetweenDates(visionDetails?.createdAt, visionDetails?.endDate),
-    'createdAt?.affirmation',
-  );
+  console.log(visionDetails?.total_practiced, 'createdAt?.affirmation');
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
@@ -52,6 +50,7 @@ const VisionDetails = ({navigation, route}: any) => {
             visionDetails?.createdAt,
             visionDetails?.endDate,
           )}
+          visionDetails={visionDetails}
           navigation={navigation}
         />
         <View style={styles.header}>
@@ -68,7 +67,8 @@ const VisionDetails = ({navigation, route}: any) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.playButton}
-            onPress={() => {
+            onPress={async () => {
+              updatePractice(_id);
               navigation.navigate('AuthenticatedStack', {
                 screen: 'Player',
                 params: {_id: _id},
@@ -105,7 +105,7 @@ const VisionDetails = ({navigation, route}: any) => {
       <AddAffermationModal
         visible={visible}
         hideModal={hideModal}
-        handleSave={handleEditFunction}
+        handleSave={handleAddFunction}
       />
 
       <FAB

@@ -18,6 +18,7 @@ export const useVisionBoardCreate = () => {
         realm.create('VisionBoard', {
           _id: new Realm.BSON.ObjectId(),
           title: title,
+          total_practiced: 0,
           endDate: endDate,
           createdAt: Date(),
           updatedAt: Date(),
@@ -113,7 +114,7 @@ export const useGetVisionBoard = () => {
   };
 };
 export const useGetVisionBoardDetails = () => {
-  const [visionDetails, setVisionDetails] = useState();
+  const [visionDetails, setVisionDetails] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const {useRealm} = RealmContext;
@@ -203,6 +204,22 @@ export const useGetVisionBoardDetails = () => {
     }
   };
 
+  const updatePractice = async (visionBoardId: string) => {
+    let total_practiced = visionDetails?.total_practiced;
+    const visionBoard: any = await realm.objectForPrimaryKey(
+      'VisionBoard',
+      visionBoardId,
+    );
+    if (!visionBoard) {
+      throw new Error(`Could not find VisionBoard with id ${visionBoardId}`);
+    }
+
+    console.log(total_practiced, 'fffffffffffff');
+    await realm.write(() => {
+      visionBoard.total_practiced = total_practiced + 1;
+    });
+  };
+
   return {
     loading,
     error,
@@ -211,5 +228,6 @@ export const useGetVisionBoardDetails = () => {
     getDaysBetweenDates,
     addAffirmationToVisionBoard,
     deleteVisionBoard,
+    updatePractice,
   };
 };

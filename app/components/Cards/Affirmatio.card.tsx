@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 0.2,
     borderColor: colors.grayText,
+    padding: 10,
   },
   imageContainer: {
     position: 'relative',
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   contentContainer: {
-    padding: 16,
     width: '70%',
+    marginLeft: 7,
     justifyContent: 'space-between',
   },
   cardTitle: {

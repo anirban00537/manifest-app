@@ -15,6 +15,7 @@ export const VisionBoard = {
   properties: {
     _id: 'objectId',
     title: 'string',
+    total_practiced: {type: 'int', default: 0},
     endDate: {type: 'date', default: new Date()},
     createdAt: {type: 'date', default: new Date()},
     updatedAt: {type: 'date', default: new Date()},
