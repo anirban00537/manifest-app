@@ -44,7 +44,6 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
-  console.log(visionDetails?.total_practiced, 'createdAt?.affirmation');
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>

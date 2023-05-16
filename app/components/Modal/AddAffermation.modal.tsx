@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import {IconButton, Modal, Portal, Button} from 'react-native-paper';
 import colors from '../../constants/colors';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -60,9 +60,14 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
         <TextInput
           style={styles.input}
           value={affirmation}
+          autoComplete="off"
           onChangeText={setAffirmation}
           placeholder="Type your affirmation here"
           placeholderTextColor={colors.background2}
+          numberOfLines={5}
+          multiline
+          maxLength={100}
+          autoCorrect={false} // Turn off auto correction
         />
         <View style={styles.buttonContainer}>
           <Button
@@ -70,7 +75,8 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
             style={styles.cancelButton}
             labelStyle={styles.buttonLabel}
             onPress={() => {
-              setAffirmation(''), setImage(null);
+              setAffirmation('');
+              setImage(null);
               hideModal();
             }}>
             Cancel
