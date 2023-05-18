@@ -2,15 +2,22 @@ import React, {useState, useRef, useEffect} from 'react';
 import {View, Text, Dimensions, Animated, StyleSheet} from 'react-native';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
 import Tts from 'react-native-tts';
+import {ProgressBar} from 'react-native-paper';
+import colors from '../constants/colors';
+import {useKeepAwake} from '@sayem314/react-native-keep-awake';
 
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const Player = ({navigation, route}: any) => {
+  useKeepAwake();
+
   const {getVisionBoardDetails, visionDetails}: any =
     useGetVisionBoardDetails();
+  const time = 8000;
   const {_id} = route.params;
   const [currentIndex, setCurrentIndex] = useState(0);
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
-  const scaleAnim = useRef(new Animated.Value(1)).current; // Initial value for scale: 1
+  const [remainingTime, setRemainingTime] = useState(time);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     getVisionBoardDetails(_id);
@@ -21,7 +28,8 @@ const Player = ({navigation, route}: any) => {
       setCurrentIndex(
         (currentIndex + 1) % (visionDetails?.affirmation.length || 1),
       );
-    }, 10000);
+      setRemainingTime(time);
+    }, time);
 
     return () => clearInterval(intervalId);
   }, [currentIndex, visionDetails]);
@@ -31,11 +39,11 @@ const Player = ({navigation, route}: any) => {
   const speakNextImage = () => {
     if (currentDetails?.title) {
       Tts.speak(currentDetails?.title);
+      Tts.setDefaultRate(0.5789);
     }
   };
 
   useEffect(() => {
-    // Animate opacity and scale when the image changes
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -62,14 +70,27 @@ const Player = ({navigation, route}: any) => {
       ]).start(speakNextImage);
     });
 
+    const timerId = setInterval(() => {
+      setRemainingTime(prevRemainingTime =>
+        Math.max(0, prevRemainingTime - 80),
+      );
+    }, 80);
+
     return () => {
-      // Stop TTS if component unmounts or image changes
       Tts.stop();
+      clearInterval(timerId);
     };
   }, [currentIndex, visionDetails, fadeAnim, scaleAnim]);
 
   return (
     <View style={styles.container}>
+      <View style={styles.progressBarContainer}>
+        <ProgressBar
+          progress={(time - remainingTime) / time}
+          color={colors.white}
+          style={styles.progressBar}
+        />
+      </View>
       <View style={styles.slide}>
         <Animated.Image
           source={{uri: currentDetails?.url}}
@@ -78,6 +99,7 @@ const Player = ({navigation, route}: any) => {
             {opacity: fadeAnim, transform: [{scale: scaleAnim}]},
           ]}
         />
+        <View style={styles.overlay} />
         <View style={styles.textContainer}>
           <Text style={styles.text}>{currentDetails?.title}</Text>
         </View>
@@ -95,6 +117,7 @@ const styles = StyleSheet.create({
   },
   slide: {
     width,
+    height,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -103,12 +126,14 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
   textContainer: {
     position: 'absolute',
-    bottom: 0,
+    alignSelf: 'center',
     padding: 20,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    width: '100%',
     alignItems: 'center',
   },
   text: {
@@ -116,6 +141,22 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  progressBarContainer: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    zIndex: 1,
+  },
+  progressBar: {
+    height: 8,
+    borderRadius: 4,
+  },
+  remainingTime: {
+    color: '#fff',
+    fontSize: 12,
+    marginTop: 4,
+    textAlign: 'right',
   },
 });
 
