@@ -165,6 +165,7 @@ export const useGetVisionBoardDetails = () => {
 
   const deleteVisionBoard = async (visionBoardId: string, navigation: any) => {
     try {
+      setLoading(true);
       await realm.write(() => {
         const visionBoard: any = realm.objectForPrimaryKey(
           'VisionBoard',
@@ -174,18 +175,12 @@ export const useGetVisionBoardDetails = () => {
           throw new Error(`VisionBoard with id ${visionBoardId} not found`);
         realm.delete(visionBoard.affirmation);
         realm.delete(visionBoard);
-        setVisionDetails({
-          title: '',
-          total_practiced: '',
-          endDate: '',
-          createdAt: '',
-          updatedAt: '',
-          affirmation: [],
-        });
       });
       navigation.goBack(); // Navigate back after successful deletion
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 

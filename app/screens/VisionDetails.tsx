@@ -26,6 +26,7 @@ const VisionDetails = ({navigation, route}: any) => {
     addAffirmationToVisionBoard,
     getDaysBetweenDates,
     deleteVisionBoard,
+    loading,
     updatePractice,
   }: any = useGetVisionBoardDetails();
   const [visible, setVisible] = React.useState(false);
@@ -33,7 +34,7 @@ const VisionDetails = ({navigation, route}: any) => {
   useEffect(() => {
     getVisionBoardDetails(_id);
     console.log('callibnggggg');
-  }, [_id]);
+  }, [_id, isFocused]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleAddFunction = (affirmation: any, image: any) => {
@@ -44,6 +45,7 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
+  if (loading) return <Text>loading</Text>;
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
