@@ -33,7 +33,7 @@ const VisionDetails = ({navigation, route}: any) => {
   useEffect(() => {
     getVisionBoardDetails(_id);
     console.log('callibnggggg');
-  }, [_id, isFocused]);
+  }, [_id]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleAddFunction = (affirmation: any, image: any) => {

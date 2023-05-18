@@ -114,7 +114,7 @@ export const useGetVisionBoard = () => {
   };
 };
 export const useGetVisionBoardDetails = () => {
-  const [visionDetails, setVisionDetails] = useState<any>();
+  const [visionDetails, setVisionDetails] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const {useRealm} = RealmContext;
@@ -151,18 +151,18 @@ export const useGetVisionBoardDetails = () => {
 
       if (visionBoard) {
         setVisionDetails(visionBoard);
-        setLoading(false);
       } else {
-        setLoading(false);
-
-        throw new Error(`No vision board found with _id: ${_id}`);
+        setVisionDetails(null); // or setVisionDetails({})
       }
+
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.error(error);
       throw error;
     }
   };
+
   const deleteVisionBoard = async (visionBoardId: string, navigation: any) => {
     try {
       await realm.write(() => {
@@ -174,12 +174,21 @@ export const useGetVisionBoardDetails = () => {
           throw new Error(`VisionBoard with id ${visionBoardId} not found`);
         realm.delete(visionBoard.affirmation);
         realm.delete(visionBoard);
-        navigation.goBack();
+        setVisionDetails({
+          title: '',
+          total_practiced: '',
+          endDate: '',
+          createdAt: '',
+          updatedAt: '',
+          affirmation: [],
+        });
       });
+      navigation.goBack(); // Navigate back after successful deletion
     } catch (error) {
       console.error(error);
     }
   };
+
   const addAffirmationToVisionBoard = async (
     visionBoardId: string,
     affirmation: {_id: any; url: string; title: string},
