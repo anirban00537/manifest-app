@@ -10,18 +10,19 @@ const {width, height} = Dimensions.get('window');
 const Player = ({navigation, route}: any) => {
   useKeepAwake();
 
-  const {getVisionBoardDetails, visionDetails}: any =
+  const {getVisionBoardDetails, visionDetails, loading, updatePractice}: any =
     useGetVisionBoardDetails();
-  const time = 8000;
   const {_id} = route.params;
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [remainingTime, setRemainingTime] = useState(time);
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     getVisionBoardDetails(_id);
   }, [_id]);
+
+  const time = 8000;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [remainingTime, setRemainingTime] = useState(time);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -81,7 +82,7 @@ const Player = ({navigation, route}: any) => {
       clearInterval(timerId);
     };
   }, [currentIndex, visionDetails, fadeAnim, scaleAnim]);
-
+  if (loading) return <Text>loading</Text>;
   return (
     <View style={styles.container}>
       <View style={styles.progressBarContainer}>

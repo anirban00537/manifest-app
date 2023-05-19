@@ -16,6 +16,7 @@ import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
 
 import Empty from '../components/Cards/Empty.card';
 import {useIsFocused} from '@react-navigation/native';
+import LoadingScreen from '../components/Loading';
 
 const VisionDetails = ({navigation, route}: any) => {
   const isFocused = useIsFocused();
@@ -26,13 +27,13 @@ const VisionDetails = ({navigation, route}: any) => {
     addAffirmationToVisionBoard,
     getDaysBetweenDates,
     deleteVisionBoard,
+    loading,
     updatePractice,
   }: any = useGetVisionBoardDetails();
   const [visible, setVisible] = React.useState(false);
   const {_id} = route.params;
   useEffect(() => {
     getVisionBoardDetails(_id);
-    console.log('callibnggggg');
   }, [_id, isFocused]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -44,6 +45,7 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
+  if (loading) return <LoadingScreen />;
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>

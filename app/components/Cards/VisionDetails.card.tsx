@@ -57,7 +57,9 @@ const VisionBoardUserActivityDetails = ({
             )}>
             {() => (
               <>
-                <Text style={styles.progressText}>{`${days.daysBetween}`}</Text>
+                <Text style={styles.progressText}>{`${
+                  days.daysBetween ? days.daysBetween : 0
+                }`}</Text>
                 <Text style={styles.targetText}>Day's Remaining</Text>
               </>
             )}
