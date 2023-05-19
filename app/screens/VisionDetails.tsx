@@ -16,6 +16,7 @@ import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
 
 import Empty from '../components/Cards/Empty.card';
 import {useIsFocused} from '@react-navigation/native';
+import LoadingScreen from '../components/Loading';
 
 const VisionDetails = ({navigation, route}: any) => {
   const isFocused = useIsFocused();
@@ -44,7 +45,7 @@ const VisionDetails = ({navigation, route}: any) => {
     });
     hideModal();
   };
-  if (loading) return <Text>loading</Text>;
+  if (loading) return <LoadingScreen />;
   return (
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>

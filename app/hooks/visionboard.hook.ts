@@ -122,7 +122,7 @@ export const useGetVisionBoardDetails = () => {
     updatedAt: '',
     affirmation: [],
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const {useRealm} = RealmContext;
   const realm = useRealm();
@@ -172,7 +172,8 @@ export const useGetVisionBoardDetails = () => {
 
   const deleteVisionBoard = async (visionBoardId: string, navigation: any) => {
     try {
-      setLoading(true);
+      await setLoading(true);
+
       await realm.write(() => {
         const visionBoard: any = realm.objectForPrimaryKey(
           'VisionBoard',
