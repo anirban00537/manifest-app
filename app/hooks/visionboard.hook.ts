@@ -114,7 +114,14 @@ export const useGetVisionBoard = () => {
   };
 };
 export const useGetVisionBoardDetails = () => {
-  const [visionDetails, setVisionDetails] = useState<any>({});
+  const [visionDetails, setVisionDetails] = useState<any>({
+    title: '',
+    total_practiced: '',
+    endDate: '',
+    createdAt: '',
+    updatedAt: '',
+    affirmation: [],
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const {useRealm} = RealmContext;

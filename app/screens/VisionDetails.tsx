@@ -33,7 +33,6 @@ const VisionDetails = ({navigation, route}: any) => {
   const {_id} = route.params;
   useEffect(() => {
     getVisionBoardDetails(_id);
-    console.log('callibnggggg');
   }, [_id, isFocused]);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
