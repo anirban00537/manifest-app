@@ -4,4 +4,9 @@ module.exports = {
     '@realm/babel-plugin',
     ['@babel/plugin-proposal-decorators', {legacy: true}],
   ],
+  env: {
+    production: {
+      plugins: ['react-native-paper/babel'],
+    },
+  },
 };
