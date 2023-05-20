@@ -72,8 +72,6 @@ export const useVisionBoardCreate = () => {
 };
 
 export const useGetVisionBoard = () => {
-  const isFocused = useIsFocused();
-  const [visionDetails, setVisionDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const {useQuery} = RealmContext;
@@ -81,36 +79,16 @@ export const useGetVisionBoard = () => {
   const realm = useRealm();
 
   const result = useQuery('VisionBoard');
-  const getVisionBoardDetails = async (_id: any) => {
-    setLoading(true);
-    try {
-      const visionBoard: any = await realm.objectForPrimaryKey(
-        'VisionBoard',
-        _id,
-      );
 
-      if (visionBoard) {
-        setVisionDetails(visionBoard);
-        setLoading(false);
-      } else {
-        setLoading(false);
-
-        throw new Error(`No vision board found with _id: ${_id}`);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-      throw error;
-    }
-  };
-
-  const visionBoards = useMemo(() => result.sorted('createdAt'), [result]);
+  const visionBoards = useMemo(
+    () => result.sorted('createdAt', true),
+    [result],
+  );
 
   return {
     visionBoards,
     loading,
     error,
-    getVisionBoardDetails,
   };
 };
 export const useGetVisionBoardDetails = () => {

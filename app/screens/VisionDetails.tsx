@@ -103,6 +103,7 @@ const VisionDetails = ({navigation, route}: any) => {
                       key={index}
                       date={affirmation?.createdAt}
                       image={affirmation.url}
+                      affirmation={affirmation}
                       title={affirmation.title}
                     />
                   ),

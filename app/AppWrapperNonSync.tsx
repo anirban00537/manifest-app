@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, StatusBar} from 'react-native';
-import Toast from 'react-native-toast-message';
 
 import {RealmContext} from './models';
 import {NavigationContainer} from '@react-navigation/native';
@@ -23,7 +22,6 @@ export const AppWrapperNonSync = () => {
         <PaperProvider>
           <NavigationContainer>
             <Main />
-            <Toast />
           </NavigationContainer>
         </PaperProvider>
       </RealmProvider>

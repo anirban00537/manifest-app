@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  ImageBackground,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import {Card, Title} from 'react-native-paper';
+import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
 import colors from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,87 +9,80 @@ const Visioncard = ({item}: any) => {
 
   return (
     <TouchableOpacity
-      style={styles.constinar}
+      style={styles.container}
       onPress={() => {
         navigation.navigate('AuthenticatedStack', {
           screen: 'VisionDetails',
           params: {_id: item._id},
         });
       }}>
-      <Card style={styles.card}>
-        <ImageBackground
-          source={{
-            uri:
-              item?.affirmation.length > 0 && item.affirmation[0].url
-                ? item.affirmation[0].url
-                : 'https://picsum.photos/700',
-          }}
-          style={styles.cardBackground}>
-          <View style={styles.gradient} />
-          <View style={styles.cardContent}>
-            <Title
-              style={[
-                styles.cardTitle,
-                {color: colors.text, fontFamily: 'Poppins-SemiBold'},
-              ]}>
-              {item.title}
-            </Title>
-            <View style={styles.cardFooter}>
-              <Title style={styles.cardFooterText}>
-                Visualised a total of {item.total_practiced} times
-              </Title>
-              <Icon
-                name="play-circle-outline"
-                size={46}
-                color={colors.primary}
-              />
-            </View>
-          </View>
-        </ImageBackground>
-      </Card>
+      <View style={styles.card}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{
+              uri:
+                item?.affirmation.length > 0 && item.affirmation[0].url
+                  ? item.affirmation[0].url
+                  : 'https://picsum.photos/700',
+            }}
+            style={styles.image}
+          />
+        </View>
+        <View style={styles.detailsContainer}>
+          <Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">
+            {item.title}
+          </Text>
+          <Text style={styles.cardFooterText}>
+            Visualised a total of {item.total_practiced} times
+          </Text>
+        </View>
+        <View style={styles.playButtonContainer}>
+          <Icon name="play-circle-outline" size={46} color={colors.primary} />
+        </View>
+      </View>
     </TouchableOpacity>
   );
 };
+
 const styles = StyleSheet.create({
-  constinar: {
+  container: {
     width: '100%',
     padding: 5,
   },
   card: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: '100%',
     marginVertical: 8,
-    borderRadius: 7,
+    borderRadius: 10,
     overflow: 'hidden',
+    backgroundColor: colors.background1,
   },
-  cardBackground: {
-    height: 150,
-    justifyContent: 'flex-end',
+  imageContainer: {
+    width: 100, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  detailsContainer: {
+    flex: 1,
     padding: 16,
-    borderRadius: 7,
-    overflow: 'hidden',
   },
   cardTitle: {
     fontSize: 22,
     marginBottom: 8,
-    paddingTop: 5,
-  },
-  gradient: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // semi-transparent black
-  },
-  cardContent: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    fontFamily: 'Poppins-SemiBold',
+    color: colors.text,
   },
   cardFooterText: {
     fontSize: 16,
-    // marginLeft: 8,
     color: colors.primary,
+  },
+  playButtonContainer: {
+    padding: 16,
   },
 });
 
