@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {formateDate} from '../../common/functions';
 
 const Visioncard = ({title, image, date}: any) => {
-  console.log(date, 'This is a date time');
   return (
     <TouchableOpacity style={styles.card}>
       <View style={styles.imageContainer}>
@@ -16,12 +15,6 @@ const Visioncard = ({title, image, date}: any) => {
           }}
           style={styles.image}
         />
-        <Icon
-          name="bookmark"
-          size={20}
-          color={colors.primary}
-          style={styles.icon}
-        />
       </View>
       <View style={styles.contentContainer}>
         <Title style={styles.cardTitle}>{title}</Title>
@@ -29,7 +22,7 @@ const Visioncard = ({title, image, date}: any) => {
           <Icon
             name="calendar-o"
             size={14}
-            color={colors.primary}
+            color={colors.grayText}
             style={styles.metaIcon}
           />
           <Text style={styles.metaText}>{formateDate(date)}</Text>
@@ -44,23 +37,19 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 8,
     backgroundColor: colors.background,
-    borderRadius: 4,
     overflow: 'hidden',
     flexDirection: 'row',
-    borderWidth: 0.2,
-    borderColor: colors.grayText,
-    padding: 10,
+    // borderWidth: 0.2,
+    // borderColor: colors.dark2,
   },
   imageContainer: {
     position: 'relative',
-    width: '30%',
+    width: '15%',
   },
   image: {
-    height: 120,
-    width: '100%',
+    height: 70,
+    width: 70,
     resizeMode: 'cover',
-    borderTopLeftRadius: 4,
-    borderBottomLeftRadius: 4,
   },
   icon: {
     position: 'absolute',
@@ -71,16 +60,16 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   contentContainer: {
-    width: '70%',
-    marginLeft: 7,
-    justifyContent: 'space-between',
+    width: '85%',
+    marginLeft: 30,
+    justifyContent: 'flex-start',
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '500',
     color: colors.text,
     fontFamily: 'Poppins-Regular',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   metaContainer: {
     flexDirection: 'row',
@@ -91,8 +80,8 @@ const styles = StyleSheet.create({
   },
   metaText: {
     fontSize: 12,
-    color: colors.primary,
-    marginLeft: 5,
+    color: colors.grayText,
+    marginLeft: 3,
   },
 });
 

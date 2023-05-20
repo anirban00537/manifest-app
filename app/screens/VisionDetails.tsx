@@ -59,53 +59,57 @@ const VisionDetails = ({navigation, route}: any) => {
           visionDetails={visionDetails}
           navigation={navigation}
         />
-        <View style={styles.header}>
-          <Text style={styles.title}>{visionDetails?.title}</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.MoreButton}
-            onPress={() => {
-              deleteVisionBoard(_id, navigation);
-            }}>
-            <Icon name="trash" size={20} color={colors.white} />
-            <Text style={styles.playButtonText}>Trash</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.playButton}
-            onPress={async () => {
-              updatePractice(_id);
-              navigation.navigate('AuthenticatedStack', {
-                screen: 'Player',
-                params: {_id: _id},
-              });
-            }}>
-            <Icon name="play" size={20} color={colors.white} />
-            <Text style={styles.playButtonText}>Start Movie</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{padding: 15}}>
-          <View>
-            <Text style={styles.practicesHeading}>Vision Cards</Text>
+        <View
+          style={{
+            marginHorizontal: 15,
+          }}>
+          <View style={styles.header}>
+            <Text style={styles.title}>{visionDetails?.title}</Text>
           </View>
-          {visionDetails?.affirmation?.length === 0 && (
-            <Empty msg={'No Visionboard'} />
-          )}
-          {visionDetails?.affirmation?.length > 0 && (
-            <View style={styles.cardsContainer}>
-              {visionDetails?.affirmation?.map(
-                (affirmation: any, index: number) => (
-                  <Visioncard
-                    key={index}
-                    date={affirmation?.createdAt}
-                    image={affirmation.url}
-                    title={affirmation.title}
-                  />
-                ),
-              )}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={async () => {
+                updatePractice(_id);
+                navigation.navigate('AuthenticatedStack', {
+                  screen: 'Player',
+                  params: {_id: _id},
+                });
+              }}>
+              <Icon name="play" size={20} color={colors.white} />
+              <Text style={styles.playButtonText}>Start Movie</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.MoreButton}
+              onPress={() => {
+                deleteVisionBoard(_id, navigation);
+              }}>
+              <Icon name="trash" size={20} color={colors.white} />
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <View>
+              <Text style={styles.practicesHeading}>Vision Cards</Text>
             </View>
-          )}
+            {visionDetails?.affirmation?.length === 0 && (
+              <Empty msg={'No Visionboard'} />
+            )}
+            {visionDetails?.affirmation?.length > 0 && (
+              <View style={styles.cardsContainer}>
+                {visionDetails?.affirmation?.map(
+                  (affirmation: any, index: number) => (
+                    <Visioncard
+                      key={index}
+                      date={affirmation?.createdAt}
+                      image={affirmation.url}
+                      title={affirmation.title}
+                    />
+                  ),
+                )}
+              </View>
+            )}
+          </View>
         </View>
       </ScrollView>
       <AddAffermationModal
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    // marginHorizontal: 20,
   },
   coverImage: {
     width: '100%',
@@ -152,11 +157,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
     marginTop: 10,
-    marginHorizontal: 13,
+    padding: 10,
+    // marginHorizontal: 20,
   },
   title: {
-    fontSize: 22,
-    fontFamily: 'Poppins-SemiBold',
+    fontSize: 19,
+    fontFamily: 'Poppins-Regular',
     color: colors.text,
   },
   heading: {
@@ -197,38 +203,38 @@ const styles = StyleSheet.create({
     marginBottom: 90,
   },
   buttonContainer: {
-    alignItems: 'flex-start',
-    justifyContent: 'space-around',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
-    marginHorizontal: 15,
+    marginBottom: 30,
   },
   playButton: {
     backgroundColor: colors.primaryDark,
-    width: '48%',
-    height: 48,
-    elevation: 10,
+    width: '80%',
+    height: 50,
+    // elevation: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: 5,
     flexDirection: 'row',
   },
   MoreButton: {
     backgroundColor: colors.background1,
-    elevation: 10,
-    width: '48%',
-    height: 48,
+    elevation: 2,
+    // borderWidth: 0.5,
+    // borderColor: colors.white,
+    width: '18%',
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: 5,
     flexDirection: 'row',
   },
-
   practicesHeading: {
-    fontSize: 17,
-    // fontWeight: '600',
+    fontSize: 15,
     color: colors.text,
     marginBottom: 10,
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Regular',
   },
   resourcesContainer: {
     marginBottom: 24,
@@ -257,7 +263,7 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.primaryDark,
     color: colors.text,
   },
 });

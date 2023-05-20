@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Switch} from 'react-native-paper';
 import colors from '../constants/colors';
-import LinearGradient from 'react-native-linear-gradient';
 
 const SettingsScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(false);
@@ -38,14 +37,6 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#FF8E53', '#FFA649']}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        style={styles.banner}>
-        <Text style={styles.bannerText}>Vision Board Settings</Text>
-      </LinearGradient>
-
       <Text style={styles.title}>General Settings</Text>
 
       <View style={styles.settingContainer}>
@@ -166,10 +157,13 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 20,
+    textAlign: 'center',
+    justifyContent: 'center',
+    color: colors.white,
+    textTransform: 'uppercase',
+    marginBottom: 25,
   },
   settingContainer: {
     flexDirection: 'row',

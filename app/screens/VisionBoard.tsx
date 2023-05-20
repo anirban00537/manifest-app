@@ -13,6 +13,10 @@ const VisionBoard = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.secondaryTitle}>{greeting}</Text>
+      </View>
       {visionBoards.length === 0 && (
         <View style={styles.emptyContainer}>
           <Empty msg={'No Visionboard'} />
@@ -20,10 +24,6 @@ const VisionBoard = ({navigation}: any) => {
       )}
       {visionBoards.length > 0 && (
         <ScrollView style={styles.scrollView}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Welcome Back</Text>
-            <Text style={styles.secondaryTitle}>{greeting}</Text>
-          </View>
           <View style={styles.cardsContainer}>
             {visionBoards?.map((item: any, index: any) => (
               <Visioncard key={index} item={item} />
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
     color: colors.text,
     fontFamily: 'Poppins-SemiBold',
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   secondaryTitle: {
-    fontSize: 22,
+    fontSize: 18,
     color: colors.primaryLight,
     textAlign: 'center',
     fontFamily: 'Poppins-SemiBold',

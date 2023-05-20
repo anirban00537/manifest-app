@@ -14,6 +14,7 @@ import AffirmationCard from '../components/Cards/Affirmatio.card';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from '../components/Datepicker';
 import FA from 'react-native-vector-icons/FontAwesome5';
+import Empty from '../components/Cards/Empty.card';
 
 const CreateVisionCard = ({navigation}: any) => {
   const {
@@ -101,6 +102,17 @@ const CreateVisionCard = ({navigation}: any) => {
           <Icon name="plus" size={20} color={colors.white} />
           <Text style={styles.addAffirmationButtonText}>Add Affirmation</Text>
         </TouchableOpacity>
+        {affirmations.length === 0 && (
+          <View style={styles.emptyContainer}>
+            <Empty
+              msg={'No Affirmations'}
+              msgSmall={' '}
+              width={110}
+              height={110}
+              fontSize={21}
+            />
+          </View>
+        )}
         {affirmations.map((affirmation, index) => (
           <AffirmationCard
             key={index}
@@ -140,6 +152,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'transparent',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   label: {
     fontSize: 18,

@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
   const [image, setImage] = useState<any>(null);
   const [affirmation, setAffirmation] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddAffirmation = () => {
     ImagePicker.openPicker({
@@ -25,6 +26,17 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
 
   const handleRemoveImage = () => {
     setImage(null);
+  };
+
+  const handleAddButton = () => {
+    if (!image || !affirmation) {
+      setErrorMessage('Please add both image and affirmation');
+    } else {
+      handleSave(affirmation, image);
+      setImage(null);
+      setAffirmation('');
+      setErrorMessage('');
+    }
   };
 
   return (
@@ -64,11 +76,14 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
           onChangeText={setAffirmation}
           placeholder="Type your affirmation here"
           placeholderTextColor={colors.background2}
-          numberOfLines={5}
+          numberOfLines={3}
           multiline
           maxLength={100}
           autoCorrect={false} // Turn off auto correction
         />
+        {errorMessage ? (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        ) : null}
         <View style={styles.buttonContainer}>
           <Button
             mode="outlined"
@@ -77,6 +92,7 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
             onPress={() => {
               setAffirmation('');
               setImage(null);
+              setErrorMessage('');
               hideModal();
             }}>
             Cancel
@@ -85,11 +101,7 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
             mode="contained"
             style={styles.addButton}
             labelStyle={styles.buttonLabel}
-            onPress={() => {
-              handleSave(affirmation, image);
-              setImage(null);
-              setAffirmation('');
-            }}>
+            onPress={handleAddButton}>
             Add
           </Button>
         </View>
@@ -100,7 +112,7 @@ const AddAffermationModal = ({visible, hideModal, handleSave}: any) => {
 
 const styles = StyleSheet.create({
   containerStyle: {
-    backgroundColor: colors.background1,
+    backgroundColor: colors.background,
     padding: 20,
     marginHorizontal: 20,
     borderRadius: 10,
@@ -120,8 +132,8 @@ const styles = StyleSheet.create({
   },
   imagePickerButton: {
     backgroundColor: colors.primary,
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -132,7 +144,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.danger,
     borderRadius: 20,
     width: 40,
     height: 40,
@@ -140,7 +152,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.background1,
     borderRadius: 10,
     padding: 10,
     fontSize: 18,
@@ -171,6 +183,10 @@ const styles = StyleSheet.create({
     color: colors.white,
     textTransform: 'uppercase',
     letterSpacing: 1,
+  },
+  errorMessage: {
+    color: 'red',
+    marginBottom: 10,
   },
 });
 

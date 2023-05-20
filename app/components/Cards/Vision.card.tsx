@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   gradient: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)', // semi-transparent black
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // semi-transparent black
   },
   cardContent: {
     flex: 1,
