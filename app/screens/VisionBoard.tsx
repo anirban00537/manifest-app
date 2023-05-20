@@ -6,7 +6,6 @@ import colors from '../constants/colors';
 import {useGetVisionBoard} from '../hooks/visionboard.hook';
 import {getGreetingMessage} from '../common/functions';
 import Empty from '../components/Cards/Empty.card';
-import LinearGradient from 'react-native-linear-gradient';
 
 const VisionBoard = ({navigation}: any) => {
   const {visionBoards} = useGetVisionBoard();
@@ -27,20 +26,7 @@ const VisionBoard = ({navigation}: any) => {
           </View>
           <View style={styles.cardsContainer}>
             {visionBoards?.map((item: any, index: any) => (
-              <Visioncard
-                key={index}
-                data={{
-                  completedCount: 5,
-                  targetCount: 20,
-                }}
-                item={item}
-                image={
-                  item?.affirmation.length > 0 && item.affirmation[0].url
-                    ? item.affirmation[0].url
-                    : 'https://picsum.photos/700'
-                }
-                title={item?.title}
-              />
+              <Visioncard key={index} item={item} />
             ))}
           </View>
         </ScrollView>
@@ -96,7 +82,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    marginTop: 20,
   },
   cardsContainer: {
     flexDirection: 'row',

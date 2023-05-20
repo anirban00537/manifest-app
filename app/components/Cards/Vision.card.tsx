@@ -10,7 +10,7 @@ import colors from '../../constants/colors';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Visioncard = ({item, title, image}: any) => {
+const Visioncard = ({item}: any) => {
   const navigation: any = useNavigation();
 
   return (
@@ -25,7 +25,10 @@ const Visioncard = ({item, title, image}: any) => {
       <Card style={styles.card}>
         <ImageBackground
           source={{
-            uri: image,
+            uri:
+              item?.affirmation.length > 0 && item.affirmation[0].url
+                ? item.affirmation[0].url
+                : 'https://picsum.photos/700',
           }}
           style={styles.cardBackground}>
           <View style={styles.gradient} />
@@ -35,11 +38,11 @@ const Visioncard = ({item, title, image}: any) => {
                 styles.cardTitle,
                 {color: colors.text, fontFamily: 'Poppins-SemiBold'},
               ]}>
-              {title}
+              {item.title}
             </Title>
             <View style={styles.cardFooter}>
               <Title style={styles.cardFooterText}>
-                Affirmed a total of {55} times
+                Visualised a total of {item.total_practiced} times
               </Title>
               <Icon
                 name="play-circle-outline"

@@ -27,7 +27,7 @@ const VisionBoardUserActivityDetails = ({
       source={require('../../assets/premium.jpg')}
       style={styles.backgroundImage}>
       <LinearGradient
-        colors={[colors.primary, 'rgba(0,0,0,0.5)', 'rgba(0,0,0,0.3)']}
+        colors={[colors.primary, 'rgba(0,0,0,0.8)', 'rgba(0,0,0,0.3)']}
         start={{x: 2, y: 0}}
         end={{x: 0, y: 3}}
         style={styles.container}>

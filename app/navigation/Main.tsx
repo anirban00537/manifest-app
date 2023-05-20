@@ -10,6 +10,7 @@ import VisionDetails from '../screens/VisionDetails';
 import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
 import Player from '../screens/Player';
+import SettingsScreen from '../screens/Settings';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -90,11 +91,11 @@ const MainTabs = () => (
       }}
     />
     <Tab.Screen
-      name="Journal"
-      component={JournalHomeScreen}
+      name="Settings"
+      component={SettingsScreen}
       options={{
-        title: 'Journal',
-        tabBarIcon: ({focused}) => tabBarIcon('file-signature', focused),
+        title: 'Settings',
+        tabBarIcon: ({focused}) => tabBarIcon('wrench', focused),
         headerShown: false,
         tabBarLabel: () => null, // hide the tab title
       }}
