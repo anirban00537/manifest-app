@@ -15,10 +15,22 @@ export const VisionBoard = {
   properties: {
     _id: 'objectId',
     title: 'string',
-    total_practiced: {type: 'int', default: 0},
+    daily_target: {type: 'int', default: 2},
     endDate: {type: 'date', default: new Date()},
     createdAt: {type: 'date', default: new Date()},
     updatedAt: {type: 'date', default: new Date()},
     affirmation: {type: 'list', objectType: 'Affirmation'},
+    PracticeTimeLog: {type: 'list', objectType: 'PracticeTimeLog'},
+  },
+};
+export const PracticeTimeLog = {
+  name: 'PracticeTimeLog',
+  primaryKey: '_id',
+  properties: {
+    _id: 'objectId',
+    logDate: 'string',
+    total_practiced: {type: 'int', default: 0},
+    createdAt: {type: 'date', default: new Date()},
+    updatedAt: {type: 'date', default: new Date()},
   },
 };

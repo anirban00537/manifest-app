@@ -6,6 +6,7 @@ import {RealmContext} from '../models';
 export const useVisionBoardCreate = () => {
   const [visible, setVisible] = useState(false);
   const [endDate, setendDate] = useState(false);
+  const [daily_target, setDaily_target] = useState(2);
   const [affirmations, setAffirmations] = useState<any[]>([]);
   const [title, setTitle] = useState('');
   const navigation = useNavigation();
@@ -19,6 +20,7 @@ export const useVisionBoardCreate = () => {
           _id: new Realm.BSON.ObjectId(),
           title: title,
           total_practiced: 0,
+          daily_target: daily_target,
           endDate: endDate,
           createdAt: Date(),
           updatedAt: Date(),
@@ -65,6 +67,8 @@ export const useVisionBoardCreate = () => {
     affirmations,
     setAffirmations,
     title,
+    setDaily_target,
+    daily_target,
     setTitle,
     endDate,
     setendDate,
@@ -94,37 +98,26 @@ export const useGetVisionBoard = () => {
 export const useGetVisionBoardDetails = () => {
   const [visionDetails, setVisionDetails] = useState<any>({
     title: '',
-    total_practiced: '',
     endDate: '',
     createdAt: '',
+    daily_target: 0,
     updatedAt: '',
     affirmation: [],
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [percentage, setPercentage] = useState(0);
   const {useRealm} = RealmContext;
   const realm = useRealm();
-  const getDaysBetweenDates = (startDate: any, endDate: any) => {
-    const start: any = new Date(startDate);
-    const end = new Date(endDate);
 
-    // Calculate the number of milliseconds between the two dates
-    const millisecondsPerDay = 86400000; // Number of milliseconds in a day
-    const timeDiff = end.getTime() - start.getTime();
-
-    // Calculate the number of days between the two dates, rounded down to the nearest integer
-    const daysBetween = Math.floor(timeDiff / millisecondsPerDay);
-
-    // Calculate the number of days that have passed since the start date, rounded down to the nearest integer
-    //@ts-ignore
-    const daysPassed = Math.floor((new Date() - start) / millisecondsPerDay);
-
-    // Calculate the completed days percentage
-    const completedPercentage = Math.floor((daysPassed / daysBetween) * 100);
-    console.log(completedPercentage, 'completedPercentage');
-    return {daysBetween, daysPassed, completedPercentage};
-  };
-
+  function getCompletedPercentage(dailyTarget: any, totalPracticed: any) {
+    const completedPercentage = (totalPracticed / dailyTarget) * 100;
+    if (Math.round(completedPercentage) > 100) {
+      return 100;
+    } else {
+      return Math.round(completedPercentage);
+    }
+  }
   const getVisionBoardDetails = async (_id: any) => {
     setLoading(true);
 
@@ -132,6 +125,26 @@ export const useGetVisionBoardDetails = () => {
       const visionBoard: any = await realm.objectForPrimaryKey(
         'VisionBoard',
         _id,
+      );
+
+      if (!visionBoard) {
+        throw new Error(`Could not find VisionBoard with id ${_id}`);
+      }
+
+      const currentDate = new Date();
+      const date = currentDate.toLocaleDateString();
+
+      const PracticeData = visionBoard.PracticeTimeLog.find(
+        (log: any) => log.logDate === date,
+      );
+
+      setPercentage(
+        getCompletedPercentage(
+          parseInt(visionBoard?.daily_target ? visionBoard?.daily_target : 0),
+          parseInt(
+            PracticeData?.total_practiced ? PracticeData?.total_practiced : 0,
+          ),
+        ),
       );
 
       if (visionBoard) {
@@ -195,19 +208,51 @@ export const useGetVisionBoardDetails = () => {
   };
 
   const updatePractice = async (visionBoardId: string) => {
-    let total_practiced = visionDetails?.total_practiced;
-    const visionBoard: any = await realm.objectForPrimaryKey(
-      'VisionBoard',
-      visionBoardId,
-    );
-    if (!visionBoard) {
-      throw new Error(`Could not find VisionBoard with id ${visionBoardId}`);
-    }
+    try {
+      const visionBoard: any = realm.objectForPrimaryKey(
+        'VisionBoard',
+        visionBoardId,
+      );
 
-    console.log(total_practiced, 'fffffffffffff');
-    await realm.write(() => {
-      visionBoard.total_practiced = total_practiced + 1;
-    });
+      if (!visionBoard) {
+        throw new Error(`Could not find VisionBoard with id ${visionBoardId}`);
+      }
+
+      const currentDate = new Date();
+      const date = currentDate.toLocaleDateString();
+
+      const existingLogIndex = visionBoard.PracticeTimeLog.findIndex(
+        (log: any) => log.logDate === date,
+      );
+
+      if (existingLogIndex !== -1) {
+        // Increment the total_practiced field by 1
+        await realm.write(() => {
+          visionBoard.PracticeTimeLog[existingLogIndex].total_practiced += 1;
+        });
+      } else {
+        // Create a new PracticeTimeLog entry for today's date
+        await realm.write(() => {
+          const practiceTimeLog = {
+            _id: new Realm.BSON.ObjectId(),
+            logDate: date,
+            total_practiced: 1,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          };
+          visionBoard.PracticeTimeLog.push(practiceTimeLog);
+        });
+      }
+
+      // Update the updatedAt field of the VisionBoard
+      await realm.write(() => {
+        visionBoard.updatedAt = new Date();
+      });
+
+      getVisionBoardDetails(visionBoardId);
+    } catch (error) {
+      console.error(error, 'error');
+    }
   };
 
   return {
@@ -215,7 +260,7 @@ export const useGetVisionBoardDetails = () => {
     error,
     getVisionBoardDetails,
     visionDetails,
-    getDaysBetweenDates,
+    percentage,
     addAffirmationToVisionBoard,
     deleteVisionBoard,
     updatePractice,

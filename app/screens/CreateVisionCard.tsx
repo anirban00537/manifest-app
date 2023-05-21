@@ -26,9 +26,11 @@ const CreateVisionCard = ({navigation}: any) => {
     title,
     visible,
     endDate,
-
+    daily_target,
+    setDaily_target,
     setendDate,
   } = useVisionBoardCreate();
+
   const showModal = () => setVisible(true);
   const [step, setStep] = useState(0);
   const hideModal = () => setVisible(false);
@@ -45,6 +47,16 @@ const CreateVisionCard = ({navigation}: any) => {
   };
   const handleEndDate = (date: any) => {
     setendDate(date);
+  };
+
+  const handlePlus = () => {
+    setDaily_target(daily_target + 1);
+  };
+
+  const handleMinus = () => {
+    if (daily_target > 0) {
+      setDaily_target(daily_target - 1);
+    }
   };
 
   const handleSave = () => {
@@ -81,6 +93,7 @@ const CreateVisionCard = ({navigation}: any) => {
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.form}>
         <Text style={styles.label}>Board Name</Text>
         <TextInput
@@ -90,11 +103,26 @@ const CreateVisionCard = ({navigation}: any) => {
           placeholder="Enter title"
           placeholderTextColor={colors.white}
         />
+
         <View style={styles.datePickerContainer}>
           <Text style={styles.label}>End Date</Text>
           <DatePicker onDateSelect={handleEndDate} />
         </View>
+
+        <View style={styles.dailyTargetContainer}>
+          <Text style={styles.label}>Daily Target</Text>
+          <View style={styles.targetBox}>
+            <TouchableOpacity style={styles.plusButton} onPress={handlePlus}>
+              <Icon name="plus" size={20} color={colors.white} />
+            </TouchableOpacity>
+            <Text style={styles.targetText}>{daily_target}</Text>
+            <TouchableOpacity style={styles.minusButton} onPress={handleMinus}>
+              <Icon name="minus" size={20} color={colors.white} />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
+
       <View style={styles.affirmationContainer}>
         <TouchableOpacity
           style={styles.addAffirmationButton}
@@ -102,6 +130,7 @@ const CreateVisionCard = ({navigation}: any) => {
           <Icon name="plus" size={20} color={colors.white} />
           <Text style={styles.addAffirmationButtonText}>Add Affirmation</Text>
         </TouchableOpacity>
+
         {affirmations.length === 0 && (
           <View style={styles.emptyContainer}>
             <Empty
@@ -113,6 +142,7 @@ const CreateVisionCard = ({navigation}: any) => {
             />
           </View>
         )}
+
         {affirmations.map((affirmation, index) => (
           <AffirmationCard
             key={index}
@@ -123,6 +153,7 @@ const CreateVisionCard = ({navigation}: any) => {
           />
         ))}
       </View>
+
       <AddAffermationModal
         visible={visible}
         hideModal={hideModal}
@@ -131,6 +162,7 @@ const CreateVisionCard = ({navigation}: any) => {
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -179,7 +211,6 @@ const styles = StyleSheet.create({
   backButtonIcon: {
     marginRight: 5,
   },
-
   addButton: {
     backgroundColor: colors.background,
     alignItems: 'center',
@@ -208,6 +239,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 10,
+  },
+  dailyTargetContainer: {
+    marginBottom: 20,
+  },
+  targetBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 0.3,
+    borderColor: colors.grayText,
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+  },
+  plusButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 5,
+    padding: 10,
+  },
+  minusButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 5,
+    padding: 10,
+  },
+  targetText: {
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

@@ -37,7 +37,7 @@ const Visioncard = ({item}: any) => {
           </Text>
         </View>
         <View style={styles.playButtonContainer}>
-          <Icon name="play-circle-outline" size={46} color={colors.secondary} />
+          <Icon name="play-circle-outline" size={46} color={colors.white} />
         </View>
       </View>
     </TouchableOpacity>

@@ -1,7 +1,6 @@
 import {createRealmContext} from '@realm/react';
-import {Task} from './Task';
-import {VisionBoard, Affirmation} from './VisionBoard';
+import {VisionBoard, Affirmation, PracticeTimeLog} from './VisionBoard';
 
 export const RealmContext = createRealmContext({
-  schema: [VisionBoard, Affirmation],
+  schema: [VisionBoard, Affirmation, PracticeTimeLog],
 });

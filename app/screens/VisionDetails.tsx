@@ -26,7 +26,8 @@ const VisionDetails = ({navigation, route}: any) => {
     getVisionBoardDetails,
     visionDetails,
     addAffirmationToVisionBoard,
-    getDaysBetweenDates,
+    todaysCompletePercentage,
+    percentage,
     deleteVisionBoard,
     loading,
     updatePractice,
@@ -36,6 +37,7 @@ const VisionDetails = ({navigation, route}: any) => {
   useEffect(() => {
     getVisionBoardDetails(_id);
   }, [_id, isFocused]);
+  // console.log(visionDetails, 'visionDetailseeeeeeeee');
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const handleAddFunction = (affirmation: any, image: any) => {
@@ -51,10 +53,7 @@ const VisionDetails = ({navigation, route}: any) => {
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
         <VisionDetailsCard
-          days={getDaysBetweenDates(
-            visionDetails?.createdAt,
-            visionDetails?.endDate,
-          )}
+          percentage={percentage}
           visionDetails={visionDetails}
           navigation={navigation}
         />
