@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import colors from '../constants/colors';
 import VisionDetailsCard from '../components/Cards/VisionDetails.card';
@@ -50,8 +51,6 @@ const VisionDetails = ({navigation, route}: any) => {
     <View style={styles.container}>
       <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
         <VisionDetailsCard
-          totalAffirmations={50}
-          targetDays={100}
           days={getDaysBetweenDates(
             visionDetails?.createdAt,
             visionDetails?.endDate,
@@ -70,6 +69,13 @@ const VisionDetails = ({navigation, route}: any) => {
             <TouchableOpacity
               style={styles.playButton}
               onPress={async () => {
+                if (visionDetails?.affirmation?.length < 3) {
+                  ToastAndroid.show(
+                    'Require minimum 3 affirmations to play',
+                    3000,
+                  );
+                  return;
+                }
                 updatePractice(_id);
                 navigation.navigate('AuthenticatedStack', {
                   screen: 'Player',

@@ -1,10 +1,18 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, Text, Dimensions, Animated, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {useGetVisionBoardDetails} from '../hooks/visionboard.hook';
 import Tts from 'react-native-tts';
 import {ProgressBar} from 'react-native-paper';
 import colors from '../constants/colors';
 import {useKeepAwake} from '@sayem314/react-native-keep-awake';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const {width, height} = Dimensions.get('window');
 const Player = ({navigation, route}: any) => {
@@ -21,6 +29,7 @@ const Player = ({navigation, route}: any) => {
   const time = 8000;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [remainingTime, setRemainingTime] = useState(time);
+  const [firstLoopCompleted, setFirstLoopCompleted] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
@@ -33,6 +42,12 @@ const Player = ({navigation, route}: any) => {
     }, time);
 
     return () => clearInterval(intervalId);
+  }, [currentIndex, visionDetails]);
+
+  useEffect(() => {
+    if (currentIndex === visionDetails?.affirmation.length - 1) {
+      setFirstLoopCompleted(true);
+    }
   }, [currentIndex, visionDetails]);
 
   const currentDetails = visionDetails?.affirmation[currentIndex];
@@ -82,6 +97,11 @@ const Player = ({navigation, route}: any) => {
       clearInterval(timerId);
     };
   }, [currentIndex, visionDetails, fadeAnim, scaleAnim]);
+
+  const handleEndSession = () => {
+    navigation.goBack();
+  };
+
   if (loading) return <Text>loading</Text>;
   return (
     <View style={styles.container}>
@@ -105,6 +125,13 @@ const Player = ({navigation, route}: any) => {
           <Text style={styles.text}>{currentDetails?.title}</Text>
         </View>
       </View>
+      {firstLoopCompleted && (
+        <TouchableOpacity
+          style={styles.endSessionButton}
+          onPress={handleEndSession}>
+          <Icon name="stop" size={24} color={colors.white} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -130,6 +157,7 @@ const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.4)',
+    zIndex: 0,
   },
   textContainer: {
     position: 'absolute',
@@ -153,11 +181,15 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
   },
-  remainingTime: {
-    color: '#fff',
-    fontSize: 12,
-    marginTop: 4,
-    textAlign: 'right',
+  endSessionButton: {
+    position: 'absolute',
+    bottom: 40,
+    alignSelf: 'center',
+    backgroundColor: colors.primary,
+    borderRadius: 50,
+    padding: 12,
+    zIndex: 2,
+    elevation: 3, // Added elevation to ensure the button appears above the image
   },
 });
 

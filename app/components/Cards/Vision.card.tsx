@@ -33,11 +33,11 @@ const Visioncard = ({item}: any) => {
             {item.title}
           </Text>
           <Text style={styles.cardFooterText}>
-            Visualised a total of {item.total_practiced} times
+            {item.affirmation.length} Affirmations
           </Text>
         </View>
         <View style={styles.playButtonContainer}>
-          <Icon name="play-circle-outline" size={46} color={colors.primary} />
+          <Icon name="play-circle-outline" size={46} color={colors.secondary} />
         </View>
       </View>
     </TouchableOpacity>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   playButtonContainer: {
-    padding: 16,
+    // padding: 16,
   },
 });
 

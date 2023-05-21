@@ -121,7 +121,7 @@ export const useGetVisionBoardDetails = () => {
 
     // Calculate the completed days percentage
     const completedPercentage = Math.floor((daysPassed / daysBetween) * 100);
-
+    console.log(completedPercentage, 'completedPercentage');
     return {daysBetween, daysPassed, completedPercentage};
   };
 
