@@ -174,6 +174,14 @@ export const useGetVisionBoardDetails = () => {
           throw new Error(`VisionBoard with id ${visionBoardId} not found`);
         realm.delete(visionBoard.affirmation);
         realm.delete(visionBoard);
+        setVisionDetails({
+          title: '',
+          endDate: '',
+          createdAt: '',
+          daily_target: 0,
+          updatedAt: '',
+          affirmation: [],
+        });
       });
       navigation.goBack(); // Navigate back after successful deletion
       setLoading(false);

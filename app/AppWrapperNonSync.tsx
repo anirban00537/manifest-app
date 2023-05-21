@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, SafeAreaView, StatusBar} from 'react-native';
 
 import {RealmContext} from './models';
@@ -7,10 +7,13 @@ import {Provider as PaperProvider, Badge} from 'react-native-paper';
 
 import {Main} from './navigation/Main';
 import colors from './constants/colors';
+import SplashScreen from 'react-native-splash-screen';
 
 export const AppWrapperNonSync = () => {
   const {RealmProvider} = RealmContext;
-
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   // If sync is disabled, setup the app without any sync functionality and return early
   return (
     <SafeAreaView style={styles.screen}>
