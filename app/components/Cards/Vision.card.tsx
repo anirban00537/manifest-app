@@ -1,11 +1,34 @@
-import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
-import colors from '../../constants/colors';
+import React, {useEffect, useRef} from 'react';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+  Text,
+  Animated,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Visioncard = ({item}: any) => {
+import colors from '../../constants/colors';
+import {formateDate} from '../../common/functions';
+
+const VisionCard = ({item}: any) => {
   const navigation: any = useNavigation();
+  const slideAnim = useRef(new Animated.Value(-100)).current;
+
+  useEffect(() => {
+    startAnimation();
+  }, []);
+
+  const startAnimation = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <TouchableOpacity
@@ -16,30 +39,41 @@ const Visioncard = ({item}: any) => {
           params: {_id: item._id},
         });
       }}>
-      <View style={styles.card}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{
-              uri:
-                item?.affirmation.length > 0 && item.affirmation[0].url
-                  ? item.affirmation[0].url
-                  : 'https://picsum.photos/700',
-            }}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">
-            {item.title}
-          </Text>
-          <Text style={styles.cardFooterText}>
-            {item.affirmation.length} Affirmations
-          </Text>
-        </View>
-        <View style={styles.playButtonContainer}>
-          <Icon name="play-circle-outline" size={46} color={colors.white} />
-        </View>
-      </View>
+      <Animated.View
+        style={[styles.card, {transform: [{translateX: slideAnim}]}]}>
+        <LinearGradient
+          colors={[colors.background1, colors.background, colors.background1]}
+          style={styles.gradientContainer}
+          start={{x: 2, y: 0}}
+          end={{x: 0.5, y: 3}}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={{
+                uri:
+                  item?.affirmation.length > 0 && item.affirmation[0].url
+                    ? item.affirmation[0].url
+                    : 'https://picsum.photos/700',
+              }}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.detailsContainer}>
+            <Text
+              style={styles.cardTitle}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {item.title}
+            </Text>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateTitle}>End Date:</Text>
+              <Text style={styles.dateText}>{formateDate(item?.endDate)}</Text>
+            </View>
+            <Text style={styles.cardFooterText}>
+              {item.affirmation.length} Affirmations
+            </Text>
+          </View>
+        </LinearGradient>
+      </Animated.View>
     </TouchableOpacity>
   );
 };
@@ -50,40 +84,55 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 8,
     borderRadius: 10,
     overflow: 'hidden',
-    backgroundColor: colors.background1,
+  },
+  gradientContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    width: '100%',
+    marginVertical: 8,
+    padding: 10,
   },
   imageContainer: {
-    width: 100, // Adjust the width as needed
-    height: 100, // Adjust the height as needed
+    width: 90,
+    height: 100,
+    marginRight: 10,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+    borderRadius: 10,
   },
   detailsContainer: {
     flex: 1,
-    padding: 16,
   },
   cardTitle: {
-    fontSize: 22,
-    marginBottom: 8,
+    fontSize: 20,
     fontFamily: 'Poppins-SemiBold',
     color: colors.text,
   },
   cardFooterText: {
-    fontSize: 16,
+    fontSize: 10,
     color: colors.primary,
   },
-  playButtonContainer: {
-    // padding: 16,
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  dateTitle: {
+    fontSize: 12,
+    fontFamily: 'Poppins-SemiBold',
+    color: colors.grayText,
+    marginRight: 4,
+  },
+  dateText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    color: colors.grayText,
   },
 });
 
-export default Visioncard;
+export default VisionCard;

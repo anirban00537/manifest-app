@@ -1,21 +1,55 @@
-import {StyleSheet, View, ScrollView, Text} from 'react-native';
+import {StyleSheet, View, ScrollView, Text, Animated} from 'react-native';
 import {FAB} from 'react-native-paper';
-import React from 'react';
-import Visioncard from '../components/Cards/Vision.card';
+import React, {useEffect, useRef} from 'react';
+import VisionCard from '../components/Cards/Vision.card';
 import colors from '../constants/colors';
 import {useGetVisionBoard} from '../hooks/visionboard.hook';
 import {getGreetingMessage} from '../common/functions';
 import Empty from '../components/Cards/Empty.card';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const VisionBoard = ({navigation}: any) => {
   const {visionBoards} = useGetVisionBoard();
   const greeting = getGreetingMessage();
+  const floatValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    startAnimation();
+  }, []);
+
+  const startAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(floatValue, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(floatValue, {
+          toValue: 0,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+  };
+
+  const translateY = floatValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 10],
+  });
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Welcome Back</Text>
-        <Text style={styles.secondaryTitle}>{greeting}</Text>
+      <View style={styles.headerSection}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={styles.secondaryTitle}>{greeting}</Text>
+        </View>
+        <Animated.View
+          style={[styles.premiumIconContainer, {transform: [{translateY}]}]}>
+          <Icon name="diamond" size={30} color={colors.white} />
+        </Animated.View>
       </View>
       {visionBoards.length === 0 && (
         <View style={styles.emptyContainer}>
@@ -23,10 +57,12 @@ const VisionBoard = ({navigation}: any) => {
         </View>
       )}
       {visionBoards.length > 0 && (
-        <ScrollView style={styles.scrollView}>
+        <ScrollView
+          style={styles.scrollView}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.cardsContainer}>
             {visionBoards?.map((item: any, index: any) => (
-              <Visioncard key={index} item={item} />
+              <VisionCard key={index} item={item} />
             ))}
           </View>
         </ScrollView>
@@ -51,18 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     padding: 20,
   },
-  gradient: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
   header: {
-    marginTop: 20,
     alignItems: 'flex-start',
-    marginBottom: 20,
-    marginLeft: 7,
   },
   title: {
     fontSize: 30,
@@ -95,6 +121,16 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: colors.primary,
+  },
+  premiumIconContainer: {
+    marginTop: 10,
+  },
+  headerSection: {
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginTop: 15,
+    marginHorizontal: 6,
   },
 });
 
