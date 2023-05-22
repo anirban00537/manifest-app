@@ -4,8 +4,15 @@ import {Card, Title} from 'react-native-paper';
 import colors from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {formateDate} from '../../common/functions';
+import {Menu} from 'react-native-paper'; // Import IconButton from react-native-paper
+import IconEntypo from 'react-native-vector-icons/Entypo';
 
 const Visioncard = ({title, image, date}: any) => {
+  const [visible, setVisible] = React.useState(false);
+
+  const openMenu = () => setVisible(true);
+
+  const closeMenu = () => setVisible(false);
   return (
     <TouchableOpacity style={styles.card}>
       <View style={styles.imageContainer}>
@@ -28,6 +35,22 @@ const Visioncard = ({title, image, date}: any) => {
           <Text style={styles.metaText}>{formateDate(date)}</Text>
         </View>
       </View>
+      <View style={styles.menuContainer}>
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <IconEntypo
+              name="dots-three-vertical"
+              size={20}
+              color={colors.white}
+              onPress={openMenu}
+            />
+          }>
+          <Menu.Item onPress={() => {}} title="Delete" />
+          <Menu.Item onPress={() => {}} title="Delete" />
+        </Menu>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -39,8 +62,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     overflow: 'hidden',
     flexDirection: 'row',
-    // borderWidth: 0.2,
-    // borderColor: colors.dark2,
+    borderWidth: 0.1,
+    borderColor: colors.dark1,
+  },
+  menuContainer: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    backgroundColor: 'transparent',
   },
   imageContainer: {
     position: 'relative',

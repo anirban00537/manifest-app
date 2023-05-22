@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  ToastAndroid,
 } from 'react-native';
 import colors from '../constants/colors';
 import VisionDetailsCard from '../components/Cards/VisionDetails.card';
@@ -56,43 +55,14 @@ const VisionDetails = ({navigation, route}: any) => {
           percentage={percentage}
           visionDetails={visionDetails}
           navigation={navigation}
+          updatePractice={updatePractice}
+          _id={_id}
+          deleteVisionBoard={deleteVisionBoard}
         />
         <View
           style={{
             marginHorizontal: 15,
           }}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{visionDetails?.title}</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.playButton}
-              onPress={async () => {
-                if (visionDetails?.affirmation?.length < 3) {
-                  ToastAndroid.show(
-                    'Require minimum 3 affirmations to play',
-                    3000,
-                  );
-                  return;
-                }
-                updatePractice(_id);
-                navigation.navigate('AuthenticatedStack', {
-                  screen: 'Player',
-                  params: {_id: _id},
-                });
-              }}>
-              <Icon name="play" size={20} color={colors.white} />
-              <Text style={styles.playButtonText}>Start Movie</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.MoreButton}
-              onPress={() => {
-                deleteVisionBoard(_id, navigation);
-              }}>
-              <Icon name="trash" size={20} color={colors.white} />
-            </TouchableOpacity>
-          </View>
-
           <View>
             <View>
               <Text style={styles.practicesHeading}>Vision Cards</Text>
@@ -124,13 +94,7 @@ const VisionDetails = ({navigation, route}: any) => {
         handleSave={handleAddFunction}
       />
 
-      <FAB
-        style={styles.fab}
-        icon="plus"
-        color="white"
-        label="Add Affirmation"
-        onPress={showModal}
-      />
+      <FAB style={styles.fab} icon="plus" color="white" onPress={showModal} />
     </View>
   );
 };
@@ -157,32 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 90,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 15,
-    marginTop: 10,
-    padding: 10,
-    // marginHorizontal: 20,
-  },
-  title: {
-    fontSize: 19,
-    fontFamily: 'Poppins-Regular',
-    color: colors.text,
-  },
-  heading: {
-    fontSize: 24,
-    // fontWeight: 'bold',
-    fontFamily: 'Poppins-SemiBold',
-    color: colors.text,
-    marginVertical: 16,
-    alignSelf: 'center',
-    position: 'absolute',
-    top: 80,
-    textAlign: 'center',
-    width: '100%',
-  },
+
   startButton: {
     backgroundColor: colors.primary,
     width: '100%',
@@ -193,10 +132,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginVertical: 16,
   },
-  playButtonText: {
-    color: colors.white,
-    marginLeft: 10,
-  },
+
   startButtonText: {
     color: colors.text,
     // fontWeight: 'bold',
@@ -208,38 +144,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 90,
   },
-  buttonContainer: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    marginBottom: 30,
-  },
-  playButton: {
-    backgroundColor: colors.primaryDark,
-    width: '80%',
-    height: 50,
-    // elevation: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    flexDirection: 'row',
-  },
-  MoreButton: {
-    backgroundColor: colors.background1,
-    elevation: 2,
-    // borderWidth: 0.5,
-    // borderColor: colors.white,
-    width: '18%',
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 5,
-    flexDirection: 'row',
-  },
+
   practicesHeading: {
-    fontSize: 15,
+    fontSize: 22,
+    textAlign: 'center',
     color: colors.text,
     marginBottom: 10,
+    marginTop: 10,
     fontFamily: 'Poppins-Regular',
   },
   resourcesContainer: {

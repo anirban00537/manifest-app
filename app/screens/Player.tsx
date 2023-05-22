@@ -130,6 +130,7 @@ const Player = ({navigation, route}: any) => {
           style={styles.endSessionButton}
           onPress={handleEndSession}>
           <Icon name="stop" size={24} color={colors.white} />
+          <Text style={styles.stopText}>End Session</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
   },
   slide: {
     width,
@@ -184,12 +185,18 @@ const styles = StyleSheet.create({
   endSessionButton: {
     position: 'absolute',
     bottom: 40,
+    flexDirection: 'row',
     alignSelf: 'center',
     backgroundColor: colors.primary,
     borderRadius: 50,
     padding: 12,
     zIndex: 2,
     elevation: 3, // Added elevation to ensure the button appears above the image
+  },
+  stopText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: colors.white,
   },
 });
 
