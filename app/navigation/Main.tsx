@@ -91,11 +91,11 @@ const MainTabs = () => (
       }}
     />
     <Tab.Screen
-      name="Settings"
-      component={SettingsScreen}
+      name="JournalHomeScreen"
+      component={JournalHomeScreen}
       options={{
-        title: 'Settings',
-        tabBarIcon: ({focused}) => tabBarIcon('wrench', focused),
+        title: 'JournalHomeScreen',
+        tabBarIcon: ({focused}) => tabBarIcon('book', focused),
         headerShown: false,
         tabBarLabel: () => null, // hide the tab title
       }}

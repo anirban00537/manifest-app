@@ -112,12 +112,13 @@ const CreateVisionCard = ({navigation}: any) => {
         <View style={styles.dailyTargetContainer}>
           <Text style={styles.label}>Daily Target</Text>
           <View style={styles.targetBox}>
-            <TouchableOpacity style={styles.plusButton} onPress={handlePlus}>
-              <Icon name="plus" size={20} color={colors.white} />
-            </TouchableOpacity>
-            <Text style={styles.targetText}>{daily_target}</Text>
             <TouchableOpacity style={styles.minusButton} onPress={handleMinus}>
               <Icon name="minus" size={20} color={colors.white} />
+            </TouchableOpacity>
+            <Text style={styles.targetText}>{daily_target}</Text>
+
+            <TouchableOpacity style={styles.plusButton} onPress={handlePlus}>
+              <Icon name="plus" size={20} color={colors.white} />
             </TouchableOpacity>
           </View>
         </View>
@@ -250,18 +251,18 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     borderColor: colors.grayText,
     borderRadius: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    // paddingVertical: 5,
+    // paddingHorizontal: 10,
   },
   plusButton: {
     backgroundColor: colors.primary,
     borderRadius: 5,
-    padding: 10,
+    padding: 15,
   },
   minusButton: {
     backgroundColor: colors.primary,
     borderRadius: 5,
-    padding: 10,
+    padding: 15,
   },
   targetText: {
     color: colors.white,

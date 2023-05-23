@@ -41,9 +41,9 @@ const VisionBoardUserActivityDetails = ({
         source={require('../../assets/premium.jpg')}
         style={styles.backgroundImage}>
         <LinearGradient
-          colors={[colors.primaryDark, 'rgba(0,0,0,0.8)', 'rgba(0,0,0,0.3)']}
-          start={{x: 2, y: 0}}
-          end={{x: 0.5, y: 3}}
+          colors={[colors.background1, colors.background2, colors.background]}
+          start={{x: 0.5, y: 0}}
+          end={{x: 0.5, y: 1}}
           style={styles.container}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
