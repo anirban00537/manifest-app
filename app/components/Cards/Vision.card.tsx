@@ -10,6 +10,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {BlurView} from '@react-native-community/blur';
 
 import colors from '../../constants/colors';
 import {formateDate} from '../../common/functions';
@@ -41,22 +42,27 @@ const VisionCard = ({item}: any) => {
       }}>
       <Animated.View
         style={[styles.card, {transform: [{translateX: slideAnim}]}]}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{
+              uri:
+                item?.affirmation.length > 0 && item.affirmation[0].url
+                  ? item.affirmation[0].url
+                  : 'https://picsum.photos/700',
+            }}
+            style={styles.image}
+          />
+        </View>
+        <BlurView style={styles.overlay} blurType="dark" blurAmount={8} />
         <LinearGradient
-          colors={[colors.background1, colors.background, colors.background1]}
+          colors={[
+            'rgba(255, 255, 255, 0.2)',
+            'rgba(255, 255, 255, 0.1)',
+            'rgba(255, 255, 255, 0.2)',
+          ]}
           style={styles.gradientContainer}
           start={{x: 2, y: 0}}
           end={{x: 0.5, y: 3}}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={{
-                uri:
-                  item?.affirmation.length > 0 && item.affirmation[0].url
-                    ? item.affirmation[0].url
-                    : 'https://picsum.photos/700',
-              }}
-              style={styles.image}
-            />
-          </View>
           <View style={styles.detailsContainer}>
             <Text
               style={styles.cardTitle}
@@ -86,23 +92,35 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     overflow: 'hidden',
+    shadowColor: 'black',
+    padding: 10,
+    height: 190, // Updated height value
+    shadowOpacity: 0.3,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  imageContainer: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: -1,
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    borderRadius: 10,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 10,
   },
   gradientContainer: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     width: '100%',
-    marginVertical: 8,
     padding: 10,
-  },
-  imageContainer: {
-    width: 90,
-    height: 100,
-    marginRight: 10,
-  },
-  image: {
-    width: '100%',
     height: '100%',
-    resizeMode: 'cover',
     borderRadius: 10,
   },
   detailsContainer: {

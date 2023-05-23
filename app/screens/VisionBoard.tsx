@@ -44,7 +44,7 @@ const VisionBoard = ({navigation}: any) => {
       <View style={styles.headerSection}>
         <View style={styles.header}>
           <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.secondaryTitle}>{greeting}</Text>
+          {/* <Text style={styles.secondaryTitle}>{greeting}</Text> */}
         </View>
         <Animated.View
           style={[styles.premiumIconContainer, {transform: [{translateY}]}]}>
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 15,
     marginHorizontal: 6,
+    marginBottom: 25,
   },
 });
 
