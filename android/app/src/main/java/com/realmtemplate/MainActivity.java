@@ -20,7 +20,7 @@ public class MainActivity extends ReactActivity {
     }
   @Override
   protected String getMainComponentName() {
-    return "achive-anything-visionboard";
+    return "Visionfest";
   }
 
   /**

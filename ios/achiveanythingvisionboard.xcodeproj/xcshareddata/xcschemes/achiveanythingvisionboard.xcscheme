@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "achiveanythingvisionboard.app"
-               BlueprintName = "achiveanythingvisionboard"
-               ReferencedContainer = "container:achiveanythingvisionboard.xcodeproj">
+               BuildableName = "Visionfest.app"
+               BlueprintName = "Visionfest"
+               ReferencedContainer = "container:Visionfest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "achiveanythingvisionboardTests.xctest"
-               BlueprintName = "achiveanythingvisionboardTests"
-               ReferencedContainer = "container:achiveanythingvisionboard.xcodeproj">
+               BuildableName = "VisionfestTests.xctest"
+               BlueprintName = "VisionfestTests"
+               ReferencedContainer = "container:Visionfest.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "achiveanythingvisionboard.app"
-            BlueprintName = "achiveanythingvisionboard"
-            ReferencedContainer = "container:achiveanythingvisionboard.xcodeproj">
+            BuildableName = "Visionfest.app"
+            BlueprintName = "Visionfest"
+            ReferencedContainer = "container:Visionfest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "achiveanythingvisionboard.app"
-            BlueprintName = "achiveanythingvisionboard"
-            ReferencedContainer = "container:achiveanythingvisionboard.xcodeproj">
+            BuildableName = "Visionfest.app"
+            BlueprintName = "Visionfest"
+            ReferencedContainer = "container:Visionfest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
