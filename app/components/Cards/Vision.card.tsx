@@ -1,68 +1,39 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {
   StyleSheet,
+  ImageBackground,
   View,
-  TouchableOpacity,
-  Image,
   Text,
-  Animated,
+  TouchableOpacity,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {BlurView} from '@react-native-community/blur';
-
+import {Card, Title} from 'react-native-paper';
 import colors from '../../constants/colors';
+import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {formateDate} from '../../common/functions';
 
-const VisionCard = ({item}: any) => {
+const Visioncard = ({item}: any) => {
   const navigation: any = useNavigation();
-  const slideAnim = useRef(new Animated.Value(-100)).current;
-
-  useEffect(() => {
-    startAnimation();
-  }, []);
-
-  const startAnimation = () => {
-    Animated.timing(slideAnim, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
-  };
 
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={styles.constinar}
       onPress={() => {
         navigation.navigate('AuthenticatedStack', {
           screen: 'VisionDetails',
           params: {_id: item._id},
         });
       }}>
-      <Animated.View
-        style={[styles.card, {transform: [{translateX: slideAnim}]}]}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{
-              uri:
-                item?.affirmation.length > 0 && item.affirmation[0].url
-                  ? item.affirmation[0].url
-                  : 'https://picsum.photos/700',
-            }}
-            style={styles.image}
-          />
-        </View>
-        <BlurView style={styles.overlay} blurType="dark" blurAmount={8} />
-        <LinearGradient
-          colors={[
-            'rgba(255, 255, 255, 0.2)',
-            'rgba(255, 255, 255, 0.1)',
-            'rgba(255, 255, 255, 0.2)',
-          ]}
-          style={styles.gradientContainer}
-          start={{x: 2, y: 0}}
-          end={{x: 0.5, y: 3}}>
+      <View style={styles.card}>
+        <ImageBackground
+          source={{
+            uri:
+              item?.affirmation.length > 0 && item.affirmation[0].url
+                ? item.affirmation[0].url
+                : 'https://picsum.photos/700',
+          }}
+          style={styles.cardBackground}>
+          <View style={styles.gradient} />
           <View style={styles.detailsContainer}>
             <Text
               style={styles.cardTitle}
@@ -78,67 +49,43 @@ const VisionCard = ({item}: any) => {
               {item.affirmation.length} Affirmations
             </Text>
           </View>
-        </LinearGradient>
-      </Animated.View>
+        </ImageBackground>
+      </View>
     </TouchableOpacity>
   );
 };
-
 const styles = StyleSheet.create({
-  container: {
+  constinar: {
     width: '100%',
     padding: 5,
   },
   card: {
-    borderRadius: 10,
+    width: '100%',
+    marginVertical: 8,
+    borderRadius: 7,
     overflow: 'hidden',
-    shadowColor: 'black',
-    padding: 10,
-    height: 190, // Updated height value
-    shadowOpacity: 0.3,
-    shadowOffset: {width: 0, height: 2},
-    shadowRadius: 4,
-    elevation: 4,
   },
-  imageContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    zIndex: -1,
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    borderRadius: 10,
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    borderRadius: 10,
-  },
-  gradientContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    width: '100%',
-    padding: 10,
-    height: '100%',
-    borderRadius: 10,
+  cardBackground: {
+    height: 150,
+    justifyContent: 'flex-end',
+    padding: 16,
+    borderRadius: 7,
+    overflow: 'hidden',
   },
   detailsContainer: {
     flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end',
+  },
+  dateText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+    color: colors.grayText,
   },
   cardTitle: {
-    fontSize: 20,
-    fontFamily: 'Poppins-SemiBold',
-    color: colors.text,
-  },
-  cardFooterText: {
-    fontSize: 10,
-    color: colors.primary,
-  },
-  dateContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    fontSize: 22,
     marginBottom: 8,
+    paddingTop: 5,
   },
   dateTitle: {
     fontSize: 12,
@@ -146,11 +93,29 @@ const styles = StyleSheet.create({
     color: colors.grayText,
     marginRight: 4,
   },
-  dateText: {
-    fontSize: 12,
-    fontFamily: 'Poppins-Regular',
-    color: colors.grayText,
+  dateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  gradient: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)', // semi-transparent black
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cardFooterText: {
+    fontSize: 16,
+    // marginLeft: 8,
+    color: colors.primary,
   },
 });
 
-export default VisionCard;
+export default Visioncard;

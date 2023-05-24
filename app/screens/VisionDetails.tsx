@@ -50,16 +50,16 @@ const VisionDetails = ({navigation, route}: any) => {
   if (loading) return <LoadingScreen />;
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.contentContainer} scrollEventThrottle={16}>
-        <VisionDetailsCard
-          percentage={percentage}
-          visionDetails={visionDetails}
-          navigation={navigation}
-          updatePractice={updatePractice}
-          _id={_id}
-          deleteVisionBoard={deleteVisionBoard}
-        />
-        <View
+      {/* <ScrollView style={styles.contentContainer} scrollEventThrottle={16}> */}
+      <VisionDetailsCard
+        percentage={percentage}
+        visionDetails={visionDetails}
+        navigation={navigation}
+        updatePractice={updatePractice}
+        _id={_id}
+        deleteVisionBoard={deleteVisionBoard}
+      />
+      {/* <View
           style={{
             marginHorizontal: 15,
           }}>
@@ -86,8 +86,8 @@ const VisionDetails = ({navigation, route}: any) => {
               </View>
             )}
           </View>
-        </View>
-      </ScrollView>
+        </View> */}
+      {/* </ScrollView> */}
       <AddAffermationModal
         visible={visible}
         hideModal={hideModal}

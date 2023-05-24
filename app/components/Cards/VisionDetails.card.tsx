@@ -41,9 +41,9 @@ const VisionBoardUserActivityDetails = ({
         source={require('../../assets/premium.jpg')}
         style={styles.backgroundImage}>
         <LinearGradient
-          colors={[colors.background1, colors.background2, colors.background]}
-          start={{x: 0.5, y: 0}}
-          end={{x: 0.5, y: 1}}
+          colors={[colors.background1, 'rgba(0,0,0,0.8)', 'rgba(0,0,0,0.3)']}
+          start={{x: 2, y: 0}}
+          end={{x: 0.5, y: 3}}
           style={styles.container}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -104,35 +104,48 @@ const VisionBoardUserActivityDetails = ({
             </AnimatedCircularProgress>
           </View>
 
-          {/* <Text style={styles.practiceText}>
-            Keep practicing to maintain your progress and achieve even greater
-            results.
-          </Text> */}
           <View style={styles.header}>
             <Text style={styles.title}>{visionDetails?.title}</Text>
           </View>
           <Text style={styles.targetDaysText}>
             End Date: {formateDate(visionDetails?.endDate)}
           </Text>
-          <TouchableOpacity
-            style={styles.playButton}
-            onPress={async () => {
-              if (visionDetails?.affirmation?.length < 3) {
-                ToastAndroid.show(
-                  'Require minimum 3 affirmations to play',
-                  ToastAndroid.LONG,
-                );
-                return;
-              }
-              updatePractice(_id);
-              navigation.navigate('AuthenticatedStack', {
-                screen: 'Player',
-                params: {_id: _id},
-              });
-            }}>
-            <Icon name="play" size={20} color={colors.white} />
-            <Text style={styles.playButtonText}>Start Movie</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.ViewButton}
+              onPress={async () => {
+                updatePractice(_id);
+                navigation.navigate('AuthenticatedStack', {
+                  screen: 'VisionAffirmations',
+                  params: {_id: _id},
+                });
+              }}>
+              <Text style={styles.playButtonText}>View affirmations</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={async () => {
+                if (visionDetails?.affirmation?.length < 3) {
+                  ToastAndroid.show(
+                    'Require minimum 3 affirmations to play',
+                    ToastAndroid.LONG,
+                  );
+                  return;
+                }
+                updatePractice(_id);
+                navigation.navigate('AuthenticatedStack', {
+                  screen: 'Player',
+                  params: {_id: _id},
+                });
+              }}>
+              <Icon name="play" size={20} color={colors.white} />
+              <Text style={styles.playButtonText}>Start Movie</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.practiceText}>
+            Keep practicing to maintain your progress and achieve even greater
+            results.
+          </Text>
         </LinearGradient>
       </ImageBackground>
     </TouchableWithoutFeedback>
@@ -144,6 +157,9 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
   },
   container: {
     flex: 1,
@@ -164,6 +180,16 @@ const styles = StyleSheet.create({
     // marginTop: 5,
     padding: 10,
     // marginHorizontal: 20,
+  },
+  ViewButton: {
+    backgroundColor: colors.background,
+    width: '50%',
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    marginTop: 25,
+    flexDirection: 'row',
   },
   title: {
     fontSize: 22,
@@ -255,8 +281,10 @@ const styles = StyleSheet.create({
   practiceText: {
     fontSize: 16,
     color: colors.white,
+    paddingHorizontal: 20,
     textAlign: 'center',
     opacity: 0.7,
+    marginTop: 15,
   },
   nextTargetText: {
     fontSize: 16,

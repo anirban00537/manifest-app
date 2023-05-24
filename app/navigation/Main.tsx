@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Premium from '../screens/Premium';
@@ -11,6 +11,7 @@ import AffermationDetailsAndEdit from '../screens/AffermationDetails';
 import CreateVisionCard from '../screens/CreateVisionCard';
 import Player from '../screens/Player';
 import SettingsScreen from '../screens/Settings';
+import VisionAffirmations from '../screens/VisionAffirmations';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,14 +22,17 @@ const tabBarIcon = (name: any, focused: boolean) => {
 };
 
 const AuthenticatedStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator
+    screenOptions={{
+      ...TransitionPresets.SlideFromRightIOS, // Use slide from right transition
+      headerShown: false,
+    }}>
     <Stack.Screen
       name="Premium"
       component={Premium}
       options={{
         title: 'Premium',
         headerTitleAlign: 'center',
-        headerShown: false,
       }}
     />
     <Stack.Screen
@@ -37,7 +41,6 @@ const AuthenticatedStack = () => (
       options={{
         title: 'VisionDetails',
         headerTitleAlign: 'center',
-        headerShown: false,
       }}
     />
     <Stack.Screen
@@ -46,26 +49,31 @@ const AuthenticatedStack = () => (
       options={{
         title: 'Player',
         headerTitleAlign: 'center',
-        headerShown: false,
       }}
     />
-
     <Stack.Screen
       name="AffermationDetailsAndEdit"
       component={AffermationDetailsAndEdit}
       options={{
         title: 'AffermationDetailsAndEdit',
         headerTitleAlign: 'center',
-        headerShown: false,
       }}
     />
+    <Stack.Screen
+      name="VisionAffirmations"
+      component={VisionAffirmations}
+      options={{
+        title: 'VisionAffirmations',
+        headerTitleAlign: 'center',
+      }}
+    />
+
     <Stack.Screen
       name="CreateVisionCard"
       component={CreateVisionCard}
       options={{
         title: 'CreateVisionCard',
         headerTitleAlign: 'center',
-        headerShown: false,
       }}
     />
   </Stack.Navigator>
